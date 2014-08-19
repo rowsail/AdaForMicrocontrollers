@@ -1,0 +1,167 @@
+I decide to write my own register declarations schema because I found compiler errors while using native registers pool declarations 
+(atomic & volatile declarations have different representanions on different arm architectures).
+
+The way proposed by me has some advantages:
+
+1. This approach preserves strong ADA typing.
+2. Is universal for all king of registers.
+3. Overloading operators leads to easy operations on registers & bit pools
+4. I can use strong typed constants.
+
+Disadvantages:
+1. A lot of ADA code (but than compiled to small & optimal code) - I'm, using a simple editors macro and copy&paste to simplify work.
+
+So this is explanation of how to use this schema:
+
+
+-------------------------
+--  Imported packages  --
+-------------------------
+
+with System;
+use  System;
+
+with Bitfields;
+use  Bitfields;
+
+with Bitfields.Types;
+with Bitfields.Bitfield;
+with Bitfields.Functions;
+
+*********************************** start of mcu subsystem definitions *******************************
+
+-----------------------------------------------------------------------------
+--                           MCU.Registers.<package name>                  --
+-----------------------------------------------------------------------------
+
+package <mcu>.Registers.<package name> is                                   [package name may be common for family like FLASH_F103XX - for all stm32f103 family or only for one MCU -> stm32f103vc]
+
+   pragma Preelaborate;
+
+   -------------------------------------------------------
+   --                    <mcu subsystem>                --
+   -------------------------------------------------------
+
+*********************************** start of register definitions *******************************
+
+   -------------------------------
+   --  <register name> Register --
+   -------------------------------
+
+   package <register name> is
+
+      package Tp is new Types (<register size>);                             [register size can be R8, R16 or R32]
+
+** here goes pool definitions (up to 32 depends of register & pool sizes)
+
+      package <bit(s) pool> is new Bitfield (Tp, <bit position>);
+      OR
+      package <bit(s) pool> is new Bitfield (Tp, <first bit position>, <pool size>);	[default pool size is 1 bit]
+      ..
+      ..
+      ..
+      ..  [up to 32 positions]
+
+** here goes constant definitions for all previous declared pools
+
+      type T is
+         record
+            <bit(s) pool> : <register name>.T;
+            ..
+            ..
+            ..
+            ..  [up to 32 positions for all declared pools]
+         end record;
+
+      for T use
+         record
+            <bit(s) pool> at 0 range <bit(s) pool>.R'First .. <bit(s) pool>.R'Last;
+            ..
+            ..
+            ..
+            ..  [up to 32 positions for all declared pools]
+         end record;
+
+      for T'Size use Tp.Reg'Size;
+      pragma Suppress_Initialization (T);
+
+      package FN is new Functions (T, Tp);
+
+   end <register name>;
+
+** here goes declarations for overloading operators - necessary part after each register & pools definitions
+
+   subtype <register name>_T is <register name>.T;
+
+   --  Field definitions
+
+   function <bit(s) pool> is new <register name>.FN.B (<register name>.<bit(s) pool>);
+   ..
+   ..
+   ..
+   ..  [up to 32 positions for all declared pools]
+
+   --  Functions
+
+** next four definitions are necessary
+
+   function  "+"   is new <register name>.FN.Add;
+   function  "+"   is new <register name>.FN.Add_RM;
+   function  "-"   is new <register name>.FN.Clear;
+   function  Init  is new <register name>.FN.Init;
+
+   --  Constant definitions
+
+** here goes definitions of possible register constants for each pool
+
+   function <constant name> is new <register name>.FN.C (<register name>.<bit(s) pool>, <constant value>);         [<value> in hex or binary form]
+   ..
+   ..
+   ..
+   ..  [non limited constant definitions]
+
+*********************************** end of register definitions *******************************
+
+***********************************************************************************************
+
+** definitions of others registers in subsystem
+** as many as needed
+
+***********************************************************************************************
+
+*********************************** start of register collection *******************************
+
+   --     <mcu subsystem> Registers Collection  --
+
+   type <mcu subsystem>_T is
+      record
+         <register name> : <register name>_T;
+         
+         pragma Volatile (<register name>);
+         
+      end record;
+
+   for <mcu subsystem>_T use
+      record
+         <register name>       at <offset form start of register subsystem base address> range <from bit> .. <to bit>;
+      end record;
+
+   <mcu subsystem> : <mcu subsystem>_T;
+
+   for <mcu subsystem>'Address use System'To_Address (<base address of registers subsystem>);
+
+end <mcu>.Registers.<package name>;
+
+*********************************** end of register collection *******************************
+
+*********************************** end of mcu subsystem definitions *************************
+
+That's all.
+
+For examples look at register definitions in STM and NXP subdirectiories. For using look at startup bodies.
+
+Note that we use only register & pools (+ a few of other like address) names, skeleton is big,
+but simple to automation.
+
+Robert Kleczek.
+

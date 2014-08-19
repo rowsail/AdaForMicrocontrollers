@@ -1,0 +1,30 @@
+Framework of arm library is divided by me into 3 levels
+
+I. First level (arm/) contains :
+    a. root & primitives definitions for all arms
+	    arm.ads, registers.ads, board.ads
+    b. generics to manipulate bitfields pool in easy way
+	    bitfields.XXXXXXX.ads
+    c. definitions for vendors board's example
+	    board-stm32f103vc_board.ads -> can be "evk407i-stm32f407igt6.ads" or other vendor's name
+    d. and some universal definitions eg. cortex_m3-registers-NVIC (like in descendant STM/stm32-registers-nvic - by the way it sould be renamed & moved here cause is common for all cortex-m3 family)
+    
+II. Second level (arm/FAMILY) contains :
+    a. common definitions for specific groups of microcontrollers with naming like:
+	    FAMILY - feature - specific_name_with_pattern_for_grouping
+	    eg. stm32-registers-scb_f103vc.ads - system controll block only for stm32f103vc
+	    eg. stm32-registers-scb_f103xx.ads - system controll block for all stm32f103 family
+	    eg. stm32-registers-scb_f10xxx.ads - system controll block for all stm32f10  family
+	    eg. lpc-registers-t0_21xx.ads timer0 definitons for all LPC21XX  family
+	    & so on
+	    in that way using renamings we should write as universal code as could be
+    b. startup files for group of families:
+	    stm32f103xx-startup.ads(b) - startup files for all stm32f103 family
+    c. on my project here are differrent kind of timing procedures (using internal timers, external timing or whatever you need)
+    
+III. Third level (arm/FAMILY/MICROCONTROLLER) contains :
+    a. packages redefinitions to use them in general way like MCU.XXXX.XXXX so programm code should be more portable
+
+In test directory is little example of using this framework.
+
+Robert Kleczek
