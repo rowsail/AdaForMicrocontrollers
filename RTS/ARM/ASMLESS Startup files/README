@@ -1,0 +1,8 @@
+Here goes a sample of my startup files written in ADA will a little essential asm inserts.
+They need a modifed linker scripts - also included (due to unexpected order of linked modules ?!).
+Of course move/copy parts can be written in ADA too, but then there is no way to compile them to such a fast code,
+and declaration of ISR procedure are not importand here as an example.
+
+These startups sets vectors tables, initiate memory and jump to main procedure.
+
+Robert Kleczek
