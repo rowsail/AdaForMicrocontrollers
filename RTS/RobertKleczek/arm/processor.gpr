@@ -1,0 +1,90 @@
+abstract project PROCESSOR extends "link.gpr" is
+
+   type VENDOR_Type is
+     ("stm",
+      "nxp");
+
+   type ARCHITECTURE_Type is
+     ("armv2", 		"armv2a", 		"armv3", 		"armv3m",
+      "armv4", 		"armv4t", 		"armv5", 		"armv5e",
+      "armv5t", 		"armv5te", 		"armv6", 		"armv6-m",
+      "armv6j", 		"armv6k", 		"armv6s-m", 		"armv6t2",
+      "armv6z", 		"armv6zk", 		"armv7", 		"armv7-a",
+      "armv7-m", 	"armv7-r", 		"armv7e-m", 		"ep9312",
+      "iwmmxt", 		"iwmmxt2", 		"native");
+
+   type CPU_Type is
+     ("arm1020e", 	"arm1020t", 		"arm1022e", 		"arm1026ej-s",
+      "arm10e", 		"arm10tdmi", 		"arm1136j-s", 		"arm1136jf-s",
+      "arm1156t2-s", 	"arm1156t2f-s", 		"arm1176jz-s", 		"arm1176jzf-s",
+      "arm2", 		"arm250", 		"arm3", 			"arm6",
+      "arm60", 		"arm600", 		"arm610", 		"arm620",
+      "arm7", 		"arm70", 		"arm700", 		"arm700i",
+      "arm710", 		"arm7100", 		"arm710c", 		"arm710t",
+      "arm720", 		"arm720t", 		"arm740t", 		"arm7500",
+      "arm7500fe", 	"arm7d", 		"arm7di", 		"arm7dm",
+      "arm7dmi", 	"arm7m", 		"arm7tdmi", 		"arm7tdmi-s",
+      "arm8", 		"arm810", 		"arm9", 			"arm920",
+      "arm920t", 	"arm922t", 		"arm926ej-s", 		"arm940t",
+      "arm946e-s", 	"arm966e-s", 		"arm968e-s", 		"arm9e",
+      "arm9tdmi", 	"cortex-a15", 		"cortex-a5", 		"cortex-a7",
+      "cortex-a8", 	"cortex-a9", 		"cortex-m0", 		"cortex-m1",
+      "cortex-m3", 	"cortex-m4", 		"cortex-r4", 		"cortex-r4f",
+      "cortex-r5", 	"ep9312", 		"fa526", 		"fa606te",
+      "fa626", 		"fa626te", 		"fa726te", 		"fmp626",
+      "generic-armv7-a", "iwmmxt", 		"iwmmxt2", 		"mpcore",
+      "mpcorenovfp", 	"native", 		"strongarm", 		"strongarm110",
+      "strongarm1100", 	"strongarm1110", 	"xscal");
+
+   type FPU_Type is
+     ("fpa", 		"fpe2", 			"fpe3", 			"fpv4-sp-d16",
+      "maverick", 	"neon", 			"neon-fp16", 		"neon-vfpv4",
+      "vfp", 		"vfp3", 			"vfpv3", 		"vfpv3-d16",
+      "vfpv3-d16-fp16", 	"vfpv3-fp16", 		"vfpv3xd", 		"vfpv3xd-fp16",
+      "vfpv4", 		"vfpv4-d16", 		"none");
+
+
+   type CODE_Type is
+     ("arm",
+      "thumb");
+
+   type PROCESSOR_Type is
+     ("stm32f407vg",
+      "stm32f103vc",
+      "lpc2148");
+
+   ARCHITECTURE : ARCHITECTURE_Type := "armv7e-m";
+   CPU          : CPU_Type          := "cortex-m4";
+   FPU          : FPU_Type          := "fpv4-sp-d16";
+   VENDOR       : VENDOR_Type       := "stm";
+
+   PROCESSOR    : PROCESSOR_Type := external ("PROCESSOR", "stm32f407vg");
+   CODE         : CODE_Type      := external ("CODE",      "thumb");
+
+
+   case PROCESSOR is
+
+      when "stm32f103vc" =>
+         VENDOR       := "stm";
+         CODE         := "thumb";
+         ARCHITECTURE := "armv7-m";
+         CPU          := "cortex-m3";
+         FPU          := "none";
+
+      when "stm32f407vg" =>
+         VENDOR       := "stm";
+         CODE         := "thumb";
+         ARCHITECTURE := "armv7e-m";
+         CPU          := "cortex-m4";
+         FPU          := "fpv4-sp-d16";
+
+      when "lpc2148" =>
+         VENDOR       := "nxp";
+         CODE         := "arm";
+         ARCHITECTURE := "armv4t";
+         CPU          := "arm7tdmi";
+         FPU          := "none";
+
+   end case;
+
+end PROCESSOR;

@@ -1,0 +1,9 @@
+abstract project LINK extends "files.gpr" is
+
+   type LINK_Type is
+     ("rom",
+      "ram");
+
+   LINK : LINK_Type := external ("LINK", "rom");
+
+end LINK;

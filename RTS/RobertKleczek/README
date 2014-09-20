@@ -1,0 +1,15 @@
+Short instruction - longer I'll write later
+
+1. Copy contents of arm-eabi into installed & working AdaCore into lib/gnat/arm-eabi folder
+2. Build runtime inside every ravenscar directories with gprbuild and runtime-build.gpr files
+3. Copy arm folder with contents whener you want
+4. Copy examples whenever you want
+5. Set proper directory paths in the arm/files.gpr
+6. Open emxample demo_leds.gpr with gps editor
+7. Set scenario variables (only for stm32f103vc, stm32f407vg, stm32f373rc are implemented)
+8. Build project (using gprbuild setted in gps preferences)
+
+9. Think should compile & run (but execution was wan tested on real board, so forgive me any bugs)
+10. Tomorrow I'll write some instruction to use this framework on out forum.
+
+Robert Kleczek.

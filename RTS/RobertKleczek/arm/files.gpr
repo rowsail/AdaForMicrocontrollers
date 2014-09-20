@@ -1,0 +1,6 @@
+abstract project FILES is
+
+   ARM_LIB := "/home/robert/Programowanie/arm/";
+   RTS     := "/usr/gnat/lib/gnat/arm-eabi/ravenscar-sfp-";
+
+end FILES;
