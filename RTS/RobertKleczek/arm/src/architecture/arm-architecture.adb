@@ -73,7 +73,7 @@ package body ARM.Architecture is
       loop
          Dst := To_Access (Data_Start);
          Src := To_Access (Data_Load);
-         Dst.all := Src.all;  --  copy one word
+         Dst.all := Src.all;                --  copy one word
          Data_Start := Data_Start + 4;      --  next word
          Data_Load := Data_Load + 4;
       end loop;
@@ -102,7 +102,7 @@ package body ARM.Architecture is
       while BSS_Start < BSS_End
       loop
          Src := To_Access (BSS_Start);
-         Src.all := 0;  --  clear
+         Src.all := 0;                      --  clear
          BSS_Start := BSS_Start + 4;
       end loop;
    end Clear_BSS;

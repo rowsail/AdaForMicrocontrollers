@@ -28,6 +28,7 @@
 
 with ARM.Link;
 with ARM.Architecture.Startup;
+with ARM.Registers.FLASH_F40XXX;
 
 --------------------------------------------------------------------------------
 --                               ARM.STM32F407VG                              --
@@ -46,5 +47,7 @@ package ARM.STM32F407VG is
       Has_FPU,
       Number_Of_Implemented_Interrupts,
       Number_Of_Implemented_Traps);
+
+   package FLASH renames ARM.Registers.FLASH_F40XXX;
 
 end ARM.STM32F407VG;

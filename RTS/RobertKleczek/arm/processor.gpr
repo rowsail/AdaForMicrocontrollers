@@ -49,7 +49,8 @@ abstract project PROCESSOR extends "link.gpr" is
       "thumb");
 
    type PROCESSOR_Type is
-     ("stm32f407vg",
+     ("stm32f373rc",
+      "stm32f407vg",
       "stm32f103vc",
       "lpc2148");
 
@@ -72,6 +73,13 @@ abstract project PROCESSOR extends "link.gpr" is
          FPU          := "none";
 
       when "stm32f407vg" =>
+         VENDOR       := "stm";
+         CODE         := "thumb";
+         ARCHITECTURE := "armv7e-m";
+         CPU          := "cortex-m4";
+         FPU          := "fpv4-sp-d16";
+
+      when "stm32f373rc" =>
          VENDOR       := "stm";
          CODE         := "thumb";
          ARCHITECTURE := "armv7e-m";

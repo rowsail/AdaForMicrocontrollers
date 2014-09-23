@@ -24,6 +24,7 @@
 
 with ARM.Link;
 with ARM.Architecture.Startup;
+with ARM.Registers.FLASH_F1XXXX;
 
 package ARM.STM32F103VC is
 
@@ -38,5 +39,7 @@ package ARM.STM32F103VC is
       Has_FPU,
       Number_Of_Implemented_Interrupts,
       Number_Of_Implemented_Traps);
+
+   package FLASH renames ARM.Registers.FLASH_F1XXXX;
 
 end ARM.STM32F103VC;
