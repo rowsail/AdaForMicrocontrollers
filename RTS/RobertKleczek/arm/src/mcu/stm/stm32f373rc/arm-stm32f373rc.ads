@@ -29,6 +29,8 @@
 with ARM.Link;
 with ARM.Architecture.Startup;
 with ARM.Registers.FLASH_F37XXX;
+with ARM.Registers.RCC_F37XXX;
+with ARM.Registers.PWR_F37XXX;
 
 --------------------------------------------------------------------------------
 --                               ARM.STM32F373RC                              --
@@ -49,5 +51,7 @@ package ARM.STM32F373RC is
       Number_Of_Implemented_Traps);
 
    package FLASH renames ARM.Registers.FLASH_F37XXX;
+   package RCC   renames ARM.Registers.RCC_F37XXX;
+   package PWR   renames ARM.Registers.PWR_F37XXX;
 
 end ARM.STM32F373RC;

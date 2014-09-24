@@ -25,6 +25,8 @@
 with ARM.Link;
 with ARM.Architecture.Startup;
 with ARM.Registers.FLASH_F1XXXX;
+with ARM.Registers.RCC_F10XXX;
+with ARM.Registers.PWR_F10XXX;
 
 package ARM.STM32F103VC is
 
@@ -41,5 +43,7 @@ package ARM.STM32F103VC is
       Number_Of_Implemented_Traps);
 
    package FLASH renames ARM.Registers.FLASH_F1XXXX;
+   package RCC   renames ARM.Registers.RCC_F10XXX;
+   package PWR   renames ARM.Registers.PWR_F10XXX;
 
 end ARM.STM32F103VC;

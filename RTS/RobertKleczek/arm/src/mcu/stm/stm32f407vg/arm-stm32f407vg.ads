@@ -29,6 +29,8 @@
 with ARM.Link;
 with ARM.Architecture.Startup;
 with ARM.Registers.FLASH_F40XXX;
+with ARM.Registers.RCC_F40XXX;
+with ARM.Registers.PWR_F40XXX;
 
 --------------------------------------------------------------------------------
 --                               ARM.STM32F407VG                              --
@@ -49,5 +51,7 @@ package ARM.STM32F407VG is
       Number_Of_Implemented_Traps);
 
    package FLASH renames ARM.Registers.FLASH_F40XXX;
+   package RCC   renames ARM.Registers.RCC_F40XXX;
+   package PWR   renames ARM.Registers.PWR_F40XXX;
 
 end ARM.STM32F407VG;
