@@ -15,8 +15,13 @@ project ARM extends "processor.gpr" is
                                "-T" & FILES.ARM_LIB & "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR & "/" & LINK.LINK & "/arm.ld");
 
    for Source_Dirs use ("src",
-                        "src/architecture", "src/architecture/" & PROCESSOR.ARCHITECTURE,
-                        "src/mcu",          "src/mcu/" & PROCESSOR.VENDOR, "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR,
+                        "src/architecture",
+                        "src/architecture/" & PROCESSOR.ARCHITECTURE,
+                        "src/mcu",
+                        "src/mcu/" & PROCESSOR.VENDOR,
+                        "src/mcu/" & PROCESSOR.VENDOR & "/registers/**",
+                        "src/mcu/" & PROCESSOR.VENDOR & "/drivers/**",
+                        "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR,
                         "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR & "/" & LINK.LINK);
 
    for Object_Dir use ARCH & "obj/";

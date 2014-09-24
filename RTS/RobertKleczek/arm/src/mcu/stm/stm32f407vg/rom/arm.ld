@@ -82,8 +82,8 @@ SECTIONS
     __rom_end = .;
   } > flash
 
-  __data_load = __rom_end;
-  .data : AT (__rom_end)
+  __data_load = .;
+  .data : AT (__data_load)
   {
     __data_start = .;
     *(.data .data.* .gnu.linkonce.d*)
