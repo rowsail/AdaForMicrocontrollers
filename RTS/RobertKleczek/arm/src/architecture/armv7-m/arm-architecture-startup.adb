@@ -32,8 +32,8 @@ use  System;
 with ARM.Architecture.ASM;
 use  ARM.Architecture.ASM;
 
-with ARM.Registers.System_Control;
-use  ARM.Registers.System_Control;
+with ARM.Register.System_Control;
+use  ARM.Register.System_Control;
 
 --------------------------------------------------------------------------------
 --                           ARM.Architecture.Startup                         --

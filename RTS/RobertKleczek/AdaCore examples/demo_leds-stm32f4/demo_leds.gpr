@@ -25,7 +25,7 @@ project Demo_Leds is
       for Gnat use "arm-eabi-gnat";
       for Gnatlist use "arm-eabi-gnatls";
       for Debugger_Command use "arm-eabi-gdb";
-      --  for Program_Host use "localhost";
+      for Program_Host use "remote localhost:3333";
       --  for Communication_Protocol use "sim";
    end Ide;
 

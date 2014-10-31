@@ -30,8 +30,29 @@ package ARM is
 
    pragma Pure;
 
+   -------------
+   --  Types  --
+   -------------
+
+   --  Frequency definitions  --
+
+   type Frequency is delta 0.001 digits 7 range 0.000 .. 9999.999;
+
+   --  Voltage definitions  --
+
+   type Voltage is delta 0.1 digits 4;
+
+
    type Bit      is  (Clear, Set);
    for  Bit      use (Clear => 0, Set => 1);
    for  Bit'Size use 1;
+
+   -----------------
+   --  Constants  --
+   -----------------
+
+   --  Special Frequency value meaning => no clock;
+   No_Clock : constant Frequency := 0.000;
+
 
 end ARM;

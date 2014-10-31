@@ -8,19 +8,21 @@ project ARM extends "processor.gpr" is
                                  "-ffunction-sections",
                                  "-fdata-sections");
 
-   Builder_Default_Switches := ("-g", "--RTS=" & RTS, "-j1");
+   Builder_Default_Switches := ("-O3", "-g", "--RTS=" & RTS, "-j4");
 
    Linker_Default_Switches := ("-g", "-Wl,--gc-sections",
                                FILES.ARM_LIB & ARCH & "lib/libarm.a",
                                "-T" & FILES.ARM_LIB & "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR & "/" & LINK.LINK & "/arm.ld");
 
    for Source_Dirs use ("src",
+                        "src/generics",
                         "src/architecture",
                         "src/architecture/" & PROCESSOR.ARCHITECTURE,
                         "src/mcu",
                         "src/mcu/" & PROCESSOR.VENDOR,
                         "src/mcu/" & PROCESSOR.VENDOR & "/registers/**",
                         "src/mcu/" & PROCESSOR.VENDOR & "/drivers/**",
+                        "src/mcu/" & PROCESSOR.VENDOR & "/startup/**",
                         "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR,
                         "src/mcu/" & PROCESSOR.VENDOR & "/" & PROCESSOR.PROCESSOR & "/" & LINK.LINK);
 

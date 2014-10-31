@@ -27,8 +27,13 @@
 
 --  The file declares the main procedure for the demonstration.
 
-with ARM.MCU;
-pragma Unreferenced (ARM.MCU);
+with ARM.MCU;              pragma Unreferenced (ARM.MCU);
+
+with Clock;                pragma Unreferenced (Clock);
+--  Clock -> user define unreferenced package to include clock mcu startup code
+--  If this package is missing simply no clock startup is invoked
+--  In that way you have full control on clock startup
+--  If you can do it better & more ellegant, please do it.
 
 with Driver;               pragma Unreferenced (Driver);
 --  The Driver package contains the task that actually controls the app so
@@ -45,6 +50,7 @@ with System;
 
 procedure Demo is
    pragma Priority (System.Priority'First);
+
 begin
    loop
       null;

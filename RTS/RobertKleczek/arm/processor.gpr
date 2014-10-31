@@ -1,7 +1,7 @@
 abstract project PROCESSOR extends "link.gpr" is
 
    type VENDOR_Type is
-     ("stm",
+     ("stm32",
       "nxp");
 
    type ARCHITECTURE_Type is
@@ -57,7 +57,7 @@ abstract project PROCESSOR extends "link.gpr" is
    ARCHITECTURE : ARCHITECTURE_Type := "armv7e-m";
    CPU          : CPU_Type          := "cortex-m4";
    FPU          : FPU_Type          := "fpv4-sp-d16";
-   VENDOR       : VENDOR_Type       := "stm";
+   VENDOR       : VENDOR_Type       := "stm32";
 
    PROCESSOR    : PROCESSOR_Type := external ("PROCESSOR", "stm32f407vg");
    CODE         : CODE_Type      := external ("CODE",      "thumb");
@@ -66,21 +66,21 @@ abstract project PROCESSOR extends "link.gpr" is
    case PROCESSOR is
 
       when "stm32f103vc" =>
-         VENDOR       := "stm";
+         VENDOR       := "stm32";
          CODE         := "thumb";
          ARCHITECTURE := "armv7-m";
          CPU          := "cortex-m3";
          FPU          := "none";
 
       when "stm32f407vg" =>
-         VENDOR       := "stm";
+         VENDOR       := "stm32";
          CODE         := "thumb";
          ARCHITECTURE := "armv7e-m";
          CPU          := "cortex-m4";
          FPU          := "fpv4-sp-d16";
 
       when "stm32f373rc" =>
-         VENDOR       := "stm";
+         VENDOR       := "stm32";
          CODE         := "thumb";
          ARCHITECTURE := "armv7e-m";
          CPU          := "cortex-m4";

@@ -32,14 +32,17 @@ use  System;
 with ARM.Architecture.ASM;
 use  ARM.Architecture.ASM;
 
-with ARM.Registers.System_Control;
-use  ARM.Registers.System_Control;
+with ARM.Register.System_Control;
+use  ARM.Register.System_Control;
 
 --------------------------------------------------------------------------------
 --                           ARM.Architecture.Startup                         --
 --------------------------------------------------------------------------------
 
 package body ARM.Architecture.Startup is
+
+   procedure Init_Clock;
+   pragma Import (Ada, Init_Clock, "__init_start");
 
    procedure Setup_PLL;
    pragma Import (Ada, Setup_PLL, "_ada_setup_pll");
@@ -69,6 +72,7 @@ package body ARM.Architecture.Startup is
          --  Turn on FPU
          System_Control.CPACR := System_Control.CPACR + CP10 (Full_Access) +
            CP11 (Full_Access);
+
          --  Wait for bus
          DSB;
          ISB;
@@ -82,7 +86,12 @@ package body ARM.Architecture.Startup is
       --  Clear BSS region
       Clear_BSS;
 
-      --  Setup PLL's
+      --  TEST  --
+      if LD_Init_Start'Address /= LD_Init_End'Address then
+         Init_Clock;
+      end if;
+
+      --  For now only UART clock -> to be removed after UART driver implementation
       Setup_PLL;
 
       --  Call main program

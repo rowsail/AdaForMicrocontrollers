@@ -140,7 +140,9 @@ procedure Setup_Pll is
 
    procedure Initialize_USART1 (Baudrate : Positive);
    procedure Initialize_Clocks;
+   pragma Unreferenced (Initialize_Clocks);
    procedure Reset_Clocks;
+   pragma Unreferenced (Reset_Clocks);
 
    -----------
    -- Reset --
@@ -309,7 +311,7 @@ procedure Setup_Pll is
    end Initialize_USART1;
 
 begin
-   Reset_Clocks;
-   Initialize_Clocks;
+   --  Reset_Clocks;
+   --  Initialize_Clocks;
    Initialize_USART1 (115_200);
 end Setup_Pll;

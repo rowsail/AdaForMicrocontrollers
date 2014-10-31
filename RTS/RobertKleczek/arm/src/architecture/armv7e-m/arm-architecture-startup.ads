@@ -67,8 +67,6 @@ private
    -------------------------------------
    --  System vectors handlers table  --
    -------------------------------------
-   --         Located in ROM          --
-   -------------------------------------
 
    System_Traps : 
    constant array (1 .. Number_Of_Implemented_Traps) of System.Address 
@@ -92,8 +90,6 @@ private
 
    -------------------------------------
    --  System vectors handlers table  --
-   -------------------------------------
-   --         Located in ROM          --
    -------------------------------------
 
    User_Interrupts : constant array (0 .. Last_Interrupt) of System.Address
