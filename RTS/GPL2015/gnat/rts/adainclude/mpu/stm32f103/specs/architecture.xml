@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   CPU           := "cortex-m3";
+   FPU           := "none";
+   ENDIAN        := "little-endian";
+   MAX_PAGE_SIZE := "0x10000";
+
+   </config>
+  </configuration>
+</gprconfig>

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   MPU := "stm32f417ie";
+
+   </config>
+  </configuration>
+</gprconfig>

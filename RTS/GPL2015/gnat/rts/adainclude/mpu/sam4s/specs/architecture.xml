@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   CPU           := "";
+   FPU           := "";
+   ENDIAN        := "";
+   MAX_PAGE_SIZE := "";
+
+   </config>
+  </configuration>
+</gprconfig>

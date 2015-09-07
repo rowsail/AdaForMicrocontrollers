@@ -1,0 +1,55 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                               G n a r l                                    --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+with "gnat.gpr";
+
+project Gnarl extends "specs.gpr" is
+
+   for Target            use Target;
+   for Source_Dirs       use Gnarl_Sources;
+   for Languages         use ("Ada", "Asm_Cpp", "C");
+   for Library_Auto_Init use "False";
+   for Library_Name      use "gnarl";
+   for Library_Kind      use "static";
+   for Object_Dir        use Gnarl_Object_Dir;
+   for Externally_Built  use Has_Not_Gnarl;
+
+   --  Prevents builder warnings
+   case Has_Not_Gnarl is
+      when "false" =>  for Library_Dir use Gnarl_Adalib_Dir;
+      when others =>
+   end case;
+
+   package Builder  renames Gnat.Builder;
+   package Compiler renames Gnat.Compiler;
+
+   package Install is
+      for Prefix         use Gnarl_Install_Path;
+      for Install_Name   use "gnarl";
+      for Lib_Subdir     use "./adalib";
+      for Sources_Subdir use "./adainclude";
+      for Project_Subdir use "./";
+   end Install;
+
+end Gnarl;

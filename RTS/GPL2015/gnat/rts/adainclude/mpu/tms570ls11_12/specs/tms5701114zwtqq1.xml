@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   MPU := "tms5701114zwtqq1";
+
+   </config>
+  </configuration>
+</gprconfig>

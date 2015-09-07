@@ -1,0 +1,139 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                           M P U _ S p e c s                                --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+with "mpu_list";
+with "types.gpr";
+
+abstract project MPU_Specs is
+
+   --  Processor
+   MPU : MPU_List.MPU_Type := external ("MPU", "stm32f407vg");
+
+   --  Set common implementation for processor family
+   Common_MPU                 := "";
+   CPU    : Types.CPU_Type    := "none";
+   FPU    : Types.FPU_Type    := "none";
+   ENDIAN : Types.ENDIAN_Type := "little-endian";  --  default little-endian
+
+   case MPU is
+
+      when "stm32f103rg" | "stm32f103vg" | "stm32f103zg" |
+           "stm32f103rf" | "stm32f103vf" | "stm32f103zf" |
+           "stm32f103re" | "stm32f103ve" | "stm32f103ze" |
+           "stm32f103rd" | "stm32f103vd" | "stm32f103zd" |
+           "stm32f103rc" | "stm32f103vc" | "stm32f103zc" |
+           "stm32f103tb" | "stm32f103cb" | "stm32f103rb" | "stm32f103vb" |
+           "stm32f103t8" | "stm32f103c8" | "stm32f103r8" | "stm32f103v8" |
+           "stm32f103t6" | "stm32f103c6" | "stm32f103r6" |
+           "stm32f103t4" | "stm32f103c4" | "stm32f103r4"
+         =>
+         Common_MPU := "stm32f103";
+         CPU := "cortex-m3";
+         FPU := "none";
+
+      when "stm32f407ie" | "stm32f407ve" | "stm32f407ze" |
+           "stm32f407ig" | "stm32f407vg" | "stm32f407zg"
+         =>
+         Common_MPU := "stm32f407";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "stm32f417ie" | "stm32f417ve" | "stm32f417ze" |
+           "stm32f417ig" | "stm32f417vg" | "stm32f417zg"
+         =>
+         Common_MPU := "stm32f417";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "stm32f429vi" | "stm32f429zi" | "stm32f429ai" | "stm32f429ii" | "stm32f429bi" | "stm32f429ni" |
+           "stm32f429vg" | "stm32f429zg" | "stm32f429ag" | "stm32f429ig" | "stm32f429bg" | "stm32f429ng" |
+           "stm32f429ve" | "stm32f429ze" |                 "stm32f429ie" | "stm32f429be" | "stm32f429ne"
+         =>
+         Common_MPU := "stm32f427";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "stm32f439vi" | "stm32f439zi" | "stm32f439ai" | "stm32f439ii" | "stm32f439bi" | "stm32f439ni" |
+           "stm32f439vg" | "stm32f439zg" |                 "stm32f439ig" | "stm32f439bg" | "stm32f439ng"
+         =>
+         Common_MPU := "stm32f437";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "stm32f745ie" | "stm32f745ve" | "stm32f745ze" |
+           "stm32f745ig" | "stm32f745vg" | "stm32f745zg"
+         =>
+         Common_MPU := "stm32f745";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "stm32f746ie" | "stm32f746ve" | "stm32f746ze" | "stm32f746be" | "stm32f746ne" |
+           "stm32f746ig" | "stm32f746vg" | "stm32f746zg" | "stm32f746bg" | "stm32f746ng"
+         =>
+         Common_MPU := "stm32f746";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "stm32f756ig" | "stm32f756vg" | "stm32f756zg" | "stm32f756bg" | "stm32f756ng"
+         =>
+         Common_MPU := "stm32f756";
+         CPU := "cortex-m4";
+         FPU := "fpv4-sp-d16";
+
+      when "tms5700332pzqq1" | "tms5700432pzqq1"
+         =>
+         Common_MPU := "tms570ls03_04";
+         CPU    := "cortex-r4";
+         FPU    := "none";
+         ENDIAN := "big-endian";
+
+      when "tms5701114pgeqq1" | "tms5701114zwtqq1" | "tms5701115pgeqq1" | "tms5701115zwtqq1" |
+           "tms5701224pgeqq1" | "tms5701224zwtqq1" | "tms5701225pgeqq1" | "tms5701225zwtqq1" |
+           "tms5701227pgeqq1" | "tms5701227zwtqq1"
+         =>
+         Common_MPU := "tms570ls11_12";
+         CPU    := "cortex-r4f";
+         FPU    := "vfpv3-d16";
+         ENDIAN := "big-endian";
+
+      when "tms5702124apgeqq1" | "tms5702124azwtqq1" | "tms5702125apgeqq1" | "tms5702125azwtqq1" |
+           "tms5702134apgeqq1" | "tms5702134azwtqq1" | "tms5702135apgeqq1" | "tms5702135azwtqq1" |
+           "tms5703134apgeqq1" | "tms5703134azwtqq1" | "tms5703135apgeqq1" | "tms5703135azwtqq1" |
+           "tms5703137apgeqq1" | "tms5703137azwtqq1"
+         =>
+         Common_MPU := "tms570ls21_31";
+         CPU    := "cortex-r4f";
+         FPU    := "vfpv3-d16";
+         ENDIAN := "big-endian";
+
+      when "tms570lc4357zwtqq1"
+         =>
+         Common_MPU := "tms570lc43";
+         CPU    := "cortex-r5f";
+         FPU    := "vfpv3-d16";
+         ENDIAN := "big-endian";
+
+   end case;
+
+end MPU_Specs;

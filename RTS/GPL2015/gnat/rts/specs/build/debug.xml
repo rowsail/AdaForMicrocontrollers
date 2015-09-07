@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   BUILD := "debug";
+
+   for Object_Dir use "obj/debug";
+   for Exec_Dir   use "exec/debug";
+
+   </config>
+  </configuration>
+</gprconfig>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   package Ide is
+
+      for Program_Host use "";
+      for Communication_Protocol use "";
+
+   end Ide;
+
+   </config>
+  </configuration>
+</gprconfig>

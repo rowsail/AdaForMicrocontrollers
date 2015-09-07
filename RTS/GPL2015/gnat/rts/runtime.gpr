@@ -1,0 +1,70 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                             R u n t i m e                                  --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+with "gnat.gpr";
+with "gnarl.gpr";
+
+project Runtime extends "specs.gpr" is
+
+   for Target            use Target;
+   for Source_Dirs       use Arch_Sources;
+   for Languages         use ("Ada", "Asm_Cpp", "C");
+   for Library_Auto_Init use "False";
+   for Library_Name      use "arch";
+   for Library_Kind      use "static";
+   for Object_Dir        use Arch_Object_Dir;
+   for Externally_Built  use Has_Not_Arch;
+
+   --  Prevents builder warnings
+   case Has_Not_Arch is
+      when "false" =>  for Library_Dir use Arch_Adalib_Dir;
+      when others =>
+   end case;
+
+   package Builder  renames Gnat.Builder;
+   package Compiler renames Gnat.Compiler;
+
+   package Install is
+
+      for Prefix use Arch_Install_Path;
+      for Install_Name use "arch";
+      for Lib_Subdir use "./adalib";
+      for Sources_Subdir use "./adainclude";
+      for Project_Subdir use "./";
+
+      case IMPLEMENTATION is
+
+          --  There is no artifacts for empty arch library
+         when "adacore" =>
+
+         when others =>
+
+            for Artifacts ("")       use XML_Artifacts;
+            for Artifacts ("adalib") use LINK_Artifacts;
+
+      end case;
+
+   end Install;
+
+end Runtime;

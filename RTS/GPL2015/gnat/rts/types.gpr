@@ -1,0 +1,89 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                               T y p e s                                    --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+abstract project Types is
+
+   type ENDIAN_Type is
+     ("little-endian",
+      "big-endian");
+
+   type CPU_Type is
+     ("arm1020e",		"arm1020t",		"arm1022e",		"arm1026ej-s",
+      "arm10e",			"arm10tdmi",		"arm1136j-s",		"arm1136jf-s",
+      "arm1156t2-s",		"arm1156t2f-s",		"arm1176jz-s",		"arm1176jzf-s",
+      "arm2",			"arm250",		"arm3",			"arm6",
+      "arm60",			"arm600",		"arm610",		"arm620",
+      "arm7",			"arm70",		"arm700",		"arm700i",
+      "arm710",			"arm7100",		"arm710c",		"arm710t",
+      "arm720",			"arm720t",		"arm740t",		"arm7500",
+      "arm7500fe",		"arm7d",		"arm7di",		"arm7dm",
+      "arm7dmi",		"arm7m",		"arm7tdmi",		"arm7tdmi-s",
+      "arm8",			"arm810",		"arm9",			"arm920",
+      "arm920t",		"arm922t",		"arm926ej-s",		"arm940t",
+      "arm946e-s",		"arm966e-s",		"arm968e-s",		"arm9e",
+      "arm9tdmi",		"cortex-a15",		"cortex-a5",		"cortex-a7",
+      "cortex-a8",		"cortex-a9",		"cortex-m0",		"cortex-m1",
+      "cortex-m3",		"cortex-m4",		"cortex-r4",		"cortex-r4f",
+      "cortex-r5",		"ep9312",		"fa526",		"fa606te",
+      "fa626",			"fa626te",		"fa726te",		"fmp626",
+      "generic-armv7-a",	"iwmmxt",		"iwmmxt2",		"mpcore",
+      "mpcorenovfp",		"native",		"strongarm",		"strongarm110",
+      "strongarm1100",		"strongarm1110",	"xscal",		"none");
+
+   type FPU_Type is
+     ("fpa",			"fpe2",			"fpe3",			"fpv4-sp-d16",
+      "maverick",		"neon",			"neon-fp16",		"neon-vfpv4",
+      "vfp",			"vfp3",			"vfpv3",		"vfpv3-d16",
+      "vfpv3-d16-fp16",		"vfpv3-fp16",		"vfpv3xd",		"vfpv3xd-fp16",
+      "vfpv4",			"vfpv4-d16",		"none");
+
+   type CODE_Type is ("arm",
+                      "thumb");
+
+   type ABI_Type is ("soft",
+                     "softfp",
+                     "hard");
+
+   type IMPLEMENTATION_Type is ("adacore",
+                                "armada",
+                                "example");
+
+   type BUILD_Type is ("production",
+                       "debug");
+
+   type RUNTIME_Type is ("zfp",
+                         "ravenscar-sfp",
+                         "ravenscar-full");
+
+   type PROFILE_Type is ("zfp",
+                         "ravenscar",
+                         "minimal",
+                         "cert");
+
+   type SUBPROFILE_Type is ("",
+                            "sfp",
+                            "full",
+                            "cert");
+
+end Types;

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   package Binder is
+
+   end Binder;
+
+   </config>
+  </configuration>
+</gprconfig>

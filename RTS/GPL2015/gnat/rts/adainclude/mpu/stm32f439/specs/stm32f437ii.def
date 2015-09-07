@@ -1,0 +1,21 @@
+/*
+ * User modifiable values:
+ *
+ * __FLASH_START   origin of FLASH memory
+ * __FLASH_SIZE    size of FLASH memory
+ *
+ * __SRAM_START    origin of SRAM
+ * __SRAM_SIZE     size of SRAM
+ *
+ * __STACK_SIZE    size of the stack to be used by the main
+ *                 procedure (environment task)
+ *
+ */
+
+#define __FLASH_START 0x08000000
+#define __FLASH_SIZE  248K
+
+#define __SRAM_START  0x20000000
+#define __SRAM_SIZE   256K
+
+#define __STACK_SIZE  (4 * 1024)

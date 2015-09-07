@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   FLOAT := "hard";
+
+   </config>
+  </configuration>
+</gprconfig>

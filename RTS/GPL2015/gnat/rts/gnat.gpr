@@ -1,0 +1,129 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                                G n a t                                     --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+project Gnat extends "specs.gpr" is
+
+   for Target            use Target;
+   for Source_Dirs       use Gnat_Sources;
+   for Languages         use ("Ada", "Asm_Cpp", "C", "TMPL");
+   for Library_Auto_Init use "False";
+   for Library_Name      use "gnat";
+   for Library_Kind      use "static";
+   for Library_Dir       use Gnat_Adalib_Dir;
+   for Object_Dir        use Gnat_Object_Dir;
+
+   --  TMPL is Preprocessor
+   for Object_Generated ("TMPL") use "false";
+
+   package Builder is
+       for Switches ("Ada") use ("--RTS=" & Fake_RTS);
+   end Builder;
+
+   package Naming is
+
+      --  Every .template needs preprocessing
+      --  used for loader scripts for now
+      for Body_Suffix ("TMPL") use ".template";
+
+    end Naming;
+
+   package Compiler is
+
+      for Required_Switches ("Ada") use
+        Compiler'Required_Switches ("Ada") & Required_ADA_Flags;
+      for Required_Switches ("C") use
+        Compiler'Required_Switches ("C") & Required_C_Flags;
+      for Required_Switches ("Asm_Cpp") use
+        Compiler'Required_Switches ("Asm_Cpp") & Required_ASM_Flags;
+
+      CFLAGS := Compiler'Default_Switches ("Ada");
+           CFLAGS := CFLAGS & ("-fcallgraph-info=su,da",
+                "-ffunction-sections", "-fdata-sections");
+      ALL_ADAFLAGS := ("-gnatpg", "-gnatn2", "-nostdinc") & CFLAGS;
+      ALL_CFLAGS := ("-DIN_RTS", "-Dinhibit_libc") & CFLAGS;
+
+      NO_SIBLING_ADAFLAGS := ("-fno-optimize-sibling-calls");
+      NO_REORDER_ADAFLAGS := ("-fno-toplevel-reorder");
+
+      for Switches ("Ada") use ALL_ADAFLAGS;
+
+     --  Some runtime files need to be compiled with debug info
+      for Switches ("s-traceb.adb") use ALL_ADAFLAGS & ("-g")
+       & NO_SIBLING_ADAFLAGS & ("-fno-inline-functions-called-once");
+      for Switches ("s-tasdeb.adb") use ALL_ADAFLAGS & ("-g", "-O0");
+      for Switches ("a-except.adb") use ALL_ADAFLAGS
+       & ("-g", "-O1", "-fno-inline") & NO_REORDER_ADAFLAGS;
+      for Switches ("s-excdeb.adb") use ALL_ADAFLAGS & ("-g", "-O0");
+      for Switches ("s-assert.adb") use ALL_ADAFLAGS & ("-g");
+      for Switches ("a-tags.adb") use ALL_ADAFLAGS & ("-g");
+      for Switches ("raise-gcc.c") use ALL_CFLAGS & ("-fexceptions");
+
+      --  TMPL is Preprocessor
+      for Driver ("TMPL") use "arm-eabi-cpp";
+      for Leading_Required_Switches ("TMPL") use Required_TMPL_Flags;
+
+      --  TMPL no makefile
+      for Dependency_Kind ("TMPL") use "None";
+
+      --  There is no object file for TMPL sources
+      --  so need to list them all with outputs files
+      for Switches ("flash.template")   use
+        (Include_Loader_Def_File, Loader_File_Output & "flash.ld");
+      for Switches ("sram.template")    use
+        (Include_Loader_Def_File, Loader_File_Output & "sram.ld");
+      for Switches ("loram.template")   use
+        (Include_Loader_Def_File, Loader_File_Output & "loram.ld");
+      for Switches ("hiram.template")   use
+        (Include_Loader_Def_File, Loader_File_Output & "hiram.ld");
+      for Switches ("monitor.template") use
+        (Include_Loader_Def_File, Loader_File_Output & "monitor.ld");
+      for Switches ("probe.template")   use
+        (Include_Loader_Def_File, Loader_File_Output & "probe.ld");
+
+  end Compiler;
+
+   package Install is
+
+      for Prefix use Gnat_Install_Path;
+      for Install_Name use "gnat";
+      for Lib_Subdir use "./adalib";
+      for Sources_Subdir use "./adainclude";
+      for Project_Subdir use "./";
+
+      --  Copy runtime additional files only if Adacore implementation
+      case IMPLEMENTATION is
+
+         when "adacore" =>
+
+            for Artifacts ("")       use XML_Artifacts;
+            for Artifacts ("adalib") use LINK_Artifacts;
+
+         when others =>
+
+      end case;
+
+   end Install;
+
+end Gnat;
+

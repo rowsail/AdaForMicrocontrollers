@@ -1,0 +1,7 @@
+abstract project Defs is
+
+   type Loaders_Type is ("flash", "sram");
+
+   Loader : Loaders_Type := external ("LOADER", "flash");
+
+end Defs;

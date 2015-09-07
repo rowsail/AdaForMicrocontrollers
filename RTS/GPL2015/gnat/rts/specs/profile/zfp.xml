@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   PROFILE_SUBPROFILE := "zfp";
+
+   </config>
+  </configuration>
+</gprconfig>

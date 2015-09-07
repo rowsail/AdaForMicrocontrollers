@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   package Ide is
+
+      for Program_Host use "localhost:4242";
+      for Communication_Protocol use "remote";
+
+   end Ide;
+
+   </config>
+  </configuration>
+</gprconfig>

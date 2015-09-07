@@ -1,0 +1,328 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                               S p e c s                                    --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+with "mpu_specs";
+
+abstract project Specs extends "scenarios.gpr" is
+
+   -------------------------------------------------------------------------
+   --                          Import definitions                         --
+   -------------------------------------------------------------------------
+
+   CPU        := MPU_Specs.CPU;
+   FPU        := MPU_Specs.FPU;
+   MPU        := MPU_Specs.MPU;
+   ENDIAN     := MPU_Specs.ENDIAN;
+   Common_MPU := MPU_Specs.Common_MPU;
+
+   -------------------------------------------------------------------------
+   --                         Set common variables                        --
+   -------------------------------------------------------------------------
+
+   --  Set desired target
+   Target := "arm-eabi";
+
+   --  Set machine architecture flags
+   MFLAGS := ("-m"           & ENDIAN,
+              "-mcpu="       & CPU,
+              "-mfpu="       & FPU,
+              "-mfloat-abi=" & FLOAT,
+              "-m"           & CODE);
+
+   --  Set common code generation flags
+   Required_ADA_Flags  := MFLAGS & ("-gnatQ", "-gnatw.X");
+   Required_C_Flags    := MFLAGS & ();
+   Required_ASM_Flags  := MFLAGS & ();
+
+   --  Set TMPL common switches
+   --  Only preprocessing, preserve comments & no addditional lines
+   Required_TMPL_Flags := ("-E", "-C", "-P");
+
+   --  Initial values to know if we need not to build these libraries
+   --  true -> do not build; false -> yes we need them
+   --  Gnat library is always built
+   Has_Not_Gnarl := "true";  --  GNAT Runtime Layer
+   Has_Not_Arch  := "true";  --  Architecture dependent library
+
+   --  Compilation option
+   Option := "";
+   -- And runtime extension name
+   Runtime_Option := "";
+
+   --  Then set debug subdir
+   case BUILD is
+
+      when "production" =>
+         Required_ADA_Flags := Required_ADA_Flags & ("-O2");
+         Required_C_Flags   := Required_C_Flags   & ("-O2");
+
+      when "debug"      =>
+         Option             := BUILD;
+         Runtime_Option     := "-" & BUILD;
+         Required_ADA_Flags := Required_ADA_Flags & ("-O0", "-gnatwa", "-g");
+         Required_C_Flags   := Required_C_Flags   & ("-O0", "-g");
+         Required_ASM_Flags := Required_ASM_Flags & ("-g");
+
+   end case;
+
+   --  Check if we need to build Gnarl library
+   case Profile is
+
+      when "zfp"  =>
+         --  Do not need Gnarl
+
+      when others =>
+         --  We need Gnarl
+         Has_Not_Gnarl := "false";
+
+   end case;
+
+
+   --  Header of profile
+   Profile_Subprofile := Profile;
+
+   --  Has subprofile ?
+   case Subprofile is
+
+      when ""     =>
+         --  Only main profile
+
+      when others =>
+         --  Runtime has subprofile
+         Profile_Subprofile := Profile_Subprofile & "-" & Subprofile;
+
+   end case;
+
+   --  Main profile
+   Main_Profile := Profile_Subprofile & "-" & FLOAT & "-" & CODE;
+
+   --  Adacore version of profile (known CPU & FPU)
+   Adacore_Profile := Main_Profile & "-" & MPU & Runtime_Option;
+
+   --  Profile for others implementations
+   Design_Profile := Main_Profile & "-" & MPU & "-" & IMPLEMENTATION & Runtime_Option;
+
+   --  Full profile version independent of MPU
+   Full_Profile := Main_Profile & "-" & CPU & "-" & FPU & "-" & IMPLEMENTATION & Runtime_Option;
+
+   -------------------------------------------------------------------------
+   --                               Sources                               --
+   -------------------------------------------------------------------------
+
+   --  Some abbrev defs
+   Ada_Include_Gnat      := "adainclude/" & IMPLEMENTATION & "/gnat/";
+   Ada_Include_Gnarl     := "adainclude/" & IMPLEMENTATION & "/gnarl/";
+   Ada_MPU_Include_Gnat  := "adainclude/mpu/" & Common_MPU & "/" & IMPLEMENTATION & "/gnat/";
+   Ada_MPU_Include_Gnarl := "adainclude/mpu/" & Common_MPU & "/" & IMPLEMENTATION & "/gnarl/";
+   Prof                  := Profile;
+   Subprof               := Profile & "/" & Subprofile;
+   Include_Header := "-I" & project'Project_Dir & "/";
+
+   --  TMPL (loader) source dirs
+   Tmpl_Source_Dirs :=
+     "adainclude/mpu/" & Common_MPU & "/" & IMPLEMENTATION & "/specs/";
+
+   --  Common GNAT source dirs
+   Gnat_Source_Dirs :=
+     (Ada_Include_Gnat, Ada_Include_Gnat & Prof, Ada_Include_Gnat & Subprof);
+
+   Gnat_Include_Dirs :=
+     (Include_Header & Ada_Include_Gnat,
+      Include_Header & Ada_Include_Gnat & Prof,
+      Include_Header & Ada_Include_Gnat & Subprof);
+
+   --  Common GNARL source dirs
+   Gnarl_Source_Dirs :=
+     (Ada_Include_Gnarl, Ada_Include_Gnarl & Prof, Ada_Include_Gnarl & Subprof);
+
+   Gnarl_Include_Dirs :=
+     (Include_Header & Ada_Include_Gnarl,
+      Include_Header & Ada_Include_Gnarl & Prof,
+      Include_Header & Ada_Include_Gnarl & Subprof);
+
+   --  Source of MPU part of runtime
+   Arch_Gnat_Source_Dirs :=
+     (Ada_MPU_Include_Gnat, Ada_MPU_Include_Gnat & Prof, Ada_MPU_Include_Gnat & Subprof);
+
+   Arch_Gnat_Include_Dirs :=
+     (Include_Header & Ada_MPU_Include_Gnat,
+      Include_Header & Ada_MPU_Include_Gnat & Prof,
+      Include_Header & Ada_MPU_Include_Gnat & Subprof);
+
+   --  Source of MPU part of runtime
+   Arch_Gnarl_Source_Dirs :=
+     (Ada_MPU_Include_Gnarl, Ada_MPU_Include_Gnarl & Prof, Ada_MPU_Include_Gnarl & Subprof);
+
+   Arch_Gnarl_Include_Dirs :=
+     (Include_Header & Ada_MPU_Include_Gnarl,
+      Include_Header & Ada_MPU_Include_Gnarl & Prof,
+      Include_Header & Ada_MPU_Include_Gnarl & Subprof);
+
+   Include_Dirs := Gnat_Include_Dirs & Gnarl_Include_Dirs &
+     Arch_Gnat_Include_Dirs & Arch_Gnarl_Include_Dirs;
+
+   Required_ADA_FLAGS := Required_ADA_FLAGS & Include_Dirs;
+   Required_C_FLAGS   := Required_C_FLAGS   & Include_Dirs;
+   Required_ASm_FLAGS := Required_ASM_FLAGS & Include_Dirs;
+
+   --  Temporary RTS for building runtime
+   Fake_RTS := project'Project_Dir;
+
+   -------------------------------------------------------------------------
+   --                          GNAT part of runtime                       --
+   -------------------------------------------------------------------------
+
+   --  Gnat sources paths
+   Gnat_Sources := Gnat_Source_Dirs & Tmpl_Source_Dirs;
+
+   --  Install name of common part of runtime
+   Gnat_Path := "";
+
+   case IMPLEMENTATION is
+
+      when "adacore" =>
+         --  Add achitecture dependent gnat sources
+         Gnat_Sources := Gnat_Sources & Arch_Gnat_Source_Dirs;
+         --  Set Gnat path
+         Gnat_Path :=  Adacore_Profile;
+
+      when others =>
+         --  Set Gnat path
+         Gnat_Path :=  Full_Profile;
+         --  Build Arch library
+         Has_Not_Arch := "false";
+
+   end case;
+
+   --  Install path of common part of runtime
+   Gnat_Install_Path := project'Project_Dir & "../" & Gnat_Path;
+
+   --  Building object dir of common part of runtime
+   Gnat_Object_Dir := project'Project_Dir & "obj/" & Gnat_Path;
+
+   --  Building library dir of common part of runtime
+   Gnat_Adalib_Dir := project'Project_Dir & "adalib/" & Gnat_Path;
+
+   -------------------------------------------------------------------------
+   --                        GNARL part of runtime                        --
+   -------------------------------------------------------------------------
+
+   --  Set but not always needed - prevents some Gprbuilder warnings
+
+   --  Gnarl sources paths
+   Gnarl_Sources := Gnarl_Source_Dirs;
+
+   --  Install name of common part of runtime
+   Gnarl_Path := "";
+
+   case IMPLEMENTATION is
+
+      when "adacore" =>
+         --  Add achitecture dependent gnarl sources
+         Gnarl_Sources := Gnarl_Sources & Arch_Gnarl_Source_Dirs;
+         --  Set Gnarl path
+         Gnarl_Path :=  Adacore_Profile;
+
+      when others =>
+         --  Set Gnarl path
+         Gnarl_Path :=  Full_Profile;
+
+   end case;
+
+   --  Install path of common part of runtime
+   Gnarl_Install_Path := project'Project_Dir & "../" & Gnarl_Path;
+
+   --  Building object dir of common part of runtime
+   Gnarl_Object_Dir := project'Project_Dir & "obj/" & Gnarl_Path;
+
+   --  Building library dir of common part of runtime
+   Gnarl_Adalib_Dir := project'Project_Dir & "adalib/" & Gnarl_Path;
+
+   -------------------------------------------------------------------------
+   --   Architecture part of runtime - implemented as library in Design   --
+   -------------------------------------------------------------------------
+
+   --  Set but not always needed - prevents some Gprbuilder warnings
+
+   --  Arch sources paths, set only if Arch building is active
+   Arch_Sources := ();
+
+   --  Path of architecture part of runtime
+   Arch_Path := "";
+
+   case IMPLEMENTATION is
+
+      when "adacore" =>
+         --  Set path as Gnat one to prevent Gprbuild problems
+         Arch_Path := Adacore_Profile;
+
+      when others =>
+         --  Add architecture sources
+         Arch_Sources :=
+           Arch_Gnat_Source_Dirs & Arch_Gnarl_Source_Dirs & Tmpl_Source_Dirs;
+         --  Set path
+         Arch_Path := Design_Profile;
+
+   end case;
+
+   --  Install path of architecture part of runtime
+   Arch_Install_Path := project'Project_Dir & "../" & Arch_Path;
+
+   --  Building object dir of architecture part of runtime
+   Arch_Object_Dir := project'Project_Dir & "obj/" & Arch_Path;
+
+   --  Building library dir of architecture part of runtime
+   Arch_Adalib_Dir := project'Project_Dir & "adalib/" & Arch_Path;
+
+   -------------------------------------------------------------------------
+   --                               Artifacs                              --
+   -------------------------------------------------------------------------
+
+   XML_Artifacts :=
+     (
+      --  Copy xml config files
+     "adainclude/"  & IMPLEMENTATION & "/specs/*.xml",
+     --  Architecture options
+     "specs/code/"  & CODE  & ".xml",
+     "specs/build/" & BUILD & ".xml",
+     "specs/float/" & FLOAT & ".xml",
+     "specs/profile/" & Profile_Subprofile & ".xml",
+     --  Set cpu i fpu - from MPU spec
+     "adainclude/mpu/" & Common_MPU & "/specs/architecture.xml",
+     --  Set IDE
+     "adainclude/mpu/" & Common_MPU & "/specs/ide.xml",
+     --  Set MPU name
+     "adainclude/mpu/" & Common_MPU & "/specs/" & MPU & ".xml"
+     );
+
+   LINK_Artifacts :=
+     (
+      --  Copy all supported linker scripts
+      "adalib/" & Gnat_Path & "/*.ld"
+     );
+
+   Loader_File_Output := "-o" & Gnat_Adalib_Dir & "/";
+   Include_Loader_Def_File := "-include" & project'Project_Dir & "adainclude/mpu/" & Common_MPU & "/specs/" & MPU & ".def";
+
+end Specs;

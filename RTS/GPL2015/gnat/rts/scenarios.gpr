@@ -1,0 +1,67 @@
+--------------------------------------------------------------------------------
+--                                                                            --
+--                       A R M   A D A   L I B R A R Y                        --
+--                                                                            --
+--                           S c e n a r i o s                                --
+--                             P r o j e c t                                  --
+--                                                                            --
+--    Copyright (C) 2015  Robert Kleczek                                      --
+--                                                                            --
+--    This program is free software: you can redistribute it and/or modify    --
+--    it under the terms of the GNU General Public License as published by    --
+--    the Free Software Foundation, either version 3 of the License, or       --
+--    (at your option) any later version.                                     --
+--                                                                            --
+--    This program is distributed in the hope that it will be useful,         --
+--    but WITHOUT ANY WARRANTY; without even the implied warranty of          --
+--    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           --
+--    GNU General Public License for more details.                            --
+--                                                                            --
+--    You should have received a copy of the GNU General Public License       --
+--    along with this program.  If not, see <http://www.gnu.org/licenses/>.   --
+--                                                                            --
+--------------------------------------------------------------------------------
+
+with "types.gpr";
+
+abstract project Scenarios is
+
+   -- Float type code
+   FLOAT : Types.ABI_Type := external ("FLOAT", "softfp");
+
+   --  Thumb or full arm architecture
+   CODE : Types.CODE_Type := external ("SET", "thumb");
+
+   --  Original AdaCore or my ArmAda implementation
+   IMPLEMENTATION : Types.IMPLEMENTATION_Type := external ("IMPLEMENTATION", "adacore");
+
+   --  Is it production compilation or debug one
+   BUILD   : Types.BUILD_Type   := external ("BUILD", "production");
+
+   --  Kind of runtime
+   RUNTIME : Types.RUNTIME_Type := external ("RUNTIME", "zfp");
+
+   --  Set profile & subprofile for runtime identification
+   Profile    : Types.PROFILE_Type    := "zfp";
+   Subprofile : Types.SUBPROFILE_Type := "sfp";
+
+   --  Set proper subprofile
+   case RUNTIME is
+
+      when "zfp" =>
+         Profile    := "zfp";
+         Subprofile := "";
+
+      when "ravenscar-sfp" =>
+         Profile    := "ravenscar";
+         Subprofile := "sfp";
+
+      when "ravenscar-full" =>
+         Profile    := "ravenscar";
+         Subprofile := "full";
+
+      when others =>
+
+   end case;
+
+end Scenarios;
