@@ -1,0 +1,109 @@
+Here comes explanation of directory & files structure
+
+test >|
+      |> demo_led_stm32f4 >| main project files, defs.gpr for select loader
+      |                    |
+      |                    |> exec >| - regular executable
+      |                    |        |
+      |                    |        |>  debug <or other> - executable if you select runtime with build <or other eg. profile, etc.> support (ending with -debug, -profile if implemented)
+      |                    |
+      |                    |> obj   | - regular object files
+      |                    |        |
+      |                    |        |>  debug <or other> - executable if you select runtime with build <or other eg. profile, etc.> support (ending with -debug, -profile if implemented)
+      |                    |
+      |                    |> src source files
+      |
+      |> demo_led_tms570 > as above
+
+
+gnat >|
+      |> rts >| main building system files
+              | runtime.gpr   - main build project file to be loaded by GPS
+              | gnat.gpr      - build gnat library
+              | gnarl.gpr     - build gnarls library if exists
+              | types.gpr     - abstract project with used common types definitions (expand it if you want new profiles, implementations, cpus etc.)
+              | mpu_list.gpr  - abstract project with all known microcontrollers
+              | mpu_specs.gpr - abstract project for family & architecture definitions for microcontrollers
+              | scenarios.gpr - abstract project for user available build scenarios (expand in the case of new implemented profiles)
+              | specs.gpr     - abstract project defines all needed variables used by library building project files (should stay unchanged)
+              |
+              |> adainclude >|> TEMPLATE - (with subdirectories) - template for implementation system
+              |              |
+              |              |  {adacore}
+              |              |> {armada } >| definitions for implementations systems
+              |              |  {example}  |
+              |              |             |> gnarl >| common part of gnarl sources
+              |              |             |         |
+              |              |             |         |> zfp - zfp gnarl part of sources (is anyone?)
+              |              |             |         |
+              |              |             |         |> ravenscar >| common ravenscar part of gnarl sources
+              |              |             |                       |
+              |              |             |                       |> sfp  - sfp part of gnarl sources
+              |              |             |                       |
+              |              |             |                       |> full - full part of gnarl sources
+              |              |             |
+              |              |             |> gnat >| common part of gnat sources
+              |              |             |        |
+              |              |             |        |> zfp - zfp gnat part of sources
+              |              |             |        |
+              |              |             |        |> ravenscar >| common ravenscar part of gnat sources
+              |              |             |                      |
+              |              |             |                      |> sfp  - sfp part of gnat sources
+              |              |             |                      |
+              |              |             |                      |> full - full part of gnat sources
+              |              |             |
+              |              |             |> specs >| common for given implementation runtime build definitions
+              |              |                       | binder.xml         - Binder receipes (for concatenate separate parts of runtime)
+              |              |                       | compiler.xml       - Compiler switches (& includes used for concatenate runtimes)
+              |              |                       | implementation.xml - name of implementation
+              |              |                       | link.xml           - receipes for Linker (also used for concatenate separate runtimes)
+              |              |
+              |              |> mpu >| architecture (for common group of microcontrollers) dependent sources & definitions
+              |                      |
+              |                      |> TEMPLATE - (with subdirectories) - template for microcontroller family definitions
+              |                      |
+              |                      |  { lm4f  }
+              |                      |> {stmf407} >|  {adacore}
+              |                         {.......}  |> {armada } >| definitions of mcu part of implementation systems
+              |                                    |  {example}  |
+              |                                    |             |> gnarl >| mcu common part of gnarl sources - good place for common mcu start files
+              |                                    |             |         |
+              |                                    |             |         |> zfp - zfp gnarl sources (is anyone?)
+              |                                    |             |         |
+              |                                    |             |         |> ravenscar >| common part of mcu ravenscar gnarl sources (s-bbsosu, s-bbpara, a-intnam [maybe different for each MCU?])
+              |                                    |             |                       |
+              |                                    |             |                       |> sfp - sfp part of mcu gnarl sources
+              |                                    |             |                       |
+              |                                    |             |                       |> full - full part of mcu gnarl sources
+              |                                    |             |
+              |                                    |             |> gnat >| mcu common part of gnat sources - good place for common mcu start files
+              |                                    |             |        |
+              |                                    |             |        |> zfp - zfp gnat sources - here comes zfp system.ads
+              |                                    |             |        |
+              |                                    |             |        |> ravenscar >| common part of mcu ravenscar gnat sources
+              |                                    |             |                      |
+              |                                    |             |                      |> sfp - sfp part of mcu gnat sources - here comes ravenscar-sfp system.ads
+              |                                    |             |                      |
+              |                                    |             |                      |> full - full part of mcu gnat sources - here comes ravenscar-full system.ads
+              |                                    |             |
+              |                                    |             |> specs >| specific mcu implementation definitions files
+              |                                    |                       | for now here goes common linker template files
+              |                                    |
+              |                                    |> specs >| architecture.xml - define cpu/fpu/endianes & linker page size for this group
+              |                                              | ide.xml          - IDE properties for builded runtime (eg. debug method)
+              |                                              | mcu.xml          - microcontroller full name
+              |                                              | mcu.def          - memory space definitions - to be linked with linker template files & then copied to runtime as linker .ld file
+              |
+              |> adalib - temporary directory for builded libraries
+              |
+              |> obj - temporary directory for compiled sources
+              |
+              |> specs >| configuration files to be copied for selected runtimes
+                        |
+                        |> build - definitions for all implemented optional buildings (production, debug, ...)
+                        |
+                        |> code - supported instruction sets
+                        |
+                        |> float - supported float eabi implementations
+                        |
+                        |> profile - supported ada profiles

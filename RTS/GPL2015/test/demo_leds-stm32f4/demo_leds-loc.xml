@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Locations>
+  <Project>
+    <vfs_file>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/demo_leds.gpr</vfs_file>
+    <file_marker column=" 53" line=" 18" >
+      <vfs_project>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/demo_leds.gpr</vfs_project>
+      <vfs_file>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/demo_leds.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 1" line=" 8" >
+      <vfs_project />
+      <vfs_file>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/defs.gpr</vfs_file>
+    </file_marker>
+    <file_marker column=" 4" line=" 44" >
+      <vfs_project>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/demo_leds.gpr</vfs_project>
+      <vfs_file>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/src/demo.adb</vfs_file>
+    </file_marker>
+    <file_marker current="true" column=" 4" line=" 35" >
+      <vfs_project>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/demo_leds.gpr</vfs_project>
+      <vfs_file>/home/robert/Programowanie/Workspace/AdaForMicrocontrollers/RTS/GPL2015/test/demo_leds-stm32f4/src/driver.ads</vfs_file>
+    </file_marker>
+  </Project>
+</Locations>
