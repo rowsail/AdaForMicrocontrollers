@@ -4,9 +4,7 @@
   <configuration>
    <config>
 
-   package Binder is
-
-   end Binder;
+   COMPILER := "GNAT-GPL";
 
    </config>
   </configuration>

@@ -1,0 +1,867 @@
+<?xml version="1.0" ?>
+<gprconfig>
+  <!--  Languages that require no compiler, but can be selected through
+        -config -->
+  <compiler_description>
+    <name>SIMULINK</name>
+    <languages>Simulink</languages>
+  </compiler_description>
+
+  <compiler_description>
+    <name>MATLAB</name>
+    <languages>Matlab</languages>
+  </compiler_description>
+
+  <compiler_description>
+    <name>PRJFILE</name>
+    <languages>Project File</languages>
+  </compiler_description>
+
+  <!--    GCC 3.x & 4.x (not for GNAT Pro)-->
+  <compiler_description>
+    <name>GCC</name>
+    <executable prefix="1">(.*-wrs-.*|.*-sysgo.*|.*-elf-.*|.*-eabi-.*|.*-eabispe-.*|avr-.*|.*-elinos-linux.*|.*-pc-mingw32.*|.*-xcoff-.*|arm-linux-androideabi-|arm-linux-gnueabi-|arm-linux-gnueabihf-|.*-darwin.*-)?gcc</executable>
+    <version>
+      <external>${PREFIX}gcc -v</external>
+      <nogrep regexp="for GNAT Pro"></nogrep>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+    </version>
+    <languages>C</languages>
+    <target>
+      <external>${PREFIX}gcc -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!--    GCC for GNAT Pro 3.x & 4.x -->
+  <compiler_description>
+    <name>GCC_Pro</name>
+    <executable prefix="1">(.*-wrs-.*|.*-sysgo.*|.*-elf-.*|.*-eabi-.*|.*-eabispe-.*|avr-.*|.*-elinos-linux.*|.*-pc-mingw32.*|.*-xcoff-.*|arm-linux-androideabi-|arm-linux-gnueabi-|arm-linux-gnueabihf-|.*-darwin.*-)?gcc</executable>
+    <version>
+      <external>${PREFIX}gcc -v</external>
+
+      <!--  'gcc version 4.7.4 20131104 for GNAT Pro ...' -->
+      <grep regexp="^gcc \S+ (\S+) \d+ (\(prerelease\) )?\(?for GNAT Pro" group="1"></grep>
+    </version>
+    <languages>C</languages>
+    <target>
+      <external>${PREFIX}gcc -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!-- VxWorks 6 -->
+  <!-- We need to distinguish version to correctly report runtimes.  -->
+  <compiler_description>
+    <name>GCC-WRS6</name>
+    <executable prefix="1">cc(arm|pentium|sh|mips|ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-6.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,kernel-smp,kernel-sjlj,rtp,rtp-smp</runtimes>
+    <target>
+      <external>cc${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRS6LEON</name>
+    <executable prefix="1">cc(sparc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-6.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel</runtimes>
+    <target>leon-wrs-vxworks</target>
+  </compiler_description>
+
+  <!-- VxWorks 6 e500v2-->
+  <!-- We need to distinguish version to correctly report runtimes.  -->
+  <compiler_description>
+    <name>GCC-WRS6E500V2</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-6.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,kernel-smp,kernel-sjlj,rtp,rtp-smp</runtimes>
+    <target>e500v2-wrs-vxworks</target>
+  </compiler_description>
+
+
+  <!-- VxWorks 6 Cert -->
+  <!-- We need to distinguish version to correctly report runtimes.  -->
+  <compiler_description>
+    <name>GCC-WRS6CERT</name>
+    <executable prefix="1">cc(arm|pentium|sh|mips|ppc|sparc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-cert-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-cert-6.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,ravenscar-cert,zfp,rtp,ravenscar-cert-rtp</runtimes>
+    <target>
+      <external>cc${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRS6CERTE500V2</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-cert-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-cert-6.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,ravenscar-cert,zfp,rtp,ravenscar-cert-rtp</runtimes>
+    <target>e500v2-wrs-vxworks</target>
+  </compiler_description>
+
+  <!-- VxWorks 5 -->
+  <compiler_description>
+    <name>GCC-WRS5</name>
+    <executable prefix="1">cc(arm|pentium|sh|mips|ppc|sparc)</executable>
+    <version>
+      <external>cc${PREFIX} -v</external>
+      <grep regexp=".*(tornado 2|VxWorks 5).*" group="1"></grep>
+      <must_match>(tornado 2|VxWorks 5)</must_match>
+    </version>
+    <languages>C</languages>
+    <target>
+      <external>cc${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!-- VxWorks 653 -->
+  <compiler_description>
+    <name>GCC-WRS653</name>
+    <executable prefix="1">cc(ppc|pentium)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks653-[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks653.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>
+      <external>cc${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRS653-E500V2</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks653-[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks653.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>e500v2-wrs-vxworksae</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRS7ARM</name>
+    <executable prefix="1">cc(arm)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>arm-wrs-vxworks7</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRS7X86</name>
+    <executable prefix="1">cc(pentium)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>i586-wrs-vxworks7</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRS7PPC</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>powerpc-wrs-vxworks7</target>
+  </compiler_description>
+
+  <!-- VxWorks 7 e500v2-->
+  <!-- We need to distinguish version to correctly report runtimes.  -->
+  <compiler_description>
+    <name>GCC-WRS7E500V2</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>e500v2-wrs-vxworks7</target>
+  </compiler_description>
+
+  <!-- VxWorks MILS -->
+  <compiler_description>
+    <name>GCC-WRSMILS</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <external>cc${PREFIX} -v</external>
+      <grep regexp=".*(vxworksae).*" group="1"></grep>
+      <must_match>vxworksae</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>powerpc-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRSMILS-E500V2</name>
+    <executable prefix="1">cc(ppc)</executable>
+    <version>
+      <external>cc${PREFIX} -v</external>
+      <grep regexp=".*(vxworksae).*" group="1"></grep>
+      <must_match>vxworksae</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>e500v2-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <!-- VxWorks MILS HAE -->
+  <compiler_description>
+    <name>GCC-WRSMILSHAE</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-mils-hae-1[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-mils-hae-1.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>zfp</runtimes>
+    <target>powerpc-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-WRSMILSHAE-E500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-mils-hae-1[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-mils-hae-1.*</must_match>
+    </version>
+    <languages>C</languages>
+    <runtimes>zfp</runtimes>
+    <target>e500v2-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <!-- PikeOS -->
+  <compiler_description>
+    <name>GCC-SYSGO-X86</name>
+    <executable prefix="1">(x86_i586-)gcc</executable>
+    <version>
+      <getenv name="PIKEOS_VERSION" />
+    </version>
+    <languages>C</languages>
+    <target>i586-sysgo-pikeos</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-SYSGO-PPC</name>
+    <executable prefix="1">(ppc_oea-)gcc</executable>
+    <version>
+      <getenv name="PIKEOS_VERSION" />
+    </version>
+    <languages>C</languages>
+    <target>powerpc-sysgo-pikeos</target>
+  </compiler_description>
+
+  <!--     GCC 2.8.1
+    There is no switch, in such versions, to find out the list of languages,
+    so we just assume there is only C.
+    C++ could be found by looking for the "g++" executable
+  -->
+  <compiler_description>
+    <name>GCC-28</name>
+    <executable>gcc</executable>
+    <version>
+      <external>gcc -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+      <must_match>2\.8\.</must_match>
+    </version>
+    <languages>C</languages>
+    <target>
+      <external>gcc -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!--    GNAAMP -->
+  <compiler_description>
+    <name>GNAAMP</name>
+    <executable>gnaampmake</executable>
+    <version>
+     <external>gnaampls -v</external>
+     <grep  regexp="^GNATLS.+?(\d+(\.\d+)?)" group="1"></grep>
+    </version>
+    <languages>Ada</languages>
+    <target>aamp</target>
+  </compiler_description>
+
+  <!--  G++ compilers (not for GNAT Pro)  -->
+  <compiler_description>
+    <name>G++</name>
+    <executable>g\+\+</executable>
+    <version>
+      <external>g++ -v</external>
+      <nogrep regexp="for GNAT Pro"></nogrep>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+    </version>
+    <languages>C++</languages>
+    <target>
+      <external>g++ -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!--  G++ compilers for GNAT Pro  -->
+  <compiler_description>
+    <name>G++_Pro</name>
+    <executable>g\+\+</executable>
+    <version>
+      <external>g++ -v</external>
+
+      <!--  'gcc version 4.7.4 20131104 for GNAT Pro ...' -->
+      <grep regexp="^gcc \S+ (\S+) \d+ \(?for GNAT Pro" group="1"></grep>
+    </version>
+    <languages>C++</languages>
+    <target>
+      <external>g++ -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 5 -->
+  <compiler_description>
+    <name>G++-WRS5</name>
+    <executable prefix="1">c\+\+(arm|pentium|sh|mips|ppc|sparc)</executable>
+    <version>
+      <external>c++${PREFIX} -v</external>
+      <grep regexp=".*(tornado 2|VxWorks 5).*" group="1"></grep>
+      <must_match>tornado 2|VxWorks 5</must_match>
+    </version>
+    <languages>C++</languages>
+    <target>
+      <external>c++${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 6 -->
+  <compiler_description>
+    <name>G++-WRS6</name>
+    <executable prefix="1">c\+\+(arm|pentium|sh|mips|ppc|sparc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-6.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,kernel-smp,kernel-sjlj,rtp,rtp-smp</runtimes>
+    <target>
+      <external>c++${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 6 Leon-->
+  <compiler_description>
+    <name>G++-WRS6LEON</name>
+    <executable prefix="1">c\+\+(sparc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-6.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel</runtimes>
+    <target>leon-wrs-vxworks</target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 6 e500v2-->
+  <compiler_description>
+    <name>G++-WRS6E500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-6.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,kernel-smp,kernel-sjlj,rtp,rtp-smp</runtimes>
+    <target>e500v2-wrs-vxworks</target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 6 Cert -->
+  <compiler_description>
+    <name>G++-WRS6CERT</name>
+    <executable prefix="1">c\+\+(arm|pentium|sh|mips|ppc|sparc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-cert-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-cert-6.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,ravenscar-cert,zfp,rtp,ravenscar-cert-rtp</runtimes>
+    <target>
+      <external>c++${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRS6CERTE500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-cert-6[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-cert-6.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,ravenscar-cert,zfp,rtp,ravenscar-cert-rtp</runtimes>
+    <target>e500v2-wrs-vxworks</target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 653 -->
+  <compiler_description>
+    <name>G++-WRS653</name>
+    <executable prefix="1">c\+\+(ppc|pentium)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks653-[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks653.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>
+      <external>c++${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRS653-E500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks653-[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks653.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>e500v2-wrs-vxworksae</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRS7ARM</name>
+    <executable prefix="1">c\+\+(arm)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>arm-wrs-vxworks7</target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks 7 e500v2-->
+  <compiler_description>
+    <name>G++-WRS7E500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>e500v2-wrs-vxworks7</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRS7PPC</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>powerpc-wrs-vxworks7</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRS7X86</name>
+    <executable prefix="1">cc(pentium)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-7[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-7.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>kernel,rtp</runtimes>
+    <target>i586-wrs-vxworks7</target>
+  </compiler_description>
+
+  <!-- G++ for VxWorks MILS -->
+  <compiler_description>
+    <name>G++-WRSMILS</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <external>c++${PREFIX} -v</external>
+      <grep regexp=".*(vxworksae).*" group="1"></grep>
+      <must_match>vxworksae</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>powerpc-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRSMILS-E500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <external>c++${PREFIX} -v</external>
+      <grep regexp=".*(vxworksae).*" group="1"></grep>
+      <must_match>vxworksae</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>full,cert,ravenscar-cert,zfp</runtimes>
+    <target>e500v2-wrs-vxworksmils</target>
+  </compiler_description>
+
+
+
+
+
+
+   <!-- G++ for WRS Linux -->
+   <compiler_description>
+     <name>G++-WRSLINUX</name>
+     <executable prefix="1">(powerpc-wrs-linux-gnu)-cpp</executable>
+     <version>
+       <external>${PREFIX}-cpp -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+     </version>
+     <languages>C++</languages>
+     <runtimes>full</runtimes>
+    <target>
+      <external>${PREFIX}-cpp -dumpmachine</external>
+      <grep regexp="(.*)-gnu" group="1"></grep>
+    </target>
+   </compiler_description>
+
+   <compiler_description>
+     <name>G++-WRSLINUXE500V2</name>
+     <executable prefix="1">(powerpc-wrs-linux-gnu)-cpp</executable>
+     <version>
+       <external>${PREFIX}-cpp -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+     </version>
+     <languages>C++</languages>
+     <runtimes>full</runtimes>
+     <target>e500v2-wrs-linux</target>
+   </compiler_description>
+
+   <!-- C for WRS Linux -->
+   <compiler_description>
+     <name>GCC-WRSLINUX</name>
+     <executable prefix="1">(powerpc-wrs-linux-gnu)-gcc</executable>
+     <version>
+       <external>${PREFIX}-cpp -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+     </version>
+     <languages>C</languages>
+     <runtimes>full</runtimes>
+    <target>
+      <external>${PREFIX} -dumpmachine</external>
+      <grep regexp="(.*)-gnu" group="1"></grep>
+    </target>
+   </compiler_description>
+
+   <compiler_description>
+     <name>GCC-WRSLINUXE500V2</name>
+     <executable prefix="1">(powerpc-wrs-linux-gnu)-gcc</executable>
+     <version>
+       <external>${PREFIX}-cpp -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+     </version>
+     <languages>C</languages>
+     <runtimes>full</runtimes>
+     <target>e500v2-wrs-linux</target>
+   </compiler_description>
+
+
+
+
+
+
+
+  <!-- G++ for VxWorks MILS HAE -->
+  <compiler_description>
+    <name>G++-WRSMILSHAE</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-mils-hae-1[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-mils-hae-1.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>zfp</runtimes>
+    <target>powerpc-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>G++-WRSMILSHAE-E500V2</name>
+    <executable prefix="1">c\+\+(ppc)</executable>
+    <version>
+      <getenv name="WIND_BASE"></getenv>
+      <grep regexp=".*[/\\](vxworks-mils-hae-1[0-9.]*).*" group="1"></grep>
+      <must_match>vxworks-mils-hae-1.*</must_match>
+    </version>
+    <languages>C++</languages>
+    <runtimes>zfp</runtimes>
+    <target>e500v2-wrs-vxworksmils</target>
+  </compiler_description>
+
+  <!--  Assembler -->
+  <compiler_description>
+    <name>GCC-ASM</name>
+    <executable prefix="1">(.*-wrs-.*|.*-sysgo.*|.*-elf-.*|.*-eabi-.*|.*-eabispe-.*|avr-.*|.*-elinos-linux.*|.*-pc-mingw32.*|.*-xcoff-.*|arm-linux-androideabi-|arm-linux-gnueabi-|arm-linux-gnueabihf-|.*-darwin.*-)?gcc</executable>
+    <version>
+      <external>${PREFIX}gcc -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+    </version>
+    <languages>Asm,Asm_Cpp,Asm2</languages>
+    <target>
+      <external>${PREFIX}gcc -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+   <!--   GNAT
+    To find the list of supported runtimes, we check the contents of
+    the directory. To be compatible with older versions of GNAT (3.16
+    for instance), we also accept lib/gcc-lib as the directory that
+    contains the runtime files.
+   -->
+  <compiler_description>
+    <name>GNAT</name>
+    <executable prefix="1">(.*-wrs-.*|.*-sysgo.*|.*-elf-.*|.*-eabi-.*|.*-eabispe-.*|avr-.*|.*-elinos-linux.*|.*-pc-mingw32.*|.*-xcoff-.*|arm-linux-androideabi-|arm-linux-gnueabi-|arm-linux-gnueabihf-|.*-darwin.*-)?gnatmake</executable>
+    <version>
+      <external>${PREFIX}gnatls -v --version</external>
+      <grep regexp="^GNATLS.+?(\d+(\.\d+)?)" group="1"></grep>
+    </version>
+    <languages>Ada</languages>
+    <variable name="gcc_version">
+      <external>${PREFIX}gcc -v</external>
+      <grep regexp="^[-\w]*gcc \S+ (\S+)" group="1"></grep>
+    </variable>
+    <runtimes default="default,kernel,native">
+       <directory group="default" >\.\./lib/gcc(-lib)?/$TARGET/$gcc_version/adalib/</directory>
+       <directory group="default" contents="^rts-">\.\./lib/gcc(-lib)?/$TARGET/$gcc_version/ada_object_path</directory>
+       <directory group="2" >\.\./lib/gcc(-lib)?/$TARGET/$gcc_version/rts-(.*)/adalib/</directory>
+       <directory group="1" >\.\./$TARGET/lib/gnat/(.*)/adalib/</directory>
+    </runtimes>
+    <target>
+      <external>${PREFIX}gcc -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!--  CodePeer -->
+
+  <compiler_description>
+    <name>GNAT_CODEPEER</name>
+    <executable prefix="1">(.*codepeer-)gnatmake</executable>
+    <version>
+      <external>${PREFIX}gnatls -v</external>
+      <grep regexp="^GNATLS.+?(\d+(\.\d+)?)" group="1"></grep>
+    </version>
+    <languages>Ada</languages>
+    <variable name="gcc_version">
+      <external>${PREFIX}gcc -v</external>
+      <grep regexp="^[-\w]*gcc \S+ (\S+)" group="1"></grep>
+    </variable>
+    <runtimes default="default">
+       <directory group="default" >\.\./lib/gcc/.*/$gcc_version/adalib/</directory>
+       <directory group="1" >\.\./lib/gnat/(.*)/adalib/</directory>
+    </runtimes>
+    <target>codepeer</target>
+  </compiler_description>
+
+  <!--  GNAT_DOTNET -->
+
+  <compiler_description>
+    <name>GNAT_DOTNET</name>
+    <executable prefix="1">(.*dotnet-)gnatmake</executable>
+    <version>
+      <external>${PREFIX}gnatls -v</external>
+      <grep regexp="^GNATLS.+?(\d+(\.\d+)?)" group="1"></grep>
+    </version>
+    <languages>Ada</languages>
+    <runtimes default="default,kernel">
+       <directory group="default" >\.\./lib/dotgnat/adalib/</directory>
+       <directory group="1" >\.\./lib/dotgnat/rts-(.*)/adalib/</directory>
+    </runtimes>
+    <target>dotnet</target>
+  </compiler_description>
+
+  <!--    G77  -->
+  <compiler_description>
+    <name>G77</name>
+    <executable>g77</executable>
+    <version>
+      <external>g77 --version</external>
+      <grep regexp="\(GCC.*\) (\S+)" group="1"></grep>
+    </version>
+    <languages>Fortran</languages>
+    <target>
+      <external>g77 -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!--    GFortran  -->
+  <compiler_description>
+    <name>GFORTRAN</name>
+    <executable>gfortran</executable>
+    <version>
+      <external>gfortran -v</external>
+      <grep regexp="^gcc \S+ (\S+)" group="1"></grep>
+    </version>
+    <languages>Fortran</languages>
+    <target>
+      <external>gfortran -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!--    mingw-cygwin compiler  -->
+  <compiler_description>
+    <name>GCC-CYGMING</name>
+    <executable>gcc</executable>
+    <version>
+      <external>gcc --version</external>
+      <grep regexp="\(GCC\) (\S+).*\(cygming special\)" group="1"></grep>
+    </version>
+    <languages>C,C++,Fortran</languages>
+    <target>
+      <external>gcc -mno-cygwin -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <compiler_description>
+    <name>GCC-MINGW32</name>
+    <executable prefix="1">gcc(-sjlj|)</executable>
+    <version>
+      <external>gcc${PREFIX} --version</external>
+      <grep regexp="\(GCC\) (\S+).*\(mingw32.*\)" group="1"></grep>
+    </version>
+    <languages>C,C++,Fortran</languages>
+    <target>
+      <external>gcc${PREFIX} -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+  <!-- Diab C Compiler -->
+  <compiler_description>
+    <name>DIABC-PPC</name>
+    <executable>dcc</executable>
+    <version>
+      <external>dcc -V</external>
+      <grep regexp=".*dcc(.exe)? Rel ([0-9.]*)" group="2"></grep>
+    </version>
+    <languages>C</languages>
+    <target>powerpc-elf</target>
+  </compiler_description>
+
+  <!-- LynxWorks C compiler for LynxOS-178 -->
+  <compiler_description>
+    <name>LYNXWORKS-C</name>
+    <executable>gcc</executable>
+    <version>
+      <external>gcc -v</external>
+      <grep regexp="^gcc version (\S+)" group="1"></grep>
+    </version>
+    <languages>C</languages>
+    <target>
+      <external>gcc -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+      <must_match>.*xcoff-lynxos.*</must_match>
+    </target>
+  </compiler_description>
+
+  <!-- LynxWorks C++ compiler for LynxOS-178 -->
+  <compiler_description>
+    <name>LYNXWORKS-C++</name>
+    <executable>c\+\+</executable>
+    <version>
+      <external>c++ -v</external>
+      <grep regexp="^gcc version (\S+)" group="1"></grep>
+    </version>
+    <languages>C++</languages>
+    <target>
+      <external>c++ -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+      <must_match>.*xcoff-lynxos.*</must_match>
+    </target>
+  </compiler_description>
+
+  <!-- LLVM Compiler -->
+  <compiler_description>
+    <name>LLVM</name>
+    <executable>clang</executable>
+    <version>
+      <external>clang -v</external>
+      <grep regexp=".*(LLVM|clang) version ([0-9.]*)" group="2"></grep>
+    </version>
+    <languages>C</languages>
+    <target>
+      <external>clang -dumpmachine</external>
+      <grep regexp="[^\r\n]+"></grep>
+    </target>
+  </compiler_description>
+
+</gprconfig>

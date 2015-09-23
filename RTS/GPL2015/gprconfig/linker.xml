@@ -1,0 +1,1498 @@
+<?xml version="1.0" ?>
+<gprconfig>
+
+  <!--  This configuration shows how to link a multi language
+        application with GNAT and either GCC or toolchains
+        derived from gcc -->
+
+
+  <!--  Archiver.  -->
+  <configuration>
+    <targets>
+      <target name="^visium-elf$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("visium-elf-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("visium-elf-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-elf$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("powerpc-elf-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-elf-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-elf-lynxos$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("ar", "crs");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-xcoff-lynxos178$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("powerpc-xcoff-lynxos178-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-xcoff-lynxos178-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-eabispe$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("powerpc-eabispe-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-eabispe-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^i686-elinos-linux$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("i686-elinos-linux-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("i686-elinos-linux-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^i686-pc-mingw32$" />
+    </targets>
+    <hosts negate="true">
+      <host name="^i686-pc-mingw32$" />
+    </hosts>
+    <config>
+   for Archive_Builder  use ("i686-pc-mingw32-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("i686-pc-mingw32-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^i686-pc-mingw32$" />
+    </targets>
+    <hosts>
+      <host name="^i686-pc-mingw32$" />
+    </hosts>
+    <config>
+   for Archive_Builder  use ("ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^x86_64-pc-mingw32$" />
+    </targets>
+    <hosts negate="true">
+      <host name="^x86_64-pc-mingw32$" />
+    </hosts>
+    <config>
+   for Archive_Builder  use ("x86_64-pc-mingw32-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("x86_64-pc-mingw32-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^x86_64-pc-mingw32$" />
+    </targets>
+    <hosts>
+      <host name="^x86_64-pc-mingw32$" />
+    </hosts>
+    <config>
+   for Archive_Builder  use ("ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-elinos-linux$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("powerpc-elinos-linux-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-elinos-linux-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^arm-linux-androideabi$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("arm-linux-androideabi-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-linux-androideabi-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^arm-linux-gnueabi$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("arm-linux-gnueabi-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-linux-gnueabi-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^arm-linux-gnueabihf$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("arm-linux-gnueabihf-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-linux-gnueabihf-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^erc32-elf$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("erc32-elf-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("erc32-elf-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^leon-elf$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("leon-elf-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("leon-elf-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^leon3-elf$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("leon3-elf-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("leon3-elf-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^arm-eabi$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("arm-eabi-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-eabi-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^arm-none-eabi$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("arm-none-eabi-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-none-eabi-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^avr$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("avr-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("avr-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^i586-sysgo-pikeos$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("i586-sysgo-pikeos-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("i586-sysgo-pikeos-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-sysgo-pikeos$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("powerpc-sysgo-pikeos-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-sysgo-pikeos-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <!-- Do not run ranlib on AIX -->
+  <configuration>
+    <targets>
+      <target name="^.*aix.*$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Suffix   use ".a";
+
+   package Linker is
+      for Max_Command_Line_Length use "15000";
+      for Response_File_Format    use "object_list";
+      for Response_File_Switches  use ("-Wl,-f,");
+      for Map_File_Option         use "-Wl,-Map,";
+   end Linker;
+    </config>
+  </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^e500v2-wrs-vxworks$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("e500v2-wrs-vxworks-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("e500v2-wrs-vxworks-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^e500v2-wrs-vxworks7$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("e500v2-wrs-vxworks7-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("e500v2-wrs-vxworks7-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^e500v2-wrs-vxworksae$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("e500v2-wrs-vxworksae-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("e500v2-wrs-vxworksae-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^e500v2-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("e500v2-wrs-vxworksmils-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("e500v2-wrs-vxworksmils-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^i586-wrs-vxworks$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("i586-wrs-vxworks-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("i586-wrs-vxworks-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^i586-wrs-vxworks7$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("i586-wrs-vxworks7-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("i586-wrs-vxworks7-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^i586-wrs-vxworksae$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("i586-wrs-vxworksae-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("i586-wrs-vxworksae-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^arm-wrs-vxworks$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("arm-wrs-vxworks-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-wrs-vxworks-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^arm-wrs-vxworks7$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("arm-wrs-vxworks7-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("arm-wrs-vxworks7-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^powerpc-wrs-vxworks$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("powerpc-wrs-vxworks-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-wrs-vxworks-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^powerpc-wrs-vxworks7$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("powerpc-wrs-vxworks7-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-wrs-vxworks7-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^leon-wrs-vxworks$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("leon-wrs-vxworks-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("leon-wrs-vxworks-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^powerpc-wrs-vxworksae$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("powerpc-wrs-vxworksae-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-wrs-vxworksae-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^powerpc-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("powerpc-wrs-vxworksmils-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-wrs-vxworksmils-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+  <!-- Do not run ranlib on IA64 HPUX -->
+  <configuration>
+    <targets>
+      <target name=".*ia64.*hpux.*" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets negate="true">
+      <target name="^.*-wrs-vxworks.*$" />
+      <target name="^visium-elf$"/>
+      <target name="^powerpc-elf$"/>
+      <target name="^powerpc-elf-lynxos$" />
+      <target name="^powerpc-xcoff-lynxos178$" />
+      <target name="^powerpc-eabispe$"/>
+      <target name="^avr$"/>
+      <target name="^erc32-elf$"/>
+      <target name="^leon-elf$"/>
+      <target name="^leon3-elf$"/>
+      <target name="^arm-eabi$"/>
+      <target name="^.*aix.*$" />
+      <target name="^.*ia64.*hpux.*$" />
+      <target name="^.*pc-mingw32$" />
+      <target name="^.*-pikeos$" />
+      <target name="^arm-linux-androideabi$" />
+      <target name="^.*-gnueabihf$" />
+      <target name="^.*-gnueabi$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+  <!-- powerpc-elf-lynxos178e, after the previous one
+       to overwrite the attributes -->
+  <configuration>
+    <targets>
+      <target name="^powerpc-elf-lynxos178e$" />
+    </targets>
+    <config>
+   for Archive_Builder  use ("powerpc-elf-lynxos178e-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-elf-lynxos178e-ranlib");
+   for Archive_Suffix   use ".a";
+    </config>
+  </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^powerpc-wrs-linux$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("powerpc-wrs-linux-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("powerpc-wrs-linux-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^e500v2-wrs-linux$" />
+     </targets>
+     <config>
+   for Archive_Builder  use ("e500v2-wrs-linux-ar", "cr");
+   for Archive_Builder_Append_Option use ("q");
+   for Archive_Indexer  use ("e500v2-wrs-linux-ranlib");
+   for Archive_Suffix   use ".a";
+     </config>
+   </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^.*-wrs-linux.*$" />
+    </targets>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("Ada");
+   end Linker;
+    </config>
+  </configuration>
+
+
+<!--  Systems with no support for shared libraries, but with static libraries -->
+  <configuration>
+    <targets>
+       <target name="^.*aix.*$" />
+       <target name="^.*lynxos.*$" />
+       <target name="^visium-elf$" />
+       <target name="^powerpc-elf$" />
+       <target name="^powerpc-eabispe$" />
+       <target name="^erc32-elf$" />
+       <target name="^leon-elf$" />
+       <target name="^leon3-elf$" />
+       <target name="^arm-eabi$" />
+       <target name="^arm-none-eabi$" />
+       <target name="^arm-apple-darwin.*$" />
+       <target name="^.*wrs-vxworks.*$" />
+       <target name="^avr$" />
+       <target name="^.*-pikeos$" />
+    </targets>
+    <config>
+   for Library_Support  use "static_only";
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+    </config>
+  </configuration>
+
+  <!-- GNAAMP -->
+  <configuration>
+    <targets>
+       <target name="aamp" />
+    </targets>
+    <config>
+   for Library_Support use "none";
+
+   package Linker is
+      for Driver use "aa_link";
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- DOTNET -->
+  <configuration>
+    <targets>
+       <target name="dotnet" />
+    </targets>
+    <config>
+   for Library_Support use "none";
+
+   package Linker is
+      for Driver use "dotnet-ld";
+   end Linker;
+    </config>
+  </configuration>
+
+  <!--  Darwin -->
+  <configuration>
+    <targets>
+       <target name="^i.86-.*darwin.*$" />
+       <target name="^powerpc-.*darwin.*$" />
+       <target name="^x86_64-.*darwin.*$" />
+    </targets>
+    <config>
+   for Library_Builder use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support use "full";
+   for Shared_Library_Prefix use "lib";
+   for Symbolic_Link_Supported use "true";
+   for Library_Major_Minor_Id_Supported use "true";
+
+   for Run_Path_Option  use ("-Wl,-rpath,");
+   for Separate_Run_Path_Options use "true";
+   for Run_Path_Origin use "@executable_path";
+   for Library_Install_Name_Option use "-Wl,-install_name,@rpath";
+
+   for Shared_Library_Suffix use ".dylib";
+   for Library_Auto_Init_Supported use "true";
+   for Archive_Indexer use project'Archive_Indexer &amp; ("-c");
+   for Shared_Library_Minimum_Switches use
+         ("-dynamiclib", "-shared-libgcc");
+   for Library_Encapsulated_Options use ("-shared", "-static-libgcc");
+
+   package Linker is
+      for Map_File_Option         use "-Wl,-map,";
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+       <target name="^i.86-.*darwin.*$" />
+       <target name="^powerpc-.*darwin.*$" />
+       <target name="^x86_64-.*darwin.*$" />
+    </targets>
+    <compilers>
+        <compiler name="G++" language="C++" />
+    </compilers>
+    <config>
+    for Library_Rpath_Options ("C++") use ("-print-file-name=libstdc++.dylib");
+    </config>
+  </configuration>
+
+  <!--  HPUX -->
+  <configuration>
+    <targets>
+       <target name="^.*hpux.*$" />
+    </targets>
+    <config>
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support  use "full";
+   for Shared_Library_Prefix use "lib";
+   for Symbolic_Link_Supported use "true";
+   for Library_Major_Minor_Id_Supported use "true";
+   for Shared_Library_Minimum_Switches use ("-shared", "-fPIC");
+   for Library_Version_Switches use ("-Wl,-soname,");
+
+   for Shared_Library_Suffix use ".sl";
+   for Library_Auto_Init_Supported use "true";
+   for Run_Path_Option  use ("-Wl,+b,");
+   for Library_Partial_Linker use ("gcc", "-nostdlib", "-Wl,-r", "-o");
+
+   package Linker is
+      for Max_Command_Line_Length use "5000";
+      for Response_File_Format    use "object_list";
+      for Response_File_Switches  use ("-Wl,-c,");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- On IA64 HPUX, the shared library suffix is .so,
+       and the ld switch for internal names in +h -->
+   <configuration>
+    <targets>
+       <target name=".*ia64.*hpux.*" />
+    </targets>
+    <config>
+   for Shared_Library_Suffix use ".so";
+   for Library_Version_Switches use ("-Wl,+h,");
+    </config>
+  </configuration>
+
+  <!-- linux, freebsd and Irix-->
+  <configuration>
+    <targets>
+       <target name="^.*linux.*$" />
+       <target name="^.*freebsd.*$" />
+       <target name="^.*irix.*$" />
+    </targets>
+    <config>
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support  use "full";
+   for Shared_Library_Prefix use "lib";
+   for Symbolic_Link_Supported use "true";
+   for Library_Major_Minor_Id_Supported use "true";
+   for Shared_Library_Minimum_Switches use ("-shared");
+   for Library_Version_Switches use ("-Wl,-soname,");
+
+   for Shared_Library_Suffix use ".so";
+   for Library_Auto_Init_Supported use "true";
+    </config>
+  </configuration>
+
+  <!-- linux -->
+  <configuration>
+    <targets>
+       <target name="^.*linux.*$" />
+    </targets>
+    <config>
+   for Run_Path_Option  use ("-Wl,-z,origin,-rpath,");
+   for Run_Path_Origin use "$$ORIGIN";
+   for Library_Encapsulated_Options use ("-shared", "-static-libgcc");
+
+   package Linker is
+      for Map_File_Option         use "-Wl,-Map,";
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+       <target name="^.*linux.*$" />
+    </targets>
+    <compilers>
+       <compiler name="GNAT" />
+    </compilers>
+    <config>
+   for Library_Partial_Linker use ("${PATH(ada)}${PREFIX(ada)}gcc", "-nostdlib", "-Wl,-r", "-o");
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+       <target name="^.*linux.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler name="GNAT" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC" />
+    </compilers>
+    <config>
+   for Library_Partial_Linker use ("${PATH(ada)}${PREFIX(c)}gcc", "-nostdlib", "-Wl,-r", "-o");
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+       <target name="^.*linux.*$" />
+    </targets>
+    <compilers>
+        <compiler name="G++" language="C++" />
+    </compilers>
+    <config>
+    for Library_Rpath_Options ("C++") use ("-print-file-name=libstdc++.so");
+    </config>
+  </configuration>
+
+  <!-- freebsd -->
+  <configuration>
+    <targets>
+       <target name="^.*freebsd.*$" />
+    </targets>
+    <config>
+   for Run_Path_Option  use ("-Wl,-rpath,");
+    </config>
+  </configuration>
+
+  <!-- irix -->
+  <configuration>
+    <targets>
+       <target name="^.*irix.*$" />
+    </targets>
+    <config>
+   for Run_Path_Option  use ("-Wl,-rpath,");
+
+   package Linker is
+      for Max_Command_Line_Length use "5000";
+      for Response_File_Format    use "object_list";
+      for Response_File_Switches  use ("-Wl,-objectlist,");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!--  Solaris -->
+  <configuration>
+    <targets>
+       <target name="^.*sunos.*$" />
+       <target name="^.*solaris.*$"/>
+    </targets>
+    <config>
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support  use "full";
+   for Shared_Library_Prefix use "lib";
+   for Symbolic_Link_Supported use "true";
+   for Library_Major_Minor_Id_Supported use "true";
+   for Shared_Library_Minimum_Switches use ("-shared");
+
+   for Library_Version_Switches use ("-Wl,-h,");
+
+   for Shared_Library_Suffix use ".so";
+   for Library_Auto_Init_Supported use "true";
+   for Library_Encapsulated_Options use
+      ("-shared", "-static-libgcc", "-mimpure-text");
+   for Run_Path_Option  use ("-Wl,-z,origin,-R,");
+   for Run_Path_Origin use "$$ORIGIN";
+   for Library_Partial_Linker use ("gcc", "-nostdlib", "-Wl,-r", "-o");
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+       <target name="^.*sunos.*$" />
+       <target name="^.*solaris.*$" />
+    </targets>
+    <compilers>
+        <compiler name="G++" language="C++" />
+    </compilers>
+    <config>
+    for Library_Rpath_Options ("C++") use ("-print-file-name=libstdc++.so");
+    </config>
+  </configuration>
+
+  <!--  Windows -->
+  <configuration>
+    <targets>
+      <target name="^.*mingw.*$" />
+    </targets>
+    <config>
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support  use "full";
+   for Shared_Library_Prefix use "lib";
+   for Symbolic_Link_Supported use "false";
+   for Library_Major_Minor_Id_Supported use "false";
+   for Shared_Library_Minimum_Switches use ("-shared", "-shared-libgcc");
+   for Library_Version_Switches use ("-Wl,-soname,");
+   for Shared_Library_Suffix use ".dll";
+   for Library_Encapsulated_Options use ("-shared", "-static-libgcc");
+   for Library_Auto_Init_Supported use "true";
+   for Library_Partial_Linker use ("gcc", "-nostdlib", "-Wl,-r", "-o");
+
+   package Linker is
+      for Map_File_Option         use "-Wl,-Map,";
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- Tru64-->
+  <configuration>
+    <targets>
+       <target name="^.*osf.*$" />
+    </targets>
+    <config>
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support  use "full";
+   for Shared_Library_Prefix use "lib";
+   for Symbolic_Link_Supported use "true";
+   for Library_Major_Minor_Id_Supported use "true";
+   for Shared_Library_Minimum_Switches use
+      ("-shared", "-Wl,-expect_unresolved,*");
+   for Library_Version_Switches use ("-Wl,-soname,");
+
+   for Shared_Library_Suffix use ".so";
+   for Library_Auto_Init_Supported use "true";
+   for Run_Path_Option  use ("-Wl,-rpath,");
+
+   package Linker is
+      for Max_Command_Line_Length use "10000";
+      for Response_File_Format    use "object_list";
+      for Response_File_Switches  use ("-Wl,-input,");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!--  VMS -->
+  <configuration>
+    <targets>
+      <target name="^.*vms.*$" />
+    </targets>
+    <compilers><compiler name="GNAT" /></compilers>
+    <config>
+   for Library_Builder  use "${GPRCONFIG_PREFIX}libexec/gprbuild/gprlib";
+   for Library_Support  use "full";
+   for Shared_Library_Prefix use "lib";
+   for Shared_Library_Suffix use ".exe";
+   for Symbolic_Link_Supported use "false";
+   for Library_Major_Minor_Id_Supported use "false";
+   for Shared_Library_Minimum_Switches use ("-shared", "-shared-libgcc");
+   for Library_Auto_Init_Supported use "true";
+    </config>
+  </configuration>
+
+  <!--  Cygming -->
+  <configuration>
+    <compilers><compiler name="GCC-CYGMING"/></compilers>
+    <config>
+   package Linker is
+       for Required_Switches use ("-mno-cygwin");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!--  use C++, Fortran, Ada or C driver to link in this order -->
+
+  <configuration>
+    <targets negate="true">
+      <target name="^.*-wrs-vxworks.*$" />
+      <target name="^.*-wrs-linux.*$" />
+    </targets>
+    <compilers>
+       <compiler language="C++" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("C++");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- If no Ada, use C++ driver when there are C++ sources -->
+  <configuration>
+    <targets>
+      <target name="^.*-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler language="C++" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("C++");
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^.*linux.*$" />
+      <target name="^.*sunos.*$" />
+      <target name="^.*solaris.*$" />
+      <target name="^.*mingw.*$" />
+    </targets>
+    <compilers>
+       <compiler language="C++" />
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use Linker'Required_Switches &amp; ("-shared-libgcc");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <compilers negate="true">
+       <compiler language="C++" />
+    </compilers>
+    <compilers>
+       <compiler language="Fortran" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("Fortran");
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets negate="true">
+       <target name="aamp" />
+       <target name="dotnet" />
+       <target name="^.*-sysgo-pikeos.*$" />
+       <target name="^.*-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+    </compilers>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("Ada");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- For PikeOS use C drivers as default for linking,
+       to use SYSGO's libgcc -->
+  <configuration>
+    <targets>
+      <target name="^.*-sysgo-pikeos.*$" />
+    </targets>
+    <compilers>
+       <compiler language="C" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("C");
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^.*-sysgo-pikeos.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C" />
+    </compilers>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("Ada");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- For VxWorks 5 and 6 use Ada driver as default for linking, since cc*
+       and c++* do not recognize the -crtbe switch needed for ZCX -->
+  <configuration>
+    <targets>
+      <target name="^.*-wrs-vxworks.*$" />
+    </targets>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("Ada");
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets negate="true">
+      <target name="^.*-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler language="C" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("C");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!-- cross targets that use GNU ld -->
+  <configuration>
+    <targets>
+       <target name="^.*-vxworks.*$" />
+       <target name="^.*-lynxos.*$" />
+       <target name="^.*-pikeos$" />
+       <target name="^.*-elf$" />
+       <target name="^.*-eabispe$" />
+       <target name="^.*-eabi$" />
+       <target name="^avr$" />
+    </targets>
+    <config>
+     package Linker is
+        for Map_File_Option use "-Wl,-Map,";
+     end Linker;
+    </config>
+  </configuration>>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6" language="C" runtime="^rtp$"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/lib/usr/lib/ppc/PPC32/common",
+                 "-L" &amp; Wind_Base
+                 &amp; "/target/usr/lib/ppc/PPC32/common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6" language="C" runtime="^rtp-smp$"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/lib_smp/usr/lib/ppc/PPC32/common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^arm-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6" language="C" runtime="^rtp$"/>
+    </compilers>
+    <!-- As a special exception, on ARM, rts-rtp is smp-based. -->
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/lib_smp/usr/lib/arm/ARMARCH7/common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^e500v2-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6E500V2" language="C" runtime="^rtp$"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/lib/usr/lib/ppc/PPC32/e500v2common",
+                 "-L" &amp; Wind_Base
+                 &amp; "/target/usr/lib/ppc/PPC32/e500v2common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^e500v2-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6E500V2" language="C" runtime="^rtp-smp$"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/lib_smp/usr/lib/ppc/PPC32/e500v2common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^powerpc-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6CERT" language="C" runtime="rtp"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/usr/lib_cert_rtp/ppc/PPC32/common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^e500v2-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS6CERTE500V2" language="C" runtime="rtp"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-L" &amp; Wind_Base
+                 &amp; "/target/usr/lib_cert_rtp/ppc/PPC32/e500v2common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler name="GCC-WRS7ARM" runtime="rtp"/>
+       <compiler name="GCC-WRS7E500V2" runtime="rtp"/>
+       <compiler name="GCC-WRS7PPC" runtime="rtp"/>
+       <compiler name="GCC-WRS7X86" runtime="rtp"/>
+    </compilers>
+    <config>
+     package Linker is
+        for Required_Switches use
+          Linker'Required_Switches
+          &amp; ("-mrtp", "-L" &amp; VSB_Dir &amp; "/usr/lib/common");
+     end Linker;
+    </config>
+  </configuration>
+
+  <!-- If no Ada and no C++, use C driver when there are C sources -->
+  <configuration>
+    <targets>
+      <target name="^.*-wrs-vxworks.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="Ada" />
+       <compiler language="C++" />
+    </compilers>
+    <compilers>
+       <compiler language="C" />
+    </compilers>
+    <config>
+   package Linker is
+      for Driver use Compiler'Driver ("C");
+   end Linker;
+    </config>
+  </configuration>
+
+  <!--  Define the right response file mechanism for linking
+        when possible use both the GCC @response file (available starting with
+        GNAT Pro 6) and the GNU linker mechanism. The latter can be used with
+        all cross since they rely on GNU ld and some of the major natives.
+        Max_Command_Line could be made different for different hosts but we
+        use the smallest value of all the hosts instead for uniformity.
+  -->
+
+   <configuration>
+     <targets>
+       <target name="^.*-wrs-vxworks.*$" />
+       <target name="^.*-elf-lynx.*$" />
+       <target name="^visium-elf$" />
+       <target name="^powerpc-elf$" />
+       <target name="^powerpc-eabispe$" />
+       <target name="^erc32-elf$" />
+       <target name="^leon-elf$" />
+       <target name="^leon3-elf$" />
+       <target name="^arm-eabi$" />
+       <target name="^arm-elf$" />
+       <target name="^avr$" />
+       <target name="^.*wrs-vxworks.*$" />
+       <target name="^powerpc-xcoff-lynxos178$" />
+       <target name="^.*-elinos-linux$" />
+       <target name="^.*-wrs-linux$" />
+       <target name="^.*-pikeos$" />
+       <target name="^.*mingw.*$" />
+       <target name="^.*linux.*$" />
+       <target name="^.*freebsd.*$" />
+     </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+    </compilers>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <compilers negate="true">
+      <compiler version="3.16" />
+      <compiler version="5.00" />
+      <compiler version="5.01" />
+      <compiler version="5.02" />
+      <compiler version="5.03" />
+      <compiler version="5.04" />
+    </compilers>
+    <config>
+   package Linker is
+      for Response_File_Format use "GCC_GNU";
+      for Max_Command_Line_Length use "8192";
+   end Linker;
+    </config>
+  </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^.*wrs-vxworks.*$" />
+       <target name="^.*-elf-lynx.*$" />
+       <target name="^visium-elf$" />
+       <target name="^powerpc-elf$" />
+       <target name="^powerpc-eabispe$" />
+       <target name="^erc32-elf$" />
+       <target name="^leon-elf$" />
+       <target name="^leon3-elf$" />
+       <target name="^arm-eabi$" />
+       <target name="^arm-elf$" />
+       <target name="^avr$" />
+       <target name="^.*-elinos-linux$" />
+       <target name="^.*-wrs-linux$" />
+       <target name="^.*mingw.*$" />
+       <target name="^.*linux.*$" />
+       <target name="^.*freebsd.*$" />
+     </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+    </compilers>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+      <compiler version="3.16" />
+      <compiler version="5.00" />
+      <compiler version="5.01" />
+      <compiler version="5.02" />
+      <compiler version="5.03" />
+      <compiler version="5.04" />
+    </compilers>
+    <config>
+   package Linker is
+      for Response_File_Format use "GNU";
+      for Max_Command_Line_Length use "8192";
+   end Linker;
+    </config>
+  </configuration>
+
+   <configuration>
+     <targets>
+       <target name="^.*wrs-vxworks.*$" />
+       <target name="^.*-elf-lynx.*$" />
+       <target name="^visium-elf$" />
+       <target name="^powerpc-elf$" />
+       <target name="^powerpc-eabispe$" />
+       <target name="^erc32-elf$" />
+       <target name="^leon-elf$" />
+       <target name="^leon3-elf$" />
+       <target name="^arm-eabi$" />
+       <target name="^arm-elf$" />
+       <target name="^avr$" />
+       <target name="^.*-elinos-linux$" />
+       <target name="^.*-wrs-linux$" />
+       <target name="^.*mingw.*$" />
+       <target name="^.*linux.*$" />
+       <target name="^.*freebsd.*$" />
+     </targets>
+    <compilers>
+       <compiler language="C++" />
+    </compilers>
+    <config>
+   package Linker is
+      for Response_File_Format use "GNU";
+      for Max_Command_Line_Length use "8192";
+   end Linker;
+    </config>
+  </configuration>
+
+  <configuration>
+    <targets>
+      <target name="^.*aix.*$" />
+      <target name="^.*hpux.*$" />
+      <target name="^.*irix.*$" />
+      <target name="^.*osf.*$" />
+    </targets>
+    <compilers negate="true">
+       <compiler language="C++" />
+       <compiler language="Fortran" />
+    </compilers>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <compilers negate="true">
+      <compiler version="3.16" />
+      <compiler version="5.00" />
+      <compiler version="5.01" />
+      <compiler version="5.02" />
+      <compiler version="5.03" />
+      <compiler version="5.04" />
+    </compilers>
+    <config>
+   package Linker is
+      for Response_File_Format use "GCC_Object_List";
+   end Linker;
+    </config>
+  </configuration>
+
+ <!-- Default language is Ada, C, Fortran, C++ in that order -->
+
+  <configuration>
+    <compilers>
+       <compiler language="Ada" />
+    </compilers>
+    <config>
+   for Default_Language use "Ada";
+    </config>
+  </configuration>
+
+  <configuration>
+    <compilers negate="true">
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler language="C" />
+    </compilers>
+    <config>
+   for Default_Language use "C";
+    </config>
+  </configuration>
+
+  <configuration>
+    <compilers negate="true">
+       <compiler language="C" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler language="Fortran" /></compilers>
+    <config>
+   for Default_Language use "Fortran";
+    </config>
+  </configuration>
+
+  <configuration>
+    <compilers negate="true">
+       <compiler language="C" />
+       <compiler language="Fortran" />
+       <compiler language="Ada" />
+    </compilers>
+    <compilers>
+       <compiler language="C++" />
+    </compilers>
+    <config>
+   for Default_Language use "C++";
+    </config>
+  </configuration>
+
+</gprconfig>

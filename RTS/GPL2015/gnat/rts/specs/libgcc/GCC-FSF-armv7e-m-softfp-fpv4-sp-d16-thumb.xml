@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   LIBGCC_PATH := "armv7e-m/softfp/";
+
+   </config>
+  </configuration>
+</gprconfig>

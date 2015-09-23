@@ -58,8 +58,7 @@ project Gnat extends "specs.gpr" is
         Compiler'Required_Switches ("Asm_Cpp") & Required_ASM_Flags;
 
       CFLAGS := Compiler'Default_Switches ("Ada");
-           CFLAGS := CFLAGS & ("-fcallgraph-info=su,da",
-                "-ffunction-sections", "-fdata-sections");
+           CFLAGS := CFLAGS & ("-ffunction-sections", "-fdata-sections");
       ALL_ADAFLAGS := ("-gnatpg", "-gnatn2", "-nostdinc") & CFLAGS;
       ALL_CFLAGS := ("-DIN_RTS", "-Dinhibit_libc") & CFLAGS;
 
@@ -80,7 +79,7 @@ project Gnat extends "specs.gpr" is
       for Switches ("raise-gcc.c") use ALL_CFLAGS & ("-fexceptions");
 
       --  TMPL is Preprocessor
-      for Driver ("TMPL") use "arm-eabi-cpp";
+      for Driver ("TMPL") use "arm-none-eabi-cpp";
       for Leading_Required_Switches ("TMPL") use Required_TMPL_Flags;
 
       --  TMPL no makefile

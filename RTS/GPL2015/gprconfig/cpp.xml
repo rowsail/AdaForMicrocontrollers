@@ -1,0 +1,265 @@
+<?xml version="1.0" ?>
+<gprconfig>
+   <!--  This package provides the default standard options for a gcc
+         C++ compiler -->
+
+   <configuration>
+     <compilers>
+        <compiler language="C++" />
+     </compilers>
+     <config>
+   package Naming is
+      for Spec_Suffix ("C++") use ".hh";
+      for Body_Suffix ("C++") use ".cpp";
+   end Naming;
+   for Inherit_Source_Path ("C++") use ("C");
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+        <compiler name="G++" language="C++" />
+        <compiler name="G++_Pro" language="C++" />
+        <compiler name="GCC-CYGMING" language="C++" />
+       <compiler name="GCC-MINGW32" language="C++" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C++") use "${PATH(c++)}g++${PREFIX(c++)}";
+   end Compiler;
+
+   package Clean is
+      for Source_Artifact_Extensions ("C++") use (".gli", ".stdout", ".stderr");
+      for Object_Artifact_Extensions ("C++") use (".s", "ci", ".gcno");
+   end Clean;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+        <compiler name="G++-WRS653" language="C++" />
+        <compiler name="G++-WRS653-E500V2" language="C++" />
+        <compiler name="G++-WRS5" language="C++" />
+        <compiler name="G++-WRS6" language="C++" />
+        <compiler name="G++-WRS6E500V2" language="C++" />
+        <compiler name="G++-WRS6LEON" language="C++" />
+        <compiler name="G++-WRS6CERT" language="C++" />
+        <compiler name="G++-WRS6CERTE500V2" language="C++" />
+        <compiler name="G++-WRS7ARM" language="C++" />
+        <compiler name="G++-WRS7E500V2" language="C++" />
+        <compiler name="G++-WRS7PPC" language="C++" />
+        <compiler name="G++-WRS7X86" language="C++" />
+        <compiler name="G++-WRSMILS" language="C++" />
+        <compiler name="G++-WRSMILSHAE" language="C++" />
+        <compiler name="G++-WRSMILS-E500V2" language="C++" />
+        <compiler name="G++-WRSMILSHAE-E500V2" language="C++" />
+    </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C++") use "${PATH(c++)}c++${PREFIX(c++)}";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+        <compiler name="G++" language="C++" />
+        <compiler name="G++_Pro" language="C++" />
+        <compiler name="G++-WRS653" language="C++" />
+        <compiler name="G++-WRS653-E500V2" language="C++" />
+        <compiler name="G++-WRSMILS" language="C++" />
+        <compiler name="G++-WRSMILSHAE" language="C++" />
+        <compiler name="G++-WRSMILS-E500V2" language="C++" />
+        <compiler name="G++-WRSMILSHAE-E500V2" language="C++" />
+        <compiler name="G++-WRS6" language="C++" />
+        <compiler name="G++-WRS6E500V2" language="C++" />
+        <compiler name="G++-WRS6LEON" language="C++" />
+        <compiler name="G++-WRS6CERT" language="C++" />
+        <compiler name="G++-WRS6CERTE500V2" language="C++" />
+        <compiler name="G++-WRS7ARM" language="C++" />
+        <compiler name="G++-WRS7E500V2" language="C++" />
+        <compiler name="G++-WRS7PPC" language="C++" />
+        <compiler name="G++-WRS7X86" language="C++" />
+        <compiler name="GCC-CYGMING" language="C++" />
+       <compiler name="GCC-MINGW32" language="C++" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches   ("C++") use
+        ("-c", "-x", "c++") &amp;
+        Compiler'Leading_Required_Switches ("C++");
+      for Dependency_Switches ("C++") use ("-MMD", "-MF", "");
+      for Include_Path        ("C++") use "CPATH";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- G++-WRS5 does not support -MF switch -->
+   <configuration>
+     <compilers>
+        <compiler name="G++-WRS5" language="C++" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches   ("C++") use
+        Compiler'Leading_Required_Switches ("C++") &amp;
+        ("-c", "-x", "c++");
+      for Dependency_Switches ("C++") use ("-Wp,-MMD,");
+      for Include_Path        ("C++") use "CPATH";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!--  Additional switches on some platforms -->
+
+   <configuration>
+     <compilers>
+       <compiler name="G++" language="C++" />
+       <compiler name="G++_Pro" language="C++" />
+     </compilers>
+     <targets negate="true">
+       <target name="^.*LynxOS.*$" />
+       <target name="^.*mingw.*$" />
+       <target name="^.*cygwin.*$" />
+       <target name="^.*tru64.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for PIC_Option      ("C++") use ("-fPIC");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- in cygminw mode, make sure that the option -mno-cygwin is used -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-CYGMING" language="C++" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+         Compiler'Leading_Required_Switches ("C++") &amp; ("-mno-cygwin");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- this compiler is not compatible with GNAT's default zcx runtime -->
+   <configuration>
+     <compilers><compiler name="GNAT" runtime="default" /></compilers>
+     <compilers>
+       <compiler name="GCC-CYGMING" language="C++" />
+       <compiler name="GCC-CYGMING" language="Fortran" />
+       <compiler name="GCC-MINGW32" language="C++" />
+       <compiler name="GCC-MINGW32" language="Fortran" />
+     </compilers>
+     <config></config>
+   </configuration>
+
+   <!-- VxWorks 7.x C++ support using the WRS compilers  -->
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS7ARM" runtime="^kernel$" />
+       <compiler name="G++-WRS7PPC" runtime="^kernel$" />
+       <compiler name="G++-WRS7E500V2" runtime="^kernel$" />
+       <compiler name="G++-WRS7X86" runtime="^kernel$" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-I" &amp; VSB_Dir &amp; "/h",
+               "-I" &amp; VSB_Dir &amp; "/share/h",
+               "-I" &amp; VSB_Dir &amp; "/krnl/h/system",
+               "-I" &amp; VSB_Dir &amp; "/krnl/h/public",
+               "-D_WRS_KERNEL");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS7ARM" runtime="^rtp$" />
+       <compiler name="G++-WRS7PPC" runtime="^rtp$" />
+       <compiler name="G++-WRS7E500V2" runtime="^rtp$" />
+       <compiler name="G++-WRS7X86" runtime="^rtp$" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++") &amp; ("-mrtp")
+        &amp; ("-I" &amp; VSB_Dir &amp; "/h",
+               "-I" &amp; VSB_Dir &amp; "/share/h",
+               "-I" &amp; VSB_Dir &amp; "/usr/h/public",
+               "-I" &amp; VSB_Dir &amp; "/usr/h");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS7ARM" />
+       <compiler name="G++-WRS7E500V2" />
+       <compiler name="G++-WRS7PPC" />
+       <compiler name="G++-WRS7X86" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-DTOOL_FAMILY=gnu",
+               "-DTOOL=gnu",
+               "-D_VSB_CONFIG_FILE=&lt;config/vsbConfig.h&gt;");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS7ARM" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-DCPU=_VX_ARMARCH7",
+               "-t7",
+               "-mfpu=vfp",
+               "-mfloat-abi=softfp");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS7E500V2" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-DCPU=_VX_PPCE500V2",
+               "-te500v2",
+               "-mhard-float",
+               "-mstrict-align");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS7PPC" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-DCPU=_VX_PPCE500MC",
+               "-mno-powerpc-gfxopt",
+               "-mno-isel");
+   end Compiler;
+     </config>
+   </configuration>
+
+</gprconfig>

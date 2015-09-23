@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   LIBGCC_PATH := "armv6-m/";
+
+   </config>
+  </configuration>
+</gprconfig>

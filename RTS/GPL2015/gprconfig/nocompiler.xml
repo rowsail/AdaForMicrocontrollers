@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<!--  For languages with no compiler -->
+
+<gprconfig>
+  <configuration>
+   <compilers>
+    <compiler language="Project File"/>
+   </compilers>
+   <config>
+package Compiler is
+   for Driver ("Project File") use "";
+end Compiler;
+
+package Naming is
+   for Spec_Suffix ("Project File") use ".gpr";
+end Naming;
+   </config>
+  </configuration>
+
+  <configuration>
+   <compilers>
+    <compiler language="Simulink"/>
+   </compilers>
+   <config>
+package Compiler is
+   for Driver ("Simulink") use "";
+end Compiler;
+
+package Naming is
+   for Spec_Suffix ("Simulink") use ".mdl";
+end Naming;
+   </config>
+  </configuration>
+
+  <configuration>
+   <compilers>
+    <compiler language="Matlab"/>
+   </compilers>
+   <config>
+package Compiler is
+   for Driver ("Matlab") use "";
+end Compiler;
+
+package Naming is
+   for Spec_Suffix ("Matlab") use ".m";
+end Naming;
+   </config>
+  </configuration>
+</gprconfig>

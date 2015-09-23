@@ -33,6 +33,7 @@ abstract project Specs extends "scenarios.gpr" is
    CPU        := MPU_Specs.CPU;
    FPU        := MPU_Specs.FPU;
    MPU        := MPU_Specs.MPU;
+   ARCH       := MPU_Specs.ARCH;
    ENDIAN     := MPU_Specs.ENDIAN;
    Common_MPU := MPU_Specs.Common_MPU;
 
@@ -41,14 +42,47 @@ abstract project Specs extends "scenarios.gpr" is
    -------------------------------------------------------------------------
 
    --  Set desired target
-   Target := "arm-eabi";
+   Target := "arm-none-eabi";
+
+   --  Set profile & subprofile for runtime identification
+   Profile    : Types.PROFILE_Type    := "zfp";
+   Subprofile : Types.SUBPROFILE_Type := "sfp";
+
+   --  Set proper subprofile
+   case RUNTIME is
+
+      when "zfp" =>
+         Profile    := "zfp";
+         Subprofile := "";
+
+      when "ravenscar-sfp" =>
+         Profile    := "ravenscar";
+         Subprofile := "sfp";
+
+      when "ravenscar-full" =>
+         Profile    := "ravenscar";
+         Subprofile := "full";
+
+      when others =>
+
+   end case;
 
    --  Set machine architecture flags
    MFLAGS := ("-m"           & ENDIAN,
               "-mcpu="       & CPU,
-              "-mfpu="       & FPU,
               "-mfloat-abi=" & FLOAT,
               "-m"           & CODE);
+
+   case FLOAT is
+
+      --  If "software" float implementation please reset FPU
+      when "soft" =>
+         FPU := "none";
+
+      when others =>
+         MFLAGS := MFLAGS & ("-mfpu=" & FPU);
+
+   end case;
 
    --  Set common code generation flags
    Required_ADA_Flags  := MFLAGS & ("-gnatQ", "-gnatw.X");
@@ -62,15 +96,20 @@ abstract project Specs extends "scenarios.gpr" is
    --  Initial values to know if we need not to build these libraries
    --  true -> do not build; false -> yes we need them
    --  Gnat library is always built
-   Has_Not_Gnarl := "true";  --  GNAT Runtime Layer
-   Has_Not_Arch  := "true";  --  Architecture dependent library
+   type Boolean_Type is ("False", "True");
+
+   Has_Not_Gnarl : Boolean_Type := "True";  --  GNAT Runtime Layer
+   Has_Not_Arch  : Boolean_Type := "True";  --  Architecture dependent library
 
    --  Compilation option
    Option := "";
    -- And runtime extension name
    Runtime_Option := "";
 
-   --  Then set debug subdir
+   --  libgcc path index
+   Lib_Gcc_Xml := COMPILER & "-" & ARCH & "-" & FLOAT & "-" & FPU & "-" & CODE;
+
+   --  Set debug subdir
    case BUILD is
 
       when "production" =>
@@ -90,11 +129,21 @@ abstract project Specs extends "scenarios.gpr" is
    case Profile is
 
       when "zfp"  =>
-         --  Do not need Gnarl
+
+         case IMPLEMENTATION is
+
+            --  If Adacore we need MCU part of GNARL (startup files)
+            when "adacore" =>
+               Has_Not_Gnarl := "False";
+
+            --  In others impl. MCU part of GNARL is compiled into "larch"
+            when others =>
+
+         end case;
 
       when others =>
-         --  We need Gnarl
-         Has_Not_Gnarl := "false";
+         --  We need GNARL
+         Has_Not_Gnarl := "False";
 
    end case;
 
@@ -287,7 +336,7 @@ abstract project Specs extends "scenarios.gpr" is
    end case;
 
    --  Install path of architecture part of runtime
-   Arch_Install_Path := project'Project_Dir & "../" & Arch_Path;
+   Arch_Install_Path := project'Runtime ("Ada") & "../" & Arch_Path;
 
    --  Building object dir of architecture part of runtime
    Arch_Object_Dir := project'Project_Dir & "obj/" & Arch_Path;
@@ -301,20 +350,24 @@ abstract project Specs extends "scenarios.gpr" is
 
    XML_Artifacts :=
      (
-      --  Copy xml config files
-     "adainclude/"  & IMPLEMENTATION & "/specs/*.xml",
-     --  Architecture options
-     "specs/code/"  & CODE  & ".xml",
-     "specs/build/" & BUILD & ".xml",
-     "specs/float/" & FLOAT & ".xml",
-     "specs/profile/" & Profile_Subprofile & ".xml",
-     --  Set cpu i fpu - from MPU spec
-     "adainclude/mpu/" & Common_MPU & "/specs/architecture.xml",
-     --  Set IDE
-     "adainclude/mpu/" & Common_MPU & "/specs/ide.xml",
-     --  Set MPU name
-     "adainclude/mpu/" & Common_MPU & "/specs/" & MPU & ".xml"
-     );
+      --  Copy xml common config files
+      "specs/*.xml",
+      --  Copy xml implementation config files
+      "adainclude/"  & IMPLEMENTATION & "/specs/*.xml",
+      --  Architecture options
+      "specs/code/"  & CODE  & ".xml",
+      "specs/build/" & BUILD & ".xml",
+      "specs/float/" & FLOAT & ".xml",
+      "specs/compiler/" & COMPILER & ".xml",
+      "specs/libgcc/" & Lib_Gcc_Xml & ".xml",
+      "specs/profile/" & Profile_Subprofile & ".xml",
+      --  Set cpu i fpu - from MPU spec
+      "adainclude/mpu/" & Common_MPU & "/specs/architecture.xml",
+      --  Set IDE
+      "adainclude/mpu/" & Common_MPU & "/specs/ide.xml",
+      --  Set MPU name
+      "adainclude/mpu/" & Common_MPU & "/specs/" & MPU & ".xml"
+      );
 
    LINK_Artifacts :=
      (

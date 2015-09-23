@@ -4,9 +4,7 @@
   <configuration>
    <config>
 
-   package Binder is
-
-   end Binder;
+   LIBGCC_PATH := "armv7e-m/";
 
    </config>
   </configuration>

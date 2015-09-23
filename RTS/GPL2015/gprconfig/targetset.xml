@@ -1,0 +1,332 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+
+<!-- Add elinos ports *before* native ports to
+     be matched before native compiler -->
+ <!-- x86-elinos-.* -->
+  <targetset>
+    <target>x86-elinos-linux</target>
+    <target>i686-elinos-linux</target>
+  </targetset>
+
+  <!-- ppc-elinos-.* -->
+  <targetset>
+    <target>ppc-elinos-linux</target>
+    <target>powerpc-elinos-linux</target>
+  </targetset>
+
+
+<!-- Add wrs-linux ports *before* native ports to
+     be matched before native compiler -->
+  <targetset>
+    <target>e500v2-wrs-linux</target>
+    <target>e500v2-wrs-linux</target>
+  </targetset>
+
+  <targetset>
+    <target>ppc-wrs-linux</target>
+    <target>powerpc-wrs-linux</target>
+  </targetset>
+
+
+<!-- Native ports -->
+<!-- ************ -->
+
+  <!-- x86-linux -->
+  <targetset>
+    <target>x86-linux</target>
+    <target>i.86-.*linux.*</target>
+  </targetset>
+
+  <!-- x86_64-linux -->
+  <targetset>
+    <target>x86_64-linux</target>
+    <target>x86_64-.*linux.*</target>
+  </targetset>
+
+  <!-- ia64-.*-linux -->
+  <targetset>
+    <target>ia64-hp_linux</target>
+    <target>ia64-sgi_linux</target>
+    <target>ia64-.*linux.*</target>
+  </targetset>
+
+  <!-- sparc-solaris -->
+  <targetset>
+    <target>sparc-solaris</target>
+    <target>sparc-.*solaris.*</target>
+  </targetset>
+
+  <!-- sparc64-solaris -->
+  <targetset>
+    <target>sparc64-solaris</target>
+    <target>sparc64-.*solaris.*</target>
+  </targetset>
+
+  <!-- x86-solaris -->
+  <targetset>
+    <target>x86-solaris</target>
+    <target>i.86-(pc-)?solaris.*</target>
+  </targetset>
+
+  <!-- x86-windows (mingw) -->
+  <targetset>
+    <!--  known targets: pentium-mingw32msv, i686-pc-mingw32 -->
+    <target>x86-windows</target>
+    <target>mingw32</target>
+    <target>i.86-.*mingw32.*</target>
+    <target>pentium-.*mingw32.*</target>
+  </targetset>
+
+  <!-- x86_64-windows (mingw) -->
+  <targetset>
+    <!--  known targets: x86_64-pc-mingw32 -->
+    <target>x86_64-windows</target>
+    <target>x86_64-.*mingw32.*</target>
+  </targetset>
+
+  <!-- arm-darwin (iOS) -->
+  <targetset>
+    <target>arm-darwin</target>
+    <target>arm.*-darwin.*</target>
+  </targetset>
+
+  <!-- ppc-darwin -->
+  <targetset>
+    <target>ppc-darwin</target>
+    <target>powerpc.*darwin.*</target>
+  </targetset>
+
+  <!-- x86-darwin -->
+  <targetset>
+    <target>x86-darwin</target>
+    <target>i.86-.*-darwin.*</target>
+  </targetset>
+
+  <!-- x86_64-darwin -->
+  <targetset>
+    <target>x86_64-darwin</target>
+    <target>x86_64-.*-darwin.*</target>
+  </targetset>
+
+  <!-- pa-hpux -->
+  <targetset>
+    <target>pa-hpux</target>
+    <target>hppa.*-hpux.*</target>
+  </targetset>
+
+  <!-- ia64-hpux -->
+  <targetset>
+    <target>ia64-hpux</target>
+    <target>ia64-.*hpux.*</target>
+  </targetset>
+
+  <!-- alpha-tru64 -->
+  <targetset>
+    <target>alpha-tru64</target>
+    <target>alpha.*osf.*</target>
+  </targetset>
+
+  <!-- alpha-openvms -->
+  <targetset>
+    <target>alpha-openvms</target>
+    <target>alpha64-dec-openvms.*</target>
+  </targetset>
+
+  <!-- mips-irix -->
+  <targetset>
+    <target>mips-irix</target>
+    <target>mips-.*irix.*</target>
+  </targetset>
+
+  <!-- ppc-aix -->
+  <targetset>
+    <target>ppc-aix</target>
+    <target>powerpc.*-aix.*</target>
+  </targetset>
+
+
+  <!-- x86-lynx -->
+  <targetset>
+    <target>x86-lynx</target>
+    <target>i.86-.*-lynxos</target>
+  </targetset>
+
+<!-- Additional Natives -->
+<!-- ******************* -->
+
+  <!-- x86-windows cygwin -->
+  <targetset>
+    <target>i.*-cygwin.*</target>
+    <target>pent.*-cygwin.*</target>
+  </targetset>
+
+  <!-- x86 Freebsd -->
+  <targetset>
+    <target>x86-freebsd</target>
+    <target>i.86-.*freebsd.*</target>
+  </targetset>
+
+  <!-- x86_64 Freebsd -->
+  <targetset>
+    <target>x86_64-freebsd</target>
+    <target>x86_64-.*freebsd.*</target>
+    <target>amd64-.*freebsd.*</target>
+  </targetset>
+
+<!-- Cross Ports -->
+<!-- *********** -->
+
+  <!-- aamp -->
+  <targetset>
+    <target>aamp</target>
+    <target>.*aamp.*</target>
+  </targetset>
+
+  <!-- ppc-lynx5-.* -->
+  <targetset>
+    <target>ppc-lynx5.*</target>
+    <target>powerpc-elf-lynxos5.*</target>
+  </targetset>
+
+  <!-- ppc-lynx-.* -->
+  <targetset>
+    <target>ppc-lynx-solaris</target>
+    <target>ppc-lynx-.*</target>
+    <target>powerpc-elf-lynxos.*</target>
+  </targetset>
+
+  <!-- ppc-xcoff-lynxos178-.* -->
+  <targetset>
+    <target>ppc-xcoff-lynxos</target>
+    <target>ppc-xcoff-lynxos178.*</target>
+    <target>powerpc-xcoff-lynxos178.*</target>
+  </targetset>
+
+  <!-- x86-lynx5-.* -->
+  <targetset>
+    <target>x86-lynx5.*</target>
+    <target>i386-elf-lynxos5.*</target>
+  </targetset>
+
+  <!-- x86-vx7-.* (vxworks 7) -->
+  <targetset>
+    <target>x86-wrs-vxworks7</target>
+    <target>i.86-wrs-vxworks7</target>
+  </targetset>
+
+  <!-- x86-vx6-.* (vxworks 6) -->
+  <targetset>
+    <target>x86-wrs-vxworks</target>
+    <target>x86-vx6-windows</target>
+    <target>x86-vx6-linux</target>
+    <target>i.86-wrs-vxworks</target>
+  </targetset>
+
+  <targetset>
+    <target>powerpc-wrs-vxworks</target>
+    <!-- ppc-vxw-.*  (vxworks 5) -->
+    <target>ppc-vxw-solaris</target>
+    <target>ppc-vxw-windows</target>
+    <!-- ppc-vx178b-.*  (vxworks cert) -->
+    <target>ppc-vx178b-solaris</target>
+    <target>ppc-vx178b-windows</target>
+    <!-- ppc-vx6-.* -->
+    <target>ppc-vx6-solaris</target>
+    <target>ppc-vx6-windows</target>
+    <target>ppc-vx6-linux</target>
+  </targetset>
+
+  <targetset>
+    <!-- e500v2-vx6-.* -->
+    <target>e500v2-wrs-vxworks</target>
+    <target>e500v2-vx6-solaris</target>
+    <target>e500v2-vx6-windows</target>
+    <target>e500v2-vx6-linux</target>
+  </targetset>
+
+  <targetset>
+    <!-- leon-vx6-.* -->
+    <target>leon-wrs-vxworks</target>
+    <target>leon-vx6-linux</target>
+  </targetset>
+
+  <!-- ppc-vx653-.*  (vxworks 653) -->
+  <targetset>
+    <target>ppc-vx653-solaris</target>
+    <target>ppc-vx653-windows</target>
+    <target>powerpc-wrs-vxworksae</target>
+  </targetset>
+
+  <!-- e500v2-vx653-.*  (vxworks 653) -->
+  <targetset>
+    <target>e500v2-vx653-windows</target>
+    <target>e500v2-wrs-vxworksae</target>
+  </targetset>
+
+  <!-- ppc-vxmils-.*  (vxworks MILS) -->
+  <targetset>
+    <target>ppc-vxmils-windows</target>
+    <target>powerpc-wrs-vxworksmils</target>
+  </targetset>
+
+  <!-- e500v2-vxmils-.*  (vxworks MILS) -->
+  <targetset>
+    <target>e500v2-vxmils-windows</target>
+    <target>e500v2-wrs-vxworksmils</target>
+  </targetset>
+
+  <!-- x86-vx653-.*  (vxworks 653) -->
+  <targetset>
+    <target>x86-vx653-windows</target>
+    <target>i.86-wrs-vxworksae</target>
+  </targetset>
+
+  <!-- ppc-elf-.*  -->
+  <targetset>
+    <target>ppc-elf-solaris</target>
+    <target>ppc-elf-windows</target>
+    <target>powerpc-elf</target>
+  </targetset>
+
+  <!-- p55-elf-.*  -->
+  <targetset>
+    <target>p55-elf-windows</target>
+    <target>powerpc-eabispe</target>
+  </targetset>
+
+  <!-- erc32-elf-.*  -->
+  <targetset>
+    <target>erc32-elf-solaris</target>
+    <target>erc32-elf-linux</target>
+    <target>erc32-elf.*</target>
+  </targetset>
+
+  <!-- leon-elf-.*  -->
+  <targetset>
+    <target>leon-elf-solaris</target>
+    <target>leon-elf-linux</target>
+    <target>leon-elf.*</target>
+  </targetset>
+
+  <!-- leon3-elf-.*  -->
+  <targetset>
+    <target>leon3-elf-linux</target>
+    <target>leon3-elf.*</target>
+  </targetset>
+
+  <!-- arm-elf-.*  -->
+  <targetset>
+    <target>arm-elf-linux</target>
+    <target>arm-eabi</target>
+    <target>arm-none-eabi</target>
+  </targetset>
+
+  <!-- avr -->
+  <targetset>
+    <target>avr-elf-windows</target>
+    <target>avr</target>
+  </targetset>
+
+</gprconfig>

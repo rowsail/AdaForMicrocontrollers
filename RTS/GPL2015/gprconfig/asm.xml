@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<gprconfig>
+   <!--  This package provides the default standard options for a gcc
+         Asm compiler -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-ASM" language="Asm_Cpp" />
+     </compilers>
+     <config>
+   package Naming is
+      for Body_Suffix ("Asm_Cpp") use ".S";
+   end Naming;
+
+   package Compiler is
+      for Driver            ("Asm_Cpp") use "${PATH(asm_cpp)}${PREFIX(asm_cpp)}gcc";
+      for Leading_Required_Switches ("Asm_Cpp") use
+         Compiler'Leading_Required_Switches ("Asm_Cpp") &amp;
+         ("-c", "-x", "assembler-with-cpp");
+      for Include_Path      ("Asm_Cpp") use "CPATH";
+      for Dependency_Switches ("Asm_Cpp") use ("-MMD", "-MF", "");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-ASM" language="Asm" />
+     </compilers>
+     <config>
+
+   package Naming is
+      for Body_Suffix ("Asm") use ".s";
+   end Naming;
+
+   package Compiler is
+      for Driver            ("Asm") use "${PATH(asm)}${PREFIX(asm)}gcc";
+      for Leading_Required_Switches ("Asm") use
+        Compiler'Leading_Required_Switches ("Asm") &amp;
+        ("-c", "-x", "assembler");
+      for Include_Path      ("Asm") use "CPATH";
+      for Dependency_Switches ("Asm") use ("-MMD", "-MF", "");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-ASM" language="Asm2" />
+     </compilers>
+     <config>
+
+   package Naming is
+      for Body_Suffix ("Asm2") use ".asm";
+   end Naming;
+
+   package Compiler is
+      for Driver            ("Asm2") use "${PATH(asm2)}${PREFIX(asm2)}gcc";
+      for Leading_Required_Switches ("Asm2") use
+        Compiler'Leading_Required_Switches ("Asm2") &amp;
+        ("-c", "-x", "assembler");
+      for Include_Path      ("Asm2") use "CPATH";
+      for Dependency_Switches ("Asm2") use ("-MMD", "-MF", "");
+   end Compiler;
+     </config>
+   </configuration>
+</gprconfig>

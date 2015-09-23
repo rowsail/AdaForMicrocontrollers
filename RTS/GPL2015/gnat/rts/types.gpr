@@ -28,6 +28,17 @@ abstract project Types is
      ("little-endian",
       "big-endian");
 
+   type ARCH_Type is
+     ("armv2",   "armv2a",      "armv3",    "armv3m",
+      "armv4",   "armv4t",      "armv5",    "armv5e",
+      "armv5t",  "armv5te",     "armv6",    "armv6-m",
+      "armv6j",  "armv6k",      "armv6s-m", "armv6t2",
+      "armv6z",  "armv6zk",     "armv7",    "armv7-a",
+      "armv7-m", "armv7-r",     "armv7e-m", "armv7ve",
+      "armv8-a", "armv8-a+crc", "iwmmxt",   "iwmmxt2",
+      "native");
+
+
    type CPU_Type is
      ("arm1020e",		"arm1020t",		"arm1022e",		"arm1026ej-s",
       "arm10e",			"arm10tdmi",		"arm1136j-s",		"arm1136jf-s",
@@ -68,6 +79,9 @@ abstract project Types is
    type IMPLEMENTATION_Type is ("adacore",
                                 "armada",
                                 "example");
+
+   type COMPILER_Type is ("GNAT-GPL",
+                          "GCC-FSF");
 
    type BUILD_Type is ("production",
                        "debug");

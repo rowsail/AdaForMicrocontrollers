@@ -1,0 +1,718 @@
+<?xml version="1.0" ?>
+<gprconfig>
+   <!--  This package provides adjustments for cross compilers -->
+
+   <!-- AAMP executable have extension .axe -->
+   <configuration>
+     <targets>
+       <target name="aamp" />
+     </targets>
+     <config>
+   package Builder is
+      for Executable_Suffix use ".axe";
+   end Builder;
+     </config>
+   </configuration>
+
+   <configuration>
+     <targets>
+       <target name="dotnet" />
+       <target name="^.*-pc-mingw32$" />
+     </targets>
+     <config>
+   package Builder is
+      for Executable_Suffix use ".exe";
+   end Builder;
+     </config>
+   </configuration>
+
+   <!-- on some targets, executables do not have any extension -->
+   <configuration>
+     <targets>
+       <target name="^visium-elf$" />
+       <target name="^powerpc-elf$" />
+       <target name="^powerpc-elf-lynxos5$" />
+       <target name="^powerpc-elf-lynxos178e$" />
+       <target name="^powerpc-xcoff-lynxos178$" />
+       <target name="^powerpc-eabispe$" />
+       <target name="^avr$" />
+       <target name="^leon-elf$" />
+       <target name="^leon3-elf$" />
+       <target name="^arm-eabi$" />
+       <target name="^.*-elinos-linux$" />
+       <target name="^.*-pikeos$" />
+       <target name="^arm-linux-androideabi" />
+       <target name="^arm-linux-gnueabi" />
+       <target name="^arm-linux-gnueabihf" />
+     </targets>
+     <config>
+   package Builder is
+      for Executable_Suffix use "";
+   end Builder;
+     </config>
+   </configuration>
+
+   <!-- Import WIND_BASE on VxWorks targets.  -->
+   <configuration>
+     <targets>
+       <target name="^.*-wrs-vxworks.*$" />
+       <target name="^.*-wrs-vxworksae$" />
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   Wind_Base := external ("WIND_BASE");
+   Wind_Usr := external ("WIND_USR", Wind_Base &amp; "/target/usr/");
+     </config>
+   </configuration>
+
+   <!-- Import VSB_DIR on some VxWorks targets.  -->
+   <configuration>
+     <targets>
+       <target name="^.*-wrs-vxworks7$" />
+     </targets>
+     <config>
+   VSB_Dir := external ("VSB_DIR");
+     </config>
+   </configuration>
+
+   <!-- Import PIKEOS_TARGET_FILES on PikeOS targets.  -->
+   <configuration>
+     <targets>
+       <target name="^.*-sysgo-pikeos.*$" />
+     </targets>
+     <config>
+   Pikeos_Target_Files := external ("PIKEOS_TARGET_FILES");
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers><compiler runtime="ravenscar-cert-rtp" /></compilers>
+     <config>
+       WRS_RTP_Base := external ("WRS_RTP_BASE", "0x40000000");
+     </config>
+   </configuration>
+
+   <!-- Forbid mixing cert, kernel and rtp.  -->
+   <!-- Watch out: "ravenscar-cert-rtp" matches both "rtp" and "cert" -->
+   <configuration>
+     <compilers><compiler runtime="rtp" /></compilers>
+     <compilers><compiler runtime="kernel" /></compilers>
+     <config></config>
+   </configuration>
+
+   <configuration>
+     <compilers><compiler runtime="cert" /></compilers>
+     <compilers><compiler runtime="kernel" /></compilers>
+     <config></config>
+   </configuration>
+
+   <configuration>
+     <compilers><compiler runtime="cert" /></compilers>
+     <compilers><compiler runtime="^rtp$" /></compilers>
+     <config></config>
+   </configuration>
+
+   <configuration>
+     <compilers><compiler runtime="rtp" /></compilers>
+     <compilers><compiler runtime="^ravenscar-cert$" /></compilers>
+     <config></config>
+   </configuration>
+
+   <!-- vxworks kernel executables have a .out extension -->
+   <configuration>
+     <compilers negate="true">
+       <compiler runtime="^rtp$" />
+       <compiler runtime="^rtp-smp$" />
+       <compiler runtime="^ravenscar-cert-rtp$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+       <target name="^.*-wrs-vxworks7$" />
+     </targets>
+     <config>
+   package Builder is
+      for Executable_Suffix use ".out";
+   end Builder;
+     </config>
+   </configuration>
+
+   <!-- vx6/rtp executables have a .vxe extension -->
+   <configuration>
+     <compilers>
+       <compiler runtime="^rtp$" />
+       <compiler runtime="^rtp-smp$" />
+       <compiler runtime="^ravenscar-cert-rtp$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+       <target name="^.*-wrs-vxworks7$" />
+     </targets>
+     <config>
+   package Builder is
+      for Executable_Suffix use ".vxe";
+   end Builder;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GNAT" runtime="^rtp$" />
+       <compiler name="GNAT" runtime="^rtp-smp$" />
+       <compiler name="GCC" runtime="^rtp$" />
+       <compiler name="GCC" runtime="^rtp-smp$" />
+       <compiler name="GCC-WRS6" runtime="^rtp$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^rtp$" />
+       <compiler name="GCC-WRS6CERT" runtime="^rtp$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^rtp$" />
+       <compiler name="GCC-WRS6" runtime="^rtp-smp$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^rtp-smp$" />
+       <compiler name="G++-WRS6" runtime="^rtp$" />
+       <compiler name="G++-WRS6E500V2" runtime="^rtp$" />
+       <compiler name="G++-WRS6" runtime="^rtp-smp$" />
+       <compiler name="G++-WRS6E500V2" runtime="^rtp-smp$" />
+       <compiler name="G++-WRS6CERT" runtime="^rtp$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^rtp$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+       <target name="^.*-wrs-vxworks7$" />
+     </targets>
+     <config>
+   package Linker is
+      for Required_Switches use
+	Linker'Required_Switches &amp; ("-mrtp");
+   end Linker;
+     </config>
+   </configuration>
+
+   <!-- mlongcall is passed by default in the case of GNAT.
+        Do the same thing for WRS compilers for consistency.  -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS6" />
+       <compiler name="GCC-WRS6E500V2" />
+       <compiler name="GCC-WRS6CERT" />
+       <compiler name="GCC-WRS6CERTE500V2" />
+       <compiler name="GCC-WRS5" />
+     </compilers>
+     <targets>
+       <target name="^powerpc-wrs-vxworks.*$" />
+       <target name="^e500v2-wrs-vxworks.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-mlongcall");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS6" />
+       <compiler name="G++-WRS6E500V2" />
+       <compiler name="G++-WRS6CERT" />
+       <compiler name="G++-WRS6CERTE500V2" />
+       <compiler name="G++-WRS5" />
+     </compilers>
+     <targets>
+       <target name="^powerpc-wrs-vxworks.*$" />
+       <target name="^e500v2-wrs-vxworks.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-mlongcall");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS6" />
+       <compiler name="GCC-WRS6CERT" />
+     </compilers>
+     <targets>
+       <target name="^arm-wrs-vxworks.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-mlong-calls");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS6" />
+       <compiler name="G++-WRS6CERT" />
+     </compilers>
+     <targets>
+       <target name="^arm-wrs-vxworks.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-mlong-calls");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GNAT"/>
+       <compiler name="GCC"/>
+       <compiler name="GCC-SYSGO-X86"/>
+       <compiler name="GCC-SYSGO-PPC"/>
+       <compiler name="G++"/>
+     </compilers>
+     <targets>
+       <target name="^.*-sysgo-pikeos$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-fno-builtin");
+   end Compiler;
+
+   package Linker is
+      for Required_Switches use
+	Linker'Required_Switches
+        &amp; ("-L" &amp; Pikeos_Target_Files &amp; "/scripts",
+               "-L" &amp; Pikeos_Target_Files &amp; "/lib");
+   end Linker;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GNAT" runtime="^ravenscar-cert-rtp$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^ravenscar-cert-rtp$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^ravenscar-cert-rtp$" />
+     </compilers>
+     <targets>
+       <target name="e500v2-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Linker is
+      for Required_Switches use
+	Linker'Required_Switches
+        &amp; ("-Wl,--defsym,__wrs_rtp_base=" &amp; WRS_RTP_Base,
+               "-mrtp");
+   end Linker;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GNAT" runtime="^ravenscar-cert-rtp$" />
+       <compiler name="GCC-WRS6CERT" runtime="^ravenscar-cert-rtp$" />
+       <compiler name="G++-WRS6CERT" runtime="^ravenscar-cert-rtp$" />
+     </compilers>
+     <targets>
+       <target name="powerpc-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Linker is
+      for Required_Switches use
+	Linker'Required_Switches
+        &amp; ("-Wl,--defsym,__wrs_rtp_base=" &amp; WRS_RTP_Base,
+               "-mrtp");
+   end Linker;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GNAT" runtime="^rtp$" />
+       <compiler name="GNAT" runtime="^rtp-smp$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("Ada") use
+        Compiler'Leading_Required_Switches ("Ada") &amp; ("-mrtp");
+   end Compiler;
+
+   package Linker is
+      for Required_Switches use
+	Linker'Required_Switches &amp; ("-mrtp");
+   end Linker;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" runtime="^rtp$" />
+       <compiler name="GCC" runtime="^rtp-smp$" />
+       <compiler name="GCC-WRS6" runtime="^rtp$" />
+       <compiler name="GCC-WRS6CERT" runtime="^rtp$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^rtp$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^rtp$" />
+       <compiler name="GCC-WRS6" runtime="^rtp-smp$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^rtp-smp$" />
+       <compiler name="GCC-WRS6CERT" runtime="^ravenscar-cert-rtp$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^ravenscar-cert-rtp$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C") &amp; ("-mrtp")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/usr/h",
+               "-I" &amp; Wind_Base &amp; "/target/usr/h/wrn/coreip");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" />
+       <compiler name="GCC-WRS653" language="C" />
+       <compiler name="GCC-WRS653-E500V2" language="C" />
+       <compiler name="GCC-WRSMILS" language="C" />
+       <compiler name="GCC-WRSMILS-E500V2" language="C" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworksae$" />
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-DVTHREADS",
+               "-I" &amp; Wind_Base &amp; "/target/vThreads/h",
+               "-I" &amp; Wind_Base &amp; "/target/val/h");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" />
+       <compiler name="GCC-WRSMILSHAE" language="C" />
+       <compiler name="GCC-WRSMILSHAE-E500V2" language="C" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/include");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" runtime="^kernel$" />
+       <compiler name="GCC" runtime="^kernel-sjlj$" />
+       <compiler name="GCC" runtime="^kernel-smp$" />
+       <compiler name="GCC-WRS6" runtime="^kernel$" />
+       <compiler name="GCC-WRS6" runtime="^kernel-sjlj$" />
+       <compiler name="GCC-WRS6" runtime="^kernel-smp$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^kernel$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^kernel-sjlj$" />
+       <compiler name="GCC-WRS6E500V2" runtime="^kernel-smp$" />
+       <compiler name="GCC-WRS6LEON" runtime="^kernel$" />
+       <compiler name="GCC-WRS6CERT" runtime="^kernel$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^kernel$" />
+       <compiler name="GCC" runtime="^zfp$" />
+       <compiler name="GCC" runtime="^ravenscar-cert$" />
+       <compiler name="GCC-WRS6CERT" runtime="^zfp$" />
+       <compiler name="GCC-WRS6CERT" runtime="^ravenscar-cert$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^zfp$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^ravenscar-cert$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/h",
+               "-I" &amp; Wind_Base &amp; "/target/h/wrn/coreip");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- require specification of run-time for VxWorks 5 using GNAT for C -->
+   <configuration>
+     <compilers>
+       <compiler name="GCC" runtime="^soft-float$" />
+       <compiler name="GCC-WRS5" runtime="^soft-float$" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/h",
+               "-msoft-float");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- require specification of run-time for VxWorks 5 using GNAT for C -->
+   <configuration>
+     <compilers>
+       <compiler name="GCC" runtime="^default$" />
+       <compiler name="GCC-WRS5" />
+       <compiler name="GCC-WRS5" runtime="^default$" />
+      </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/h");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS6" runtime="^rtp$" />
+       <compiler name="G++-WRS6CERT" runtime="^rtp$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^rtp$" />
+       <compiler name="G++-WRS6E500V2" runtime="^rtp$" />
+       <compiler name="G++-WRS6" runtime="^rtp-smp$" />
+       <compiler name="G++-WRS6E500V2" runtime="^rtp-smp$" />
+       <compiler name="G++-WRS6CERT" runtime="^ravenscar-cert-rtp$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^ravenscar-cert-rtp$" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++") &amp; ("-mrtp")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/usr/h",
+               "-I" &amp; Wind_Base &amp; "/target/usr/h/wrn/coreip");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++-WRS6" runtime="^kernel$" />
+       <compiler name="G++-WRS6" runtime="^kernel-smp$" />
+       <compiler name="G++-WRS6" runtime="^kernel-sjlj$" />
+       <compiler name="G++-WRS6E500V2" runtime="^kernel$" />
+       <compiler name="G++-WRS6E500V2" runtime="^kernel-smp$" />
+       <compiler name="G++-WRS6E500V2" runtime="^kernel-sjlj$" />
+       <compiler name="G++-WRS6CERT" runtime="^kernel$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^kernel$" />
+       <compiler name="G++-WRS6CERT" runtime="^zfp$" />
+       <compiler name="G++-WRS6CERT" runtime="^ravenscar-cert$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^zfp$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^ravenscar-cert$" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/h",
+               "-I" &amp; Wind_Base &amp; "/target/h/wrn/coreip");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS6E500V2" />
+       <compiler name="GCC-WRS6CERTE500V2" />
+       <compiler name="GCC-WRS653-E500V2" />
+       <compiler name="GCC-WRSMILS-E500V2" />
+       <compiler name="G++-WRS6E500V2" />
+       <compiler name="G++-WRS6CERTE500V2" />
+       <compiler name="G++-WRS653-E500V2" />
+       <compiler name="G++-WRSMILS-E500V2" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-te500v2", "-fno-implicit-fp");
+
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-te500v2", "-fno-implicit-fp");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+        <compiler name="G++-WRS653" language="C++" />
+        <compiler name="G++-WRS653-E500V2" language="C++" />
+        <compiler name="G++-WRSMILS" language="C++" />
+        <compiler name="G++-WRSMILS-E500V2" language="C++" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworksae$" />
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-DVTHREADS",
+               "-I" &amp; Wind_Base &amp; "/target/vThreads/h",
+               "-I" &amp; Wind_Base &amp; "/target/val/h");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+        <compiler name="G++-WRSMILSHAE" language="C++" />
+        <compiler name="G++-WRSMILSHAE-E500V2" language="C++" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-I" &amp; Wind_Base &amp; "/target/include");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- In Cert, 653 and MILS printf should not be considered as a builtin -->
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" runtime="^zfp$" />
+       <compiler name="GCC" language="C" runtime="cert" />
+       <compiler name="GCC-WRS653" runtime="^zfp$" />
+       <compiler name="GCC-WRS653" runtime="cert" />
+       <compiler name="GCC-WRS653-E500V2" runtime="^zfp$" />
+       <compiler name="GCC-WRS653-E500V2" runtime="cert" />
+       <compiler name="GCC-WRSMILS" runtime="^zfp$" />
+       <compiler name="GCC-WRSMILS" runtime="cert" />
+       <compiler name="GCC-WRSMILS-E500V2" runtime="^zfp" />
+       <compiler name="GCC-WRSMILS-E500V2" runtime="cert" />
+       <compiler name="GCC-WRSMILSHAE" runtime="^zfp$" />
+       <compiler name="GCC-WRSMILSHAE" runtime="cert" />
+       <compiler name="GCC-WRSMILSHAE-E500V2" runtime="^zfp$" />
+       <compiler name="GCC-WRSMILSHAE-E500V2" runtime="cert" />
+       <compiler name="GCC-WRS6CERT" runtime="^zfp$" />
+       <compiler name="GCC-WRS6CERT" runtime="cert" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="^zfp$" />
+       <compiler name="GCC-WRS6CERTE500V2" runtime="cert" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+       <target name="^.*-wrs-vxworksae$" />
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-fno-builtin");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="G++" language="C++" runtime="^zfp$" />
+       <compiler name="G++" language="C++" runtime="cert" />
+       <compiler name="G++-WRS653" runtime="^zfp$" />
+       <compiler name="G++-WRS653" runtime="cert" />
+       <compiler name="G++-WRS653-E500V2" runtime="^zfp$" />
+       <compiler name="G++-WRS653-E500V2" runtime="cert" />
+       <compiler name="G++-WRSMILS" runtime="^zfp$" />
+       <compiler name="G++-WRSMILS" runtime="cert" />
+       <compiler name="G++-WRSMILS-E500V2" runtime="^zfp$" />
+       <compiler name="G++-WRSMILS-E500V2" runtime="cert" />
+       <compiler name="G++-WRS6CERT" runtime="^zfp$" />
+       <compiler name="G++-WRS6CERT" runtime="cert" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="^zfp$" />
+       <compiler name="G++-WRS6CERTE500V2" runtime="cert" />
+     </compilers>
+     <targets>
+       <target name="^.*-wrs-vxworks$" />
+       <target name="^.*-wrs-vxworksae$" />
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C++") use
+        Compiler'Leading_Required_Switches ("C++")
+        &amp; ("-fno-builtin");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- vx653 & vxMILS executables have a .out extension.  -->
+   <configuration>
+     <targets>
+       <target name="^.*-wrs-vxworksae$" />
+       <target name="^.*-wrs-vxworksmils$" />
+     </targets>
+     <config>
+   package Builder is
+      for Executable_Suffix use ".out";
+   end Builder;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7ARM" runtime="^rtp$" />
+       <compiler name="GCC-WRS7E500V2" runtime="^rtp$" />
+       <compiler name="GCC-WRS7PPC" runtime="^rtp$" />
+       <compiler name="G++-WRS7ARM" runtime="^rtp$" />
+       <compiler name="G++-WRS7PPC" runtime="^rtp$" />
+       <compiler name="G++-WRS7E500V2" runtime="^rtp$" />
+       <!-- On x86, Workbench does not specify the RTP base,
+            so we do not do it either.  -->
+     </compilers>
+     <config>
+   WRS_RTP_Base := external ("WRS_RTP_BASE", "0x80000000");
+   package Linker is
+      for Required_Switches use
+	Linker'Required_Switches
+        &amp; ("-Wl,--defsym,__wrs_rtp_base=" &amp; WRS_RTP_Base);
+   end Linker;
+     </config>
+   </configuration>
+
+   <!--  Set prefix of gnatbind -->
+   <configuration>
+     <compilers>
+       <compiler name="GNAT" />
+       <compiler name="GNAT_DOTNET" />
+       <compiler name="GNAT_CODEPEER" />
+     </compilers>
+     <config>
+   package Binder is
+      for Required_Switches ("Ada") use
+          Binder'Required_Switches ("Ada") &amp;
+          ("gnatbind_prefix=${PREFIX(ada)}");
+   end Binder;
+     </config>
+   </configuration>
+
+</gprconfig>

@@ -1,0 +1,299 @@
+<?xml version="1.0" ?>
+<!DOCTYPE gprconfig [
+  <!ENTITY filter_gnat '<compilers><compiler name="GNAT" /><compiler name="GNAT_DOTNET" /><compiler name="GNAT_CODEPEER" /></compilers>'>
+] >
+
+<gprconfig>
+
+  <!--  GNAAMP -->
+  <configuration>
+   <compilers>
+    <compiler name="GNAAMP" />
+   </compilers>
+   <config>
+   package Naming is
+      for Spec_Suffix ("Ada") use ".ads";
+      for Body_Suffix ("Ada") use ".adb";
+      for Casing use "lowercase";
+      for Dot_Replacement use "-";
+   end Naming;
+
+   package Compiler is
+      for Driver                   ("Ada") use "gnaamp";
+      for Language_Kind            ("Ada") use "unit_based";
+      for Dependency_Kind          ("Ada") use "ALI_File";
+      for Required_Switches        ("Ada") use
+          Compiler'Required_Switches ("Ada")
+             &amp; ("-gnatA");
+      for Object_File_Suffix       ("Ada") use ".obj";
+      for Mapping_File_Switches    ("Ada") use ("-gnatem=");
+      for Mapping_Spec_Suffix      ("Ada") use "%s";
+      for Mapping_Body_Suffix      ("Ada") use "%b";
+      for Config_File_Switches     ("Ada") use ("-gnatec=");
+      for Include_Path_File     ("Ada") use "ADA_PRJ_INCLUDE_FILE";
+      for Config_Body_File_Name    ("Ada") use
+           "pragma Source_File_Name_Project (%u, Body_File_Name => ""%f"");";
+      for Config_Spec_File_Name    ("Ada") use
+           "pragma Source_File_Name_Project (%u, Spec_File_Name => ""%f"");";
+      for Config_Body_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name_Project " &amp;
+           "  (Body_File_Name  => ""*%b""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_Spec_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name_Project " &amp;
+           "  (Spec_File_Name  => ""*%s""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_File_Unique    ("Ada") use "False";
+   end Compiler;
+
+   package Binder is
+      for Objects_Path_File     ("Ada") use "ADA_PRJ_OBJECTS_FILE";
+      for Required_Switches     ("Ada") use
+          Binder'Required_Switches ("Ada")  &amp;
+          ("ada_binder=gnaampbind");
+      for Driver         ("Ada") use
+          "${GPRCONFIG_PREFIX}/libexec/gprbuild/gprbind";
+   end Binder;
+
+   for Toolchain_Version     ("Ada") use "GNAT ${VERSION(ada)}";
+   for Runtime_Library_Dir   ("Ada") use "${RUNTIME_DIR(ada)}/adalib/";
+   for Runtime_Source_Dir    ("Ada") use "${RUNTIME_DIR(ada)}/adainclude/";
+   </config>
+  </configuration>
+
+  <!-- GNAT -->
+  <configuration>
+   &filter_gnat;
+   <config>
+   package Naming is
+      for Spec_Suffix ("Ada") use ".ads";
+      for Body_Suffix ("Ada") use ".adb";
+      for Casing use "lowercase";
+      for Dot_Replacement use "-";
+   end Naming;
+
+   package Compiler is
+      for Driver                   ("Ada") use "${PATH(ada)}${PREFIX(ada)}gcc";
+      for Language_Kind            ("Ada") use "unit_based";
+      for Dependency_Kind          ("Ada") use "ALI_File";
+      for Leading_Required_Switches        ("Ada") use
+	  ("-c", "-x", "ada", "-gnatA")
+             &amp; Compiler'Leading_Required_Switches ("Ada");
+      for Mapping_File_Switches    ("Ada") use ("-gnatem=");
+      for Mapping_Spec_Suffix      ("Ada") use "%s";
+      for Mapping_Body_Suffix      ("Ada") use "%b";
+      for Config_File_Switches     ("Ada") use ("-gnatec=");
+      for Include_Path_File     ("Ada") use "ADA_PRJ_INCLUDE_FILE";
+   end Compiler;
+
+   package Binder is
+      for Objects_Path_File     ("Ada") use "ADA_PRJ_OBJECTS_FILE";
+      for Driver         ("Ada") use
+          "${GPRCONFIG_PREFIX}libexec/gprbuild/gprbind";
+   end Binder;
+
+   package Clean is
+      for Source_Artifact_Extensions ("Ada")
+         use (".dg", ".rep", ".stdout", ".stderr");
+      for Object_Artifact_Extensions ("Ada") use (".s", "ci", ".gcno");
+   end Clean;
+
+   for Toolchain_Version     ("Ada") use "GNAT ${VERSION(ada)}";
+   for Runtime_Library_Dir   ("Ada") use "${RUNTIME_DIR(ada)}/adalib/";
+   for Runtime_Source_Dir    ("Ada") use "${RUNTIME_DIR(ada)}/adainclude/";
+   </config>
+  </configuration>
+
+  <!-- DOTNET -->
+  <configuration>
+   <compilers>
+    <compiler name="GNAT_DOTNET"/>
+   </compilers>
+   <config>
+   package Compiler is
+      for Object_File_Suffix       ("Ada") use ".il";
+      for Driver                   ("Ada") use "${PATH(ada)}${PREFIX(ada)}gnatcompile";
+   end Compiler;
+   </config>
+  </configuration>
+
+  <configuration>
+   &filter_gnat;
+   <compilers negate="true">
+     <compiler version="3.16" />
+     <compiler version="5.00" />
+     <compiler version="5.01" />
+     <compiler version="5.02" />
+   </compilers>
+   <config>
+   package Compiler is
+      for Multi_Unit_Switches ("Ada") use ("-gnateI");
+      for Multi_Unit_Object_Separator ("Ada") use "~";
+      for Config_Body_File_Name ("Ada") use
+           "pragma Source_File_Name_Project (%u, Body_File_Name => ""%f"");";
+      for Config_Spec_File_Name ("Ada") use
+           "pragma Source_File_Name_Project (%u, Spec_File_Name => ""%f"");";
+      for Config_Body_File_Name_Index ("Ada") use
+           "pragma Source_File_Name_Project (%u, Body_File_Name => ""%f"", Index => %i);";
+      for Config_Spec_File_Name_Index ("Ada") use
+           "pragma Source_File_Name_Project (%u, Spec_File_Name => ""%f"", Index => %i);";
+      for Config_Body_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name_Project " &amp;
+           "  (Body_File_Name  => ""*%b""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_Spec_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name_Project " &amp;
+           "  (Spec_File_Name  => ""*%s""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_File_Unique    ("Ada") use "False";
+   end Compiler;
+   </config>
+  </configuration>
+
+  <configuration>
+   &filter_gnat;
+   <compilers>
+     <compiler version="3.16" />
+     <compiler version="5.00" />
+   </compilers>
+   <config>
+   package Compiler is
+      for Config_Body_File_Name    ("Ada") use
+           "pragma Source_File_Name (%u, Body_File_Name => ""%f"");";
+      for Config_Spec_File_Name    ("Ada") use
+           "pragma Source_File_Name (%u, Spec_File_Name => ""%f"");";
+      for Config_Body_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name " &amp;
+           "  (Body_File_Name  => ""*%b""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_Spec_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name " &amp;
+           "  (Spec_File_Name  => ""*%s""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_File_Unique    ("Ada") use "True";
+   end Compiler;
+   </config>
+  </configuration>
+
+  <configuration>
+   &filter_gnat;
+   <compilers>
+     <compiler version="5.01" />
+     <compiler version="5.02" />
+   </compilers>
+   <config>
+   package Compiler is
+      for Config_Body_File_Name    ("Ada") use
+           "pragma Source_File_Name_Project (%u, Body_File_Name => ""%f"");";
+      for Config_Spec_File_Name    ("Ada") use
+           "pragma Source_File_Name_Project (%u, Spec_File_Name => ""%f"");";
+      for Config_Body_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name_Project " &amp;
+           "  (Body_File_Name  => ""*%b""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_Spec_File_Name_Pattern ("Ada") use
+           "pragma Source_File_Name_Project " &amp;
+           "  (Spec_File_Name  => ""*%s""," &amp;
+           "   Casing          => %c," &amp;
+           "   Dot_Replacement => ""%d"");";
+      for Config_File_Unique    ("Ada") use "False";
+   end Compiler;
+   </config>
+  </configuration>
+
+  <!--  Whether -fPIC is needed -->
+  <configuration>
+   &filter_gnat;
+   <targets negate="true">
+      <target name="^.*lynxos.*$" />
+      <target name="^.*mingw.*$" />
+      <target name="^.*dec-osf.*$" />
+      <target name="^.*vms.*$" />
+      <target name="^.*dotnet.*$" />
+   </targets>
+   <config>
+   package Compiler is
+      for PIC_Option      ("Ada") use ("-fPIC");
+   end Compiler;
+   </config>
+  </configuration>
+
+  <!--  Whether encapsulated library is supported -->
+  <configuration>
+   &filter_gnat;
+   <targets>
+      <target name="^.*mingw.*$" />
+      <target name="^i.86-.*linux.*$" />
+      <target name="^.*sunos.*$" />
+      <target name="^sparc-.*solaris.*$"/>
+      <target name="^i.86-.*-solaris.*$"/>
+      <target name="^i.86-.*darwin.*$" />
+      <target name="^powerpc-.*darwin.*$" />
+      <target name="^x86_64-.*darwin.*$" />
+      <target name="^.*android.*$" />
+   </targets>
+   <config>
+      for Library_Encapsulated_Supported use "true";
+   </config>
+  </configuration>
+
+  <!-- add switch __RTS= to the compiler and binder for GNAT, if not default -->
+  <configuration>
+   <compilers>
+     <compiler name="GNAT" />
+   </compilers>
+   <compilers negate="true">
+     <compiler runtime="default" />
+   </compilers>
+   <config>
+   package Compiler is
+      for Leading_Required_Switches ("Ada") use
+        Compiler'Leading_Required_Switches ("Ada") &amp; ("--RTS=${RUNTIME_DIR(ada)}");
+   end Compiler;
+
+   package Binder is
+      for Required_Switches ("Ada") use
+        Binder'Required_Switches ("Ada") &amp; ("--RTS=${RUNTIME_DIR(ada)}");
+   end Binder;
+   </config>
+  </configuration>
+
+  <configuration>
+   <compilers>
+     <compiler name="GNAT_DOTNET" runtime="compact" />
+     <compiler name="GNAT_DOTNET" runtime="silverlight" />
+   </compilers>
+   <config>
+   package Compiler is
+      for Leading_Required_Switches ("Ada") use
+        Compiler'Leading_Required_Switches ("Ada") &amp; ("--RTS=${RUNTIME(ada)}/..");
+   end Compiler;
+
+   package Binder is
+      for Required_Switches ("Ada") use
+        Binder'Required_Switches ("Ada") &amp; ("--RTS=${RUNTIME(ada)}/..");
+   end Binder;
+   </config>
+  </configuration>
+
+  <!-- add compiler option -msoft-float when the runtime is soft-float -->
+  <configuration>
+   <compilers>
+     <compiler name="GNAT" runtime="soft-float" />
+   </compilers>
+   <config>
+   package Compiler is
+      for Leading_Required_Switches ("Ada") use
+        Compiler'Leading_Required_Switches ("Ada") &amp; ("-msoft-float");
+   end Compiler;
+   </config>
+  </configuration>
+
+</gprconfig>

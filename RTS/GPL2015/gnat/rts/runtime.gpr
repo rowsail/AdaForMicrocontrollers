@@ -38,7 +38,7 @@ project Runtime extends "specs.gpr" is
 
    --  Prevents builder warnings
    case Has_Not_Arch is
-      when "false" =>  for Library_Dir use Arch_Adalib_Dir;
+      when "False" =>  for Library_Dir use Arch_Adalib_Dir;
       when others =>
    end case;
 

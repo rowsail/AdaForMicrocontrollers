@@ -26,42 +26,22 @@ with "types.gpr";
 
 abstract project Scenarios is
 
+   --  Is it production compilation or debug one
+   BUILD : Types.BUILD_Type   := external ("BUILD", "production");
+
+   --  Set type of compiler
+   COMPILER : Types.COMPILER_Type := external ("COMPILER", "GNAT-GPL");
+
    -- Float type code
    FLOAT : Types.ABI_Type := external ("FLOAT", "softfp");
-
-   --  Thumb or full arm architecture
-   CODE : Types.CODE_Type := external ("SET", "thumb");
 
    --  Original AdaCore or my ArmAda implementation
    IMPLEMENTATION : Types.IMPLEMENTATION_Type := external ("IMPLEMENTATION", "adacore");
 
-   --  Is it production compilation or debug one
-   BUILD   : Types.BUILD_Type   := external ("BUILD", "production");
+   --  Thumb or full arm architecture
+   CODE : Types.CODE_Type := external ("SET", "thumb");
 
    --  Kind of runtime
    RUNTIME : Types.RUNTIME_Type := external ("RUNTIME", "zfp");
-
-   --  Set profile & subprofile for runtime identification
-   Profile    : Types.PROFILE_Type    := "zfp";
-   Subprofile : Types.SUBPROFILE_Type := "sfp";
-
-   --  Set proper subprofile
-   case RUNTIME is
-
-      when "zfp" =>
-         Profile    := "zfp";
-         Subprofile := "";
-
-      when "ravenscar-sfp" =>
-         Profile    := "ravenscar";
-         Subprofile := "sfp";
-
-      when "ravenscar-full" =>
-         Profile    := "ravenscar";
-         Subprofile := "full";
-
-      when others =>
-
-   end case;
 
 end Scenarios;

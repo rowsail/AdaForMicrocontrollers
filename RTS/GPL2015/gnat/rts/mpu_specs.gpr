@@ -34,6 +34,7 @@ abstract project MPU_Specs is
    Common_MPU                 := "";
    CPU    : Types.CPU_Type    := "none";
    FPU    : Types.FPU_Type    := "none";
+   ARCH   : Types.ARCH_Type   := "native";
    ENDIAN : Types.ENDIAN_Type := "little-endian";  --  default little-endian
 
    case MPU is
@@ -51,6 +52,7 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f103";
          CPU := "cortex-m3";
          FPU := "none";
+         ARCH := "armv7-m";
 
       when "stm32f407ie" | "stm32f407ve" | "stm32f407ze" |
            "stm32f407ig" | "stm32f407vg" | "stm32f407zg"
@@ -58,6 +60,7 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f407";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7e-m";
 
       when "stm32f417ie" | "stm32f417ve" | "stm32f417ze" |
            "stm32f417ig" | "stm32f417vg" | "stm32f417zg"
@@ -65,6 +68,7 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f417";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7e-m";
 
       when "stm32f429vi" | "stm32f429zi" | "stm32f429ai" | "stm32f429ii" | "stm32f429bi" | "stm32f429ni" |
            "stm32f429vg" | "stm32f429zg" | "stm32f429ag" | "stm32f429ig" | "stm32f429bg" | "stm32f429ng" |
@@ -73,6 +77,7 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f427";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7e-m";
 
       when "stm32f439vi" | "stm32f439zi" | "stm32f439ai" | "stm32f439ii" | "stm32f439bi" | "stm32f439ni" |
            "stm32f439vg" | "stm32f439zg" |                 "stm32f439ig" | "stm32f439bg" | "stm32f439ng"
@@ -80,6 +85,7 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f437";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7-m";
 
       when "stm32f745ie" | "stm32f745ve" | "stm32f745ze" |
            "stm32f745ig" | "stm32f745vg" | "stm32f745zg"
@@ -87,6 +93,7 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f745";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7e-m";
 
       when "stm32f746ie" | "stm32f746ve" | "stm32f746ze" | "stm32f746be" | "stm32f746ne" |
            "stm32f746ig" | "stm32f746vg" | "stm32f746zg" | "stm32f746bg" | "stm32f746ng"
@@ -94,12 +101,14 @@ abstract project MPU_Specs is
          Common_MPU := "stm32f746";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7e-m";
 
       when "stm32f756ig" | "stm32f756vg" | "stm32f756zg" | "stm32f756bg" | "stm32f756ng"
          =>
          Common_MPU := "stm32f756";
          CPU := "cortex-m4";
          FPU := "fpv4-sp-d16";
+         ARCH := "armv7-m";
 
       when "tms5700332pzqq1" | "tms5700432pzqq1"
          =>
@@ -107,6 +116,7 @@ abstract project MPU_Specs is
          CPU    := "cortex-r4";
          FPU    := "none";
          ENDIAN := "big-endian";
+         ARCH := "armv7-r";
 
       when "tms5701114pgeqq1" | "tms5701114zwtqq1" | "tms5701115pgeqq1" | "tms5701115zwtqq1" |
            "tms5701224pgeqq1" | "tms5701224zwtqq1" | "tms5701225pgeqq1" | "tms5701225zwtqq1" |
@@ -116,6 +126,7 @@ abstract project MPU_Specs is
          CPU    := "cortex-r4f";
          FPU    := "vfpv3-d16";
          ENDIAN := "big-endian";
+         ARCH := "armv7-r";
 
       when "tms5702124apgeqq1" | "tms5702124azwtqq1" | "tms5702125apgeqq1" | "tms5702125azwtqq1" |
            "tms5702134apgeqq1" | "tms5702134azwtqq1" | "tms5702135apgeqq1" | "tms5702135azwtqq1" |
@@ -126,6 +137,7 @@ abstract project MPU_Specs is
          CPU    := "cortex-r4f";
          FPU    := "vfpv3-d16";
          ENDIAN := "big-endian";
+         ARCH := "armv7-r";
 
       when "tms570lc4357zwtqq1"
          =>
@@ -133,6 +145,7 @@ abstract project MPU_Specs is
          CPU    := "cortex-r5f";
          FPU    := "vfpv3-d16";
          ENDIAN := "big-endian";
+         ARCH := "armv7-r";
 
    end case;
 

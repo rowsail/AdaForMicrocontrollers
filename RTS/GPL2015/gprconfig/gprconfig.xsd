@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!--
+  This file contains the XML Schema for the knowledge base of gprconfig.
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <xsd:element name="gprconfig">
+      <xsd:complexType>
+         <xsd:choice>
+            <xsd:element ref="compiler_description" maxOccurs="unbounded"/>
+            <xsd:element ref="configuration" maxOccurs="unbounded"/>
+            <xsd:element ref="targetset" maxOccurs="unbounded"/>
+         </xsd:choice>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="compiler_description">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="name"       type="xsd:string" />
+            <xsd:element name="executable" type="Texecutable" minOccurs="0" />
+            <xsd:element name="version"    type="Texternal"   minOccurs="0" />
+            <xsd:element name="languages"  type="Texternal"   minOccurs="0" />
+            <xsd:element name="variable"   type="Texternal_with_name"
+                         minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="runtimes"   type="Texternal_with_default"
+                         minOccurs="0" />
+            <xsd:element name="target"     type="Texternal"   minOccurs="0" />
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="configuration">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="compilers" type="Tcompilers"
+                         minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="targets" type="Ttargets"
+                         minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="hosts" type="Thosts"
+                         minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="config" type="xsd:string" minOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <xsd:element name="targetset">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="target" type="xsd:string"
+               maxOccurs="unbounded" minOccurs="1"/>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+
+   <!--  The "executable" node in a "compiler_description" -->
+
+   <xsd:complexType name="Texecutable">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="prefix" type="xsd:string" />
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <!-- All nodes in a "compiler_description" that get their value from
+        the environment (a process, environment variable,...)
+
+        ??? How do we show in the schema that if a simple content is used
+        we cannot specify any child ?
+    -->
+
+   <xsd:complexType name="Texternal" mixed="true">
+      <xsd:sequence minOccurs="0" maxOccurs="1">
+         <xsd:choice>
+            <xsd:element name="external" type="xsd:string" />
+            <xsd:element name="getenv" type="Tgetenv" />
+            <xsd:element name="directory" type="Tdirectory"
+                         maxOccurs="unbounded"/>
+         </xsd:choice>
+         <xsd:element name="nogrep" type="Tgrep" minOccurs="0" />
+         <xsd:element name="grep" type="Tgrep" minOccurs="0" />
+         <xsd:element name="must_match" type="xsd:string" minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="Texternal_with_name" mixed="true">
+      <xsd:complexContent>
+         <xsd:extension base="Texternal">
+            <xsd:attribute name="name" type="xsd:string" />
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="Texternal_with_default" mixed="true">
+      <xsd:complexContent>
+         <xsd:extension base="Texternal">
+            <xsd:attribute name="default" type="xsd:string" />
+         </xsd:extension>
+      </xsd:complexContent>
+   </xsd:complexType>
+
+   <!--  ??? Could check that "group" is a valid parenthesis count for the
+         regexp.
+   -->
+
+   <xsd:complexType name="Tgrep">  <!--  No text allowed, no children -->
+      <xsd:attribute name="regexp" type="xsd:string" />
+      <xsd:attribute name="group" type="xsd:nonNegativeInteger" />
+   </xsd:complexType>
+
+   <xsd:complexType name="Tgetenv"> <!-- No text allowed, no children -->
+      <xsd:attribute name="name" type="xsd:string" />
+   </xsd:complexType>
+
+   <xsd:simpleType name="TpositiveOrDefault">
+      <xsd:union>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:nonNegativeInteger"/>
+        </xsd:simpleType>
+        <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="default"/>
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:union> 
+   </xsd:simpleType>
+
+   <xsd:complexType name="Tdirectory">
+      <xsd:simpleContent>
+         <xsd:extension base="xsd:string">
+            <xsd:attribute name="group" type="TpositiveOrDefault" />
+            <xsd:attribute name="contents" type="xsd:string" />
+         </xsd:extension>
+      </xsd:simpleContent>
+   </xsd:complexType>
+
+   <xsd:complexType name="Tcompilers">
+      <xsd:sequence>
+         <xsd:element name="compiler" type="Tcompiler" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="negate" type="xsd:boolean" />
+   </xsd:complexType>
+
+   <xsd:complexType name="Tcompiler"> <!-- No text allowed, no children -->
+      <xsd:attribute name="name" type="xsd:string"/>
+      <xsd:attribute name="version" type="xsd:string"/>
+      <xsd:attribute name="runtime" type="xsd:string"/>
+      <xsd:attribute name="language" type="xsd:string"/>
+   </xsd:complexType>
+
+   <xsd:complexType name="Ttargets">
+      <xsd:sequence>
+         <xsd:element name="target" type="Ttarget" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="negate" type="xsd:boolean" />
+   </xsd:complexType>
+
+   <xsd:complexType name="Ttarget"> <!-- No text allowed, no children -->
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+
+   <xsd:complexType name="Thosts">
+      <xsd:sequence>
+         <xsd:element name="host" type="Thost" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="negate" type="xsd:boolean" />
+   </xsd:complexType>
+
+   <xsd:complexType name="Thost"> <!-- No text allowed, no children -->
+      <xsd:attribute name="name" type="xsd:string"/>
+   </xsd:complexType>
+
+
+</xsd:schema>

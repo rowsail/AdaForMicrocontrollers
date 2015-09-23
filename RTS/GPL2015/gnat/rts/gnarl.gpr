@@ -37,7 +37,7 @@ project Gnarl extends "specs.gpr" is
 
    --  Prevents builder warnings
    case Has_Not_Gnarl is
-      when "false" =>  for Library_Dir use Gnarl_Adalib_Dir;
+      when "False" =>  for Library_Dir use Gnarl_Adalib_Dir;
       when others =>
    end case;
 

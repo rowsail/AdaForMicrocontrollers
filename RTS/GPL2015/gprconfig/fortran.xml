@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<gprconfig>
+   <!--  This package provides the default standard options for a g77
+         Fortran compiler -->
+
+   <configuration>
+     <compilers>
+       <compiler name="G77" language="Fortran" />
+       <compiler name="GCC-CYGMING" language="Fortran" />
+     </compilers>
+     <config>
+   package Naming is
+      for Body_Suffix ("Fortran") use ".f";
+   end Naming;
+
+   package Compiler is
+      for Driver            ("Fortran") use "${PATH(fortran)}g77";
+      for Leading_Required_Switches ("Fortran") use
+         Compiler'Leading_Required_Switches ("Fortran") &amp;
+         ("-c", "-fno-underscoring");
+      for Include_Path      ("Fortran") use "CPATH";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- in cygminw mode, make sure that the option -mno-cygwin is used -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-CYGMING" language="Fortran" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("Fortran") use
+      Compiler'Leading_Required_Switches ("Fortran") &amp; ("-mno-cygwin");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- Configuration for GFortran: the GCC fortran 95 compiler -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GFORTRAN" language="Fortran" />
+       <compiler name="GCC-MINGW32" language="Fortran" />
+     </compilers>
+     <config>
+   package Naming is
+      for Body_Suffix ("Fortran") use ".f";
+   end Naming;
+
+   package Compiler is
+      for Driver            ("Fortran") use "${PATH(fortran)}gfortran${PREFIX(fortran)}";
+      for Leading_Required_Switches ("Fortran") use
+         Compiler'Leading_Required_Switches ("Fortran") &amp;
+         ("-c", "-fno-underscoring");
+      for Include_Path      ("Fortran") use "CPATH";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!--  Additional switches needed on some platforms -->
+
+   <configuration>
+     <compilers>
+       <compiler name="G77" language="Fortran" />
+     </compilers>
+     <targets negate="true">
+       <target name="^.*LynxOS.*$" />
+       <target name="^.*pentium-mingw.*$" />
+       <target name="^.*cygwin.*$" />
+       <target name="^.*dec-osf.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for PIC_Option      ("Fortran") use ("-fPIC");
+   end Compiler;
+     </config>
+   </configuration>
+</gprconfig>

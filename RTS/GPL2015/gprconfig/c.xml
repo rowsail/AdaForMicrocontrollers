@@ -1,0 +1,339 @@
+<?xml version="1.0" ?>
+<gprconfig>
+   <!--  This package provides the default standard options for a gcc
+         C compiler -->
+
+   <configuration>
+     <compilers>
+       <compiler language="C" />
+     </compilers>
+     <config>
+   package Naming is
+      for Spec_Suffix ("C") use ".h";
+      for Body_Suffix ("C") use ".c";
+   end Naming;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" />
+       <compiler name="GCC_Pro" language="C" />
+       <compiler name="GCC-28" language="C" />
+       <compiler name="GCC-CYGMING" language="C" />
+       <compiler name="GCC-SYSGO-X86" language="C" />
+       <compiler name="GCC-SYSGO-PPC" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C") use "${PATH(c)}${PREFIX(c)}gcc";
+   end Compiler;
+
+   package Clean is
+      for Source_Artifact_Extensions ("C")   use (".gli", ".stdout", ".stderr");
+      for Object_Artifact_Extensions ("C")   use (".s", "ci", ".gcno");
+   end Clean;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+        <compiler name="GCC-MINGW32" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C") use "${PATH(c)}gcc${PREFIX(c)}";
+   end Compiler;
+
+   package Clean is
+      for Source_Artifact_Extensions ("C")   use (".gli", ".stdout", ".stderr");
+      for Object_Artifact_Extensions ("C")   use (".s", "ci", ".gcno");
+   end Clean;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS5" language="C" />
+       <compiler name="GCC-WRS6" language="C" />
+       <compiler name="GCC-WRS6CERT" language="C" />
+       <compiler name="GCC-WRS6CERTE500V2" language="C" />
+       <compiler name="GCC-WRS6E500V2" language="C" />
+       <compiler name="GCC-WRS6LEON" language="C" />
+       <compiler name="GCC-WRS653" language="C" />
+       <compiler name="GCC-WRS653-E500V2" language="C" />
+       <compiler name="GCC-WRS7ARM" language="C" />
+       <compiler name="GCC-WRS7E500V2" language="C" />
+       <compiler name="GCC-WRS7PPC" language="C" />
+       <compiler name="GCC-WRS7X86" language="C" />
+       <compiler name="GCC-WRSMILS" language="C" />
+       <compiler name="GCC-WRSMILSHAE" language="C" />
+       <compiler name="GCC-WRSMILS-E500V2" language="C" />
+       <compiler name="GCC-WRSMILSHAE-E500V2" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C") use "${PATH(c)}cc${PREFIX(c)}";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="DIABC-PPC" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C") use "${PATH(c)}dcc";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="LLVM" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Driver              ("C") use "${PATH(c)}clang";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" />
+       <compiler name="GCC_Pro" language="C" />
+       <compiler name="GCC-28" language="C" />
+       <compiler name="GCC-CYGMING" language="C" />
+       <compiler name="GCC-MINGW32" language="C" />
+       <compiler name="GCC-SYSGO-X86" language="C" />
+       <compiler name="GCC-SYSGO-PPC" language="C" />
+       <compiler name="GCC-WRS5" language="C" />
+       <compiler name="GCC-WRS6" language="C" />
+       <compiler name="GCC-WRS6E500V2" language="C" />
+       <compiler name="GCC-WRS6LEON" language="C" />
+       <compiler name="GCC-WRS6CERT" language="C" />
+       <compiler name="GCC-WRS6CERTE500V2" language="C" />
+       <compiler name="GCC-WRS653" language="C" />
+       <compiler name="GCC-WRS653-E500V2" language="C" />
+       <compiler name="GCC-WRS7ARM" language="C" />
+       <compiler name="GCC-WRS7E500V2" language="C" />
+       <compiler name="GCC-WRS7PPC" language="C" />
+       <compiler name="GCC-WRS7X86" language="C" />
+       <compiler name="GCC-WRSMILS" language="C" />
+       <compiler name="GCC-WRSMILSHAE" language="C" />
+       <compiler name="GCC-WRSMILS-E500V2" language="C" />
+       <compiler name="GCC-WRSMILSHAE-E500V2" language="C" />
+       <compiler name="LLVM" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches   ("C") use
+         ("-c", "-x", "c") &amp; Compiler'Leading_Required_Switches ("C");
+      for Include_Path        ("C") use "CPATH";
+   end Compiler;
+     </config>
+   </configuration>
+
+  <!--     GCC 2.8.1 & VxWorks 5
+   Switch -MMD is not supported on GCC 2.8.1. So, we use an undocumented
+   switch. -MF is not supported by the VxWorks 5 gcc
+   -->
+   <configuration>
+     <compilers>
+       <compiler name="GCC-28" language="C" />
+       <compiler name="GCC-WRS5" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Dependency_Switches ("C") use ("-Wp,-MMD,");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" />
+       <compiler name="GCC_Pro" language="C" />
+       <compiler name="GCC-CYGMING" language="C" />
+       <compiler name="GCC-MINGW32" language="C" />
+       <compiler name="GCC-WRS6" language="C" />
+       <compiler name="GCC-WRS6E500V2" language="C" />
+       <compiler name="GCC-WRS6LEON" language="C" />
+       <compiler name="GCC-WRS6CERT" language="C" />
+       <compiler name="GCC-WRS6CERTE500V2" language="C" />
+       <compiler name="GCC-WRS653" language="C" />
+       <compiler name="GCC-WRS653-E500V2" language="C" />
+       <compiler name="GCC-WRS7X86" language="C" />
+       <compiler name="GCC-WRS7PPC" language="C" />
+       <compiler name="GCC-WRS7E500V2" language="C" />
+       <compiler name="GCC-WRSMILS" language="C" />
+       <compiler name="GCC-WRSMILSHAE" language="C" />
+       <compiler name="GCC-WRSMILS-E500V2" language="C" />
+       <compiler name="GCC-WRSMILSHAE-E500V2" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Dependency_Switches ("C") use ("-MMD", "-MF", "");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="DIABC-PPC" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches   ("C") use
+         Compiler'Leading_Required_Switches ("C") &amp; ("-tPPC750EH:cross", "-c");
+      for Dependency_Switches ("C") use
+         ("-Xmake-dependency=6", "-Xmake-dependency-savefile=");
+      for Include_Path        ("C") use "CPATH";
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!--  Additional switches needed on some platforms -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC" language="C" />
+       <compiler name="GCC_Pro" language="C" />
+       <compiler name="GCC-28" language="C" />
+     </compilers>
+     <targets negate="true">
+       <target name="^.*LynxOS.*$" />
+       <target name="^.*mingw.*$" />
+       <target name="^.*cygwin.*$" />
+       <target name="^.*dec-osf.*$" />
+       <target name="^.*wrs-vxworks.*$" />
+     </targets>
+     <config>
+   package Compiler is
+      for PIC_Option ("C") use ("-fPIC");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- for cygming we make sure that the option -mno-cygwin is used -->
+   <configuration>
+     <compilers>
+       <compiler name="GCC-CYGMING" language="C" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C") &amp; ("-mno-cygwin");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <!-- VxWorks 7.x C support using the WRS compilers  -->
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7ARM" runtime="^kernel$" />
+       <compiler name="GCC-WRS7PPC" runtime="^kernel$" />
+       <compiler name="GCC-WRS7E500V2" runtime="^kernel$" />
+       <compiler name="GCC-WRS7X86" runtime="^kernel$" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-I" &amp; VSB_Dir &amp; "/h",
+               "-I" &amp; VSB_Dir &amp; "/share/h",
+               "-I" &amp; VSB_Dir &amp; "/krnl/h/system",
+               "-I" &amp; VSB_Dir &amp; "/krnl/h/public",
+               "-D_WRS_KERNEL");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7ARM" runtime="^rtp$" />
+       <compiler name="GCC-WRS7PPC" runtime="^rtp$" />
+       <compiler name="GCC-WRS7E500V2" runtime="^rtp$" />
+       <compiler name="GCC-WRS7X86" runtime="^rtp$" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C") &amp; ("-mrtp")
+        &amp; ("-I" &amp; VSB_Dir &amp; "/h",
+               "-I" &amp; VSB_Dir &amp; "/share/h",
+               "-I" &amp; VSB_Dir &amp; "/usr/h/public",
+               "-I" &amp; VSB_Dir &amp; "/usr/h");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7ARM" />
+       <compiler name="GCC-WRS7E500V2" />
+       <compiler name="GCC-WRS7PPC" />
+       <compiler name="GCC-WRS7X86" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-DTOOL_FAMILY=gnu",
+               "-DTOOL=gnu",
+               "-D_VSB_CONFIG_FILE=&lt;config/vsbConfig.h&gt;");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7ARM" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-DCPU=_VX_ARMARCH7",
+               "-t7",
+               "-mfpu=vfp",
+               "-mfloat-abi=softfp");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7E500V2" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-DCPU=_VX_PPCE500V2",
+               "-te500v2",
+               "-mhard-float",
+               "-mstrict-align");
+   end Compiler;
+     </config>
+   </configuration>
+
+   <configuration>
+     <compilers>
+       <compiler name="GCC-WRS7PPC" />
+     </compilers>
+     <config>
+   package Compiler is
+      for Leading_Required_Switches ("C") use
+        Compiler'Leading_Required_Switches ("C")
+        &amp; ("-DCPU=_VX_PPCE500MC",
+               "-mno-powerpc-gfxopt",
+               "-mno-isel");
+   end Compiler;
+     </config>
+   </configuration>
+
+</gprconfig>

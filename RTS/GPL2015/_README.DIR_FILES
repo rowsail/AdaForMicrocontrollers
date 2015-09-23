@@ -16,7 +16,10 @@ test >|
       |> demo_led_tms570 > as above
 
 
-gnat >|
+gprconfig >| little changed scripts for gprconfig/gprbuild (adding arm-none-eabi with library support) to be copied to .../share/gprconfig
+
+
+gnat >| to be copied or linked to arm-*-eabi/lib/
       |> rts >| main building system files
               | runtime.gpr   - main build project file to be loaded by GPS
               | gnat.gpr      - build gnat library
@@ -53,10 +56,7 @@ gnat >|
               |              |             |                      |> full - full part of gnat sources
               |              |             |
               |              |             |> specs >| common for given implementation runtime build definitions
-              |              |                       | binder.xml         - Binder receipes (for concatenate separate parts of runtime)
-              |              |                       | compiler.xml       - Compiler switches (& includes used for concatenate runtimes)
               |              |                       | implementation.xml - name of implementation
-              |              |                       | link.xml           - receipes for Linker (also used for concatenate separate runtimes)
               |              |
               |              |> mpu >| architecture (for common group of microcontrollers) dependent sources & definitions
               |                      |
@@ -107,3 +107,10 @@ gnat >|
                         |> float - supported float eabi implementations
                         |
                         |> profile - supported ada profiles
+                        |
+                        |> compiler - kind of used compiler
+                        |
+                        |> libgcc - set oc XMLs definint paths to multilib libgcc
+                        |
+                        | compiler, binder and link scripts definitions
+                        

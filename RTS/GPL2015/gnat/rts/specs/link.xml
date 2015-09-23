@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+
+<gprconfig>
+  <configuration>
+   <config>
+
+   package Linker is
+
+      --  Get LOADER value
+      Loader := external ("LOADER");
+
+      --  Set additional directory path for gnat &amp; gnarl library in other then adacore implementation
+      Runtime_Loader := PROFILE_SUBPROFILE &amp; "-" &amp; FLOAT &amp; "-" &amp; CODE &amp; "-" &amp; CPU &amp; "-" &amp; FPU &amp; "-" &amp; IMPLEMENTATION &amp; "/adalib";
+
+      --  Set path to gcc library set
+      --  Use "gcc_version(ada)" variable from gprbuild, if you do not use one, please replace with used GCC full version number
+      Path_To_Gcc  := "${PATH(ada)}../lib/gcc/${TARGET(ada)}/${gcc_version(ada)}/";
+
+      --  Path correction for GNAT GPL multilib implementation for big endian MCUs
+      case COMPILER is
+
+         when "GNAT-GPL" => 
+            case ENDIAN is
+               when "big-endian" => Path_To_Gcc := Path_To_Gcc &amp; "be/";
+               when others =>
+           end case;
+
+         when "GCC_FSF" =>
+
+         when others =>
+
+      end case;
+
+      --  Complete path to libgcc with multilib subpath
+      Path_To_Gcc := Path_To_Gcc &amp; LIBGCC_PATH;
+
+      --  Adacore implementation has one runtime directory, others are implemented have two
+      case IMPLEMENTATION is
+
+         when "adacore" =>
+            for Required_Switches use Linker'Required_Switches &amp;
+               ("-L${RUNTIME_DIR(ada)}/adalib", "-lgnat", "-lgnarl", "-T", Loader &amp; ".ld") &amp;
+               ("-L" &amp; Path_to_Gcc, "-nostdlib", "-lgcc");
+
+         when others =>
+            for Required_Switches use Linker'Required_Switches &amp;
+               ("-L${RUNTIME_DIR(ada)}/adalib", "-larch", "-T", Loader &amp; ".ld") &amp;
+               ("-L${RUNTIME_DIR(ada)}/../" &amp; Runtime_Loader, "-lgnat", "-lgnarl") &amp;
+               ("-L" &amp; Path_to_Gcc, "-nostdlib", "-lgcc");
+
+      end case;
+
+      --  Some linker scripts needs this? Leads to smaller executable although
+      case Loader is
+
+         when "flash" | "monitor" | "hiram" | "loram" =>
+            for Required_Switches use Linker'Required_Switches &amp;
+               ("-Wl,-z,max-page-size="&amp;MAX_PAGE_SIZE);
+
+         when others =>
+
+       end case;
+
+   end Linker;
+
+   </config>
+  </configuration>
+</gprconfig>
