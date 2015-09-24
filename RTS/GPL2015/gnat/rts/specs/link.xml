@@ -34,7 +34,7 @@
       --  Complete path to libgcc with multilib subpath
       Path_To_Gcc := Path_To_Gcc &amp; LIBGCC_PATH;
 
-      --  Adacore implementation has one runtime directory, others are implemented have two
+      --  Adacore implementation has one runtime directory, others have two
       case IMPLEMENTATION is
 
          when "adacore" =>
